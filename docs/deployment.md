@@ -133,7 +133,6 @@ restarts the worker. It keeps 5 releases; `make deploy-rollback` switches back t
 After the first deploy, inside the LXC:
 
 ```bash
-supervisorctl reread && supervisorctl update              # start the Messenger worker
 cd /var/www/phantombraking.eu/current
 sudo -u www-data php bin/console app:admin:create "Your Name"   # prints a one-time login link
 ```

@@ -85,7 +85,8 @@ nginx -t && systemctl reload nginx
 
 echo "==> Messenger worker"
 install -m 644 "$DIR/supervisor/phantom-braking-messenger.conf" /etc/supervisor/conf.d/phantom-braking-messenger.conf
-# Started after the first deploy, when current/ exists: supervisorctl reread && supervisorctl update
+# Load it now so the deploy can restart it; until the first deploy (no current/ yet) it just waits in FATAL.
+supervisorctl reread && supervisorctl update
 
 echo "==> Backups"
 install -d -o postgres -g postgres -m 700 /var/backups/phantom-braking
@@ -100,6 +101,5 @@ Done. Next:
   1. Add your SSH public key to /home/deployer/.ssh/authorized_keys
   2. Edit $ENV_FILE (TRUSTED_PROXIES, MEDIA_S3_*, SENTRY_DSN, OPERATOR_*)
   3. From your machine: make deploy
-  4. Here: supervisorctl reread && supervisorctl update
-  5. Here: sudo -u www-data php $SITE/current/bin/console app:admin:create "Your Name"
+  4. Here: sudo -u www-data php $SITE/current/bin/console app:admin:create "Your Name"
 DONE
