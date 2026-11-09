@@ -9,12 +9,10 @@ require 'recipe/symfony.php';
 // Deployed to its own Debian 12 LXC on Proxmox (nginx + PHP-FPM + PostgreSQL + supervisor),
 // behind the existing reverse proxy. Server setup: docs/deployment.md and .deploy/.
 
-set('repository', 'git@github.com:LauLamanApps/phantom-braking.git');
+// Public repository: the server clones over HTTPS, so your SSH agent is never forwarded to it.
+set('repository', 'https://github.com/LauLamanApps/phantom-braking.git');
 set('http_user', 'www-data');
 set('keep_releases', 5);
-
-// A fresh SSH session per command keeps the forwarded agent (needed for the git clone).
-set('ssh_multiplexing', false);
 
 // var/tailwind: the Tailwind binary is downloaded once, not on every deploy.
 // var/storage: upload staging (media itself lives in S3).
@@ -38,7 +36,6 @@ host('phantombraking.eu')
     ->setLabels(['env' => 'prod'])
     ->setHostname($hostname)
     ->setRemoteUser('deployer')
-    ->setForwardAgent(true)
     ->set('deploy_path', '/var/www/phantombraking.eu');
 
 // Tasks

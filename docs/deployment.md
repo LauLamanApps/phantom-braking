@@ -74,8 +74,8 @@ The script is safe to re-run. It:
 
 Then:
 
-1. Add your SSH public key to `/home/deployer/.ssh/authorized_keys`. Deployer forwards your SSH agent, so the server
-   clones from GitHub with your key; no deploy key is needed on the server.
+1. Add your SSH public key to `/home/deployer/.ssh/authorized_keys`. The server clones the public repository over
+   HTTPS, so it needs no GitHub key and your SSH agent is not forwarded.
 2. Fill in `/var/www/phantombraking.eu/shared/.env.local`:
    - `TRUSTED_PROXIES`: the IP of the reverse proxy. Without it, every visitor appears to come from the proxy (one shared rate limit) and the site doesn't know it runs on HTTPS.
    - `MEDIA_S3_*`: see [Object storage](#object-storage).
