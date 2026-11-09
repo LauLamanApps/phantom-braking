@@ -1,0 +1,6 @@
+<?php
+
+// Copy to deploy.local.php (git-ignored) and fill in: keeps internal addresses out of the public repository.
+return [
+    'hostname' => '192.0.2.10', // the LXC's IP or an SSH host alias
+];

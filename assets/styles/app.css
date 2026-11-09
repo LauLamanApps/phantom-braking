@@ -1,0 +1,230 @@
+@import "tailwindcss";
+
+@source "../../templates";
+@source "../../src/**/Presentation";
+@source "../controllers";
+
+@theme {
+    --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+    --color-brand-50: #fef3f2;
+    --color-brand-100: #fee4e2;
+    --color-brand-500: #e0412f;
+    --color-brand-600: #c8331f;
+    --color-brand-700: #a42a1a;
+    --color-ink: #0b0b0b;
+}
+
+/* Data-viz tokens (single-series blue, status red for collisions). Read by the chart/map JS. */
+:root {
+    --surface-1: #ffffff;
+    --text-primary: #0b0b0b;
+    --text-secondary: #52514e;
+    --grid: #e7e6e2;
+    --series-1: #2a78d6;
+    --series-1-soft: rgb(42 120 214 / 0.12);
+    --status-critical: #e34948;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --surface-1: #1a1a19;
+        --text-primary: #f0efec;
+        --text-secondary: #c3c2b7;
+        --grid: #33332f;
+        --series-1: #3987e5;
+        --series-1-soft: rgb(57 135 229 / 0.18);
+        --status-critical: #e66767;
+    }
+}
+
+:root[data-theme="dark"] {
+    --surface-1: #1a1a19;
+    --text-primary: #f0efec;
+    --text-secondary: #c3c2b7;
+    --grid: #33332f;
+    --series-1: #3987e5;
+    --series-1-soft: rgb(57 135 229 / 0.18);
+    --status-critical: #e66767;
+}
+
+@layer base {
+    body {
+        @apply bg-stone-50 text-stone-900 antialiased dark:bg-stone-950 dark:text-stone-100;
+    }
+
+    input[type="text"], input[type="number"], input[type="datetime-local"], input[type="search"], select, textarea {
+        @apply block w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm shadow-sm
+            focus:border-brand-500 focus:ring-2 focus:ring-brand-500/30 focus:outline-none
+            dark:border-stone-700 dark:bg-stone-900;
+    }
+
+    input[type="file"] {
+        @apply block w-full text-sm file:mr-4 file:rounded-lg file:border-0 file:bg-stone-900 file:px-4 file:py-2
+            file:text-sm file:font-semibold file:text-white hover:file:bg-stone-700
+            dark:file:bg-stone-100 dark:file:text-stone-900;
+    }
+
+    input[type="checkbox"], input[type="radio"] {
+        @apply accent-brand-600;
+    }
+}
+
+@layer components {
+    .card {
+        @apply rounded-2xl border border-stone-200 bg-white p-5 shadow-sm dark:border-stone-800 dark:bg-stone-900;
+    }
+
+    .btn-primary {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white
+            shadow-sm transition hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500/50 disabled:opacity-50;
+    }
+
+    .btn-secondary {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl border border-stone-300 bg-white px-4 py-2 text-sm font-semibold
+            text-stone-800 transition hover:bg-stone-100 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-100 dark:hover:bg-stone-800;
+    }
+
+    .stat-value {
+        @apply text-3xl font-bold tabular-nums tracking-tight;
+    }
+
+    .stat-label {
+        @apply mt-1 text-sm text-stone-600 dark:text-stone-400;
+    }
+
+    .chart-box {
+        @apply relative h-72;
+    }
+
+    /* Long-form legal pages */
+    .legal {
+        @apply max-w-3xl space-y-4 leading-relaxed text-stone-700 dark:text-stone-300;
+    }
+    .legal h1 {
+        @apply text-3xl font-bold tracking-tight text-stone-900 dark:text-white;
+    }
+    .legal h2 {
+        @apply pt-6 text-xl font-semibold text-stone-900 dark:text-white;
+    }
+    .legal h3 {
+        @apply pt-2 font-semibold text-stone-900 dark:text-white;
+    }
+    .legal ul {
+        @apply list-disc space-y-1 pl-6;
+    }
+    .legal a {
+        @apply text-brand-600 underline;
+    }
+    .legal table {
+        @apply w-full text-left text-sm;
+    }
+    .legal th, .legal td {
+        @apply border-b border-stone-200 py-2 pr-4 align-top dark:border-stone-800;
+    }
+
+    .plate {
+        @apply inline-flex items-center rounded-md border-2 border-stone-900 bg-yellow-400 px-2 py-0.5 font-mono font-bold tracking-widest text-stone-900;
+    }
+}
+
+/*
+ * Symfony UX Dropzone. Its own stylesheet is disabled in controllers.json (unlayered CSS
+ * would beat Tailwind's layers), so the functional rules it needs are here too.
+ */
+.dropzone-container {
+    @apply relative flex min-h-36 cursor-pointer items-center rounded-xl border-2 border-dashed border-stone-300 bg-stone-50 px-4 py-6 transition
+        hover:border-stone-400 dark:border-stone-700 dark:bg-stone-900/60 dark:hover:border-stone-500;
+}
+.dropzone-container[data-state="dragging"] {
+    @apply border-brand-500 bg-brand-50 dark:bg-brand-700/15;
+}
+.dropzone-container-multiple {
+    @apply flex-col items-stretch justify-center;
+}
+.dropzone-container-multiple .dropzone-placeholder {
+    @apply flex-grow-0;
+}
+.dropzone-container [hidden] {
+    display: none !important;
+}
+.dropzone-input {
+    @apply absolute inset-0 z-[1] block h-full w-full cursor-pointer opacity-0;
+}
+.dropzone-placeholder {
+    @apply flex-grow text-center text-sm text-stone-500 dark:text-stone-400;
+}
+.dropzone-placeholder::before {
+    content: "⬆";
+    @apply mb-1 block text-xl text-stone-400;
+}
+.dropzone-preview {
+    @apply flex max-w-full items-center gap-3 text-sm;
+}
+.dropzone-preview-image {
+    @apply h-12 w-12 shrink-0 rounded-md bg-contain bg-center bg-no-repeat;
+}
+.dropzone-preview-filename {
+    @apply break-all;
+}
+.dropzone-preview-button {
+    @apply absolute right-2 top-2 z-[2] rounded-full px-2 text-lg leading-none text-stone-500 hover:bg-stone-200 hover:text-stone-900 dark:hover:bg-stone-700 dark:hover:text-white;
+}
+.dropzone-preview-button::before {
+    content: "×";
+}
+.dropzone-preview-list {
+    @apply relative z-[2] mt-4 grid list-none grid-cols-3 gap-2 p-0 empty:hidden;
+}
+.dropzone-preview-list-item {
+    @apply relative flex flex-col gap-1 rounded-lg bg-white p-1 text-xs shadow-sm dark:bg-stone-800;
+}
+.dropzone-preview-list-item .dropzone-preview-image {
+    @apply aspect-square h-auto w-full rounded-md bg-cover;
+}
+.dropzone-preview-list .dropzone-preview-filename {
+    @apply truncate px-1 text-stone-500 dark:text-stone-400;
+}
+.dropzone-preview-list-remove {
+    @apply absolute right-2 top-2 cursor-pointer rounded-full bg-stone-900/70 px-1.5 text-sm leading-5 text-white hover:bg-stone-900;
+}
+.dropzone-preview-list-remove::before {
+    content: "×";
+}
+
+.map-wheel-hint {
+    @apply pointer-events-none absolute inset-x-0 top-1/2 z-[1000] mx-auto w-fit -translate-y-1/2 rounded-lg bg-stone-900/80 px-3 py-2 text-sm text-white;
+}
+
+.leaflet-container {
+    font: inherit;
+}
+
+.language-switcher {
+    @apply relative;
+}
+.language-switcher > summary {
+    @apply flex cursor-pointer list-none items-center gap-1.5 rounded-lg px-2 py-1.5 text-stone-600 hover:bg-stone-100 hover:text-stone-900
+        dark:text-stone-400 dark:hover:bg-stone-800 dark:hover:text-white;
+}
+.language-switcher > summary::-webkit-details-marker {
+    display: none;
+}
+.language-switcher[open] > summary svg:last-child {
+    @apply rotate-180;
+}
+.language-switcher > ul {
+    @apply absolute right-0 z-[1100] mt-1 min-w-40 rounded-xl border border-stone-200 bg-white p-1 shadow-lg dark:border-stone-700 dark:bg-stone-900;
+}
+.language-switcher a {
+    @apply flex items-center justify-between gap-4 rounded-lg px-3 py-2 text-stone-700 hover:bg-stone-100 dark:text-stone-300 dark:hover:bg-stone-800;
+}
+.language-switcher a[aria-current] {
+    @apply font-semibold text-stone-900 dark:text-white;
+}
+
+.faq-item > summary {
+    @apply flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 font-medium hover:text-brand-600;
+}
+.faq-item > summary::-webkit-details-marker {
+    display: none;
+}

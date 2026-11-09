@@ -1,0 +1,185 @@
+{% extends 'legal/_layout.html.twig' %}
+{% import 'legal/_layout.html.twig' as legal %}
+
+{% block title %}Datenschutzerklärung{% endblock %}
+
+{% block content %}
+    <p>
+        Die Phantombremsungen-Meldestelle sammelt Meldungen über <em>Phantombremsungen</em>: Ein Auto bremst unerwartet, obwohl
+        kein Hindernis vor ihm ist. Wir gehen sorgfältig mit deinen Daten um. Diese Erklärung beschreibt, was wir verarbeiten,
+        warum, wie lange und welche Rechte du hast.
+    </p>
+
+    <h2>Kurz gesagt</h2>
+    <ul>
+        <li>Du brauchst <strong>kein Konto</strong>, und wir fragen nicht nach deinem Namen oder deiner E-Mail-Adresse.</li>
+        <li>Wir <strong>speichern dein Kennzeichen nicht</strong>. Wir verwenden es nur, um Marke, Modell und Baujahr beim RDW abzurufen, und behalten danach einen nicht umkehrbaren Fingerabdruck.</li>
+        <li>Meldungen werden <strong>ohne Kennzeichen</strong> veröffentlicht und für Statistiken genutzt.</li>
+        <li>Dashcam-Aufnahmen und Fotos bleiben privat, bis wir sie geprüft haben. Mit dem Hochladen willigst du ein, dass sie danach veröffentlicht werden; du kannst diese Einwilligung jederzeit widerrufen.</li>
+        <li>Wir entfernen alle Metadaten aus Fotos, etwa den GPS-Standort und das Gerät, und schwärzen Kennzeichen auf Fotos, bevor sie veröffentlicht werden.</li>
+        <li>Kein Tracking, keine Werbung, keine Analyse-Tools, kein Verkauf von Daten.</li>
+    </ul>
+
+    <h2>Wer ist verantwortlich?</h2>
+    <p>
+        Verantwortlicher ist {{ legal.operator_field(operator.name, 'Name des Betreibers') }}{% if operator.address %}, {{ operator.address }}{% endif %}.
+        Du erreichst uns unter {% if operator.email %}<a href="mailto:{{ operator.email }}">{{ operator.email }}</a>{% else %}{{ legal.operator_field(null, 'E-Mail-Adresse') }}{% endif %}.
+    </p>
+
+    <h2>Was wir verarbeiten, warum und auf welcher Rechtsgrundlage</h2>
+    <table>
+        <thead><tr><th>Daten</th><th>Zweck</th><th>Rechtsgrundlage (Art. 6 DSGVO)</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><strong>Kennzeichen</strong></td>
+                <td>
+                    Abruf der Fahrzeugdaten beim RDW, sowohl während der Eingabe (um zu prüfen, ob das richtige Fahrzeug gefunden wurde)
+                    als auch beim Absenden. Wir speichern das Kennzeichen nicht: Wir behalten nur einen Fingerabdruck (HMAC-SHA256 mit einem
+                    geheimen Schlüssel), damit wir verschiedene Fahrzeuge und wiederholte Meldungen zählen können. Das Kennzeichen ist nie
+                    Teil einer URL und landet daher nicht in den Webserver-Logs.
+                </td>
+                <td>Einwilligung (beim Absenden); berechtigtes Interesse (die Abfrage während der Eingabe)</td>
+            </tr>
+            <tr>
+                <td><strong>Fahrzeugdaten</strong> vom RDW</td>
+                <td>Marke, Modell, Datum der Erstzulassung, Kraftstoff, Typgenehmigung und Ähnliches, für die Meldung und die Statistiken.</td>
+                <td>Einwilligung</td>
+            </tr>
+            <tr>
+                <td><strong>Angaben zum Vorfall</strong></td>
+                <td>
+                    Datum und Uhrzeit, Ort (auf etwa 10 Meter gerundet), Straßennummer, Umstände, Geschwindigkeiten, Folgen,
+                    Reaktion des Händlers, Kilometerstand, Softwareversion und deine Beschreibung. Zusammen bilden sie die Meldung und die Statistiken.
+                </td>
+                <td>Einwilligung</td>
+            </tr>
+            <tr>
+                <td><strong>Dashcam-Aufnahmen</strong> (optional)</td>
+                <td>
+                    Beweis, dass kein Hindernis da war. Aufnahmen werden privat gespeichert, außerhalb der öffentlichen Website.
+                    Mit dem Hochladen willigst du ein, dass sie veröffentlicht werden, nachdem eine Moderatorin oder ein Moderator sie
+                    geprüft hat. Das steht beim Upload-Feld, und du kannst diese Einwilligung jederzeit widerrufen.
+                </td>
+                <td>Einwilligung (Veröffentlichung); berechtigtes Interesse (private Aufbewahrung für die Forschung zu Phantombremsungen)</td>
+            </tr>
+            <tr>
+                <td><strong>Fotos der Folgen</strong> (optional)</td>
+                <td>
+                    Zeigen die Folgen, etwa Schäden oder die Situation auf der Straße. Wir wandeln jedes Foto sofort in eine neue Datei
+                    ohne Metadaten um. Dabei werden GPS-Standort, Gerät, Zeitstempel und andere EXIF-Daten entfernt, und wir behalten
+                    die Originaldatei nicht. Fotos werden privat gespeichert und, wie Aufnahmen, erst nach Prüfung veröffentlicht; mit dem
+                    Hochladen willigst du darin ein. Kennzeichen schwärzt du beim Hochladen selbst; eine Moderatorin oder ein Moderator
+                    prüft und ergänzt das. Nur diese maskierte Kopie wird veröffentlicht. Dashcam-Aufnahmen werden nur veröffentlicht,
+                    wenn kein Kennzeichen lesbar ist.
+                </td>
+                <td>Einwilligung (Veröffentlichung); berechtigtes Interesse (private Aufbewahrung für die Forschung zu Phantombremsungen)</td>
+            </tr>
+            <tr>
+                <td><strong>IP-Adresse</strong></td>
+                <td>Verhinderung von Missbrauch (eine Höchstzahl an Abfragen und Meldungen pro Zeitraum) und Absicherung der Website (Webserver-Logs).</td>
+                <td>Berechtigtes Interesse</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>
+        <strong>Vorsicht bei deiner Beschreibung:</strong> Gib keine Namen, Telefonnummern oder andere personenbezogene Daten an,
+        auch nicht die anderer Personen. Moderatorinnen und Moderatoren können solche Angaben entfernen.
+    </p>
+    <p>
+        Eine Meldung ohne Kennzeichen lässt sich normalerweise nicht auf dich zurückführen. In seltenen Fällen könnte die Kombination
+        aus Datum, Uhrzeit, Ort und Automodell jemandem, der dich kennt, etwas sagen. Deshalb runden wir den Ort und zeigen das
+        Kennzeichen nie. Wenn du sichergehen willst, gib den Ort weniger genau an.
+    </p>
+
+    <h2>Was veröffentlichen wir?</h2>
+    <p>
+        Jede Meldung erhält eine öffentliche Seite mit den Fahrzeug- und Vorfallsdaten, ohne Kennzeichen. Dashcam-Aufnahmen und
+        Fotos erscheinen dort erst, nachdem eine Moderatorin oder ein Moderator sie freigegeben hat. Die Startseite zeigt
+        zusammengefasste Statistiken und eine Karte mit den gerundeten Orten.
+    </p>
+
+    <h2>An wen geben wir Daten weiter?</h2>
+    <ul>
+        <li>
+            <strong>RDW</strong> (niederländische Fahrzeugbehörde): Unser Server ruft die öffentlichen Fahrzeugdaten anhand des
+            Kennzeichens über <a href="https://opendata.rdw.nl" rel="noopener">RDW Open Data</a> ab. Der RDW sieht die Adresse unseres Servers, nicht deine.
+        </li>
+        <li>
+            <strong>OpenStreetMap</strong>: Dein Browser lädt die Kartenkacheln direkt von den Servern der
+            OpenStreetMap Foundation, die dadurch deine IP-Adresse erhält. Siehe die
+            <a href="https://osmfoundation.org/wiki/Privacy_Policy" rel="noopener">Datenschutzrichtlinie der OSMF</a>.
+            Die OSMF hat ihren Sitz im Vereinigten Königreich.
+        </li>
+        <li>
+            <strong>OpenStreetMap Nominatim</strong>: Wenn du auf die Karte klickst, sendet unser Server die Koordinaten dieses
+            Punkts an den Nominatim-Dienst der OSMF, um die Straße zu ermitteln (Land, Straßennummer, Straßentyp, Höchstgeschwindigkeit).
+            Nominatim erhält nur den Punkt und die Adresse unseres Servers, nicht deine IP-Adresse. Siehe die
+            <a href="https://osmfoundation.org/wiki/Privacy_Policy" rel="noopener">Datenschutzrichtlinie der OSMF</a>.
+        </li>
+        <li>
+            <strong>Hosting-Anbieter</strong>: Die Website und die Datenbank laufen bei einem Hosting-Anbieter, der als unser Auftragsverarbeiter tätig ist.
+        </li>
+        <li>
+            <strong>Fehlerüberwachung (Sentry)</strong>: Wenn auf dem Server etwas schiefgeht, senden wir technische Fehlerdetails
+            an Sentry, um das Problem zu beheben. Sie enthalten keine IP-Adressen, Cookies, Kennzeichen oder abgesendeten Formulardaten.
+        </li>
+        <li>
+            <strong>Speicheranbieter</strong>: Dashcam-Aufnahmen und Fotos werden in einem privaten Speicher (nicht öffentlich
+            zugänglich) bei einem Speicheranbieter aufbewahrt, der als unser Auftragsverarbeiter tätig ist.
+        </li>
+    </ul>
+    <p>Wir verkaufen keine Daten und geben sie nicht für Marketing weiter. Was wir veröffentlichen, ist öffentlich und kann von Forschenden, Journalistinnen und Journalisten sowie Behörden genutzt werden.</p>
+
+    <h2>Wie lange speichern wir Daten?</h2>
+    <ul>
+        <li><strong>Meldungen, Fahrzeugdaten und Fingerabdruck</strong>: solange die Meldestelle besteht, da die Statistiken über die Zeit am wertvollsten sind. Es sei denn, du bittest uns, sie früher zu löschen.</li>
+        <li><strong>Dashcam-Aufnahmen und Fotos</strong>: solange die Meldung besteht. Abgelehnte Aufnahmen und Fotos werden nie veröffentlicht und bleiben privat bei der Meldung. Die Original-Fotodatei mit ihren Metadaten wird direkt nach der Verarbeitung gelöscht.</li>
+        <li><strong>Ergebnisse von RDW-Abfragen</strong>: höchstens 24 Stunden in einem technischen Cache, ohne Kennzeichen.</li>
+        <li><strong>Straßendaten zu einem Kartenpunkt</strong>: höchstens 30 Tage in einem technischen Cache (gerundeter Punkt und Straßendaten, nicht mit einer Person oder IP-Adresse verknüpft).</li>
+        <li><strong>IP-Adresse zur Missbrauchsverhinderung</strong>: höchstens 2 Stunden.</li>
+        <li><strong>Webserver-Logs</strong>: höchstens 14 Tage.</li>
+    </ul>
+
+    <h2>Sicherheit</h2>
+    <p>
+        Die Website funktioniert nur über eine verschlüsselte Verbindung (HTTPS). Dashcam-Aufnahmen und Fotos werden außerhalb des
+        öffentlichen Teils der Website gespeichert und sind erst nach Freigabe erreichbar. Kennzeichen werden nur als Fingerabdruck
+        mit einem geheimen Schlüssel aufbewahrt. Nur Administratorinnen und Administratoren haben Zugriff auf die Systeme.
+    </p>
+
+    <h2>Deine Rechte</h2>
+    <p>
+        Du hast das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung deiner Daten sowie auf Widerspruch.
+        Wo du eine Einwilligung gegeben hast, kannst du sie jederzeit widerrufen.
+    </p>
+    <p>
+        <strong>Aufnahmen und Fotos löschen lassen</strong>: Beantrage das auf der Seite deiner Meldung, indem du das Kennzeichen
+        eingibst. Passt es, geht deine Anfrage an eine Moderatorin oder einen Moderator, die bzw. der alle Aufnahmen und Fotos dieser
+        Meldung endgültig löscht. Die Meldung selbst (ohne Kennzeichen) bleibt bestehen.
+    </p>
+    <p>
+        Für andere Anliegen schreib uns eine E-Mail mit dem Link zu deiner Meldung.
+    </p>
+    <p>
+        Da es keine Konten gibt, können wir nicht ohne Weiteres erkennen, welche Meldung zu wem gehört. Wir fragen daher nach dem
+        Kennzeichen: Wir berechnen seinen Fingerabdruck, vergleichen ihn mit der Meldung und vergessen das Kennzeichen danach wieder.
+        Wir antworten innerhalb eines Monats.
+    </p>
+    <p>
+        <strong>Bist du auf Dashcam-Aufnahmen oder Fotos von jemandem zu sehen?</strong> Melde dich bei uns. Wir nehmen die Aufnahmen
+        offline oder machen dich unkenntlich.
+    </p>
+
+    <h2>Beschwerden</h2>
+    <p>
+        Wenn du mit unserem Umgang mit deinen Daten nicht zufrieden bist, sag es uns bitte zuerst. Du kannst dich auch bei deiner
+        Datenschutzaufsichtsbehörde beschweren. In den Niederlanden ist das die
+        <a href="https://autoriteitpersoonsgegevens.nl" rel="noopener">Autoriteit Persoonsgegevens</a> (niederländische Datenschutzbehörde).
+    </p>
+
+    <h2>Keine automatisierten Entscheidungen</h2>
+    <p>Wir treffen keine Entscheidungen über Personen auf Grundlage automatisierter Verarbeitung und erstellen keine Profile.</p>
+
+    <h2>Änderungen</h2>
+    <p>Wir können diese Erklärung aktualisieren. Das Datum oben zeigt, wann sie zuletzt geändert wurde.</p>
+{% endblock %}

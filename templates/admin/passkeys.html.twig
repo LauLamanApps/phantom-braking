@@ -1,0 +1,48 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ 'admin.passkeys.title'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="mx-auto max-w-2xl">
+        <h1 class="text-2xl font-bold tracking-tight">{{ 'admin.passkeys.title'|trans }}</h1>
+        <p class="mt-2 text-sm text-stone-600 dark:text-stone-400">{{ 'admin.passkeys.intro'|trans }}</p>
+
+        {% if passkeys is empty %}
+            <p class="mt-6 rounded-xl border border-yellow-300 bg-yellow-50 p-4 text-sm text-yellow-900 dark:border-yellow-800 dark:bg-yellow-950 dark:text-yellow-100" role="status">{{ 'admin.passkeys.none'|trans }}</p>
+        {% else %}
+            <ul class="card mt-6 divide-y divide-stone-200 p-0 dark:divide-stone-800">
+                {% for passkey in passkeys %}
+                    <li class="flex items-center justify-between gap-4 px-5 py-4 text-sm">
+                        <div>
+                            <p class="font-medium">
+                                {{ 'admin.passkeys.added'|trans({date: passkey.createdAt|format_datetime('medium', 'short')}) }}
+                                {% if passkey.synced %}<span class="ml-1 rounded bg-stone-100 px-1.5 py-0.5 text-xs text-stone-600 dark:bg-stone-800 dark:text-stone-300">{{ 'admin.passkeys.synced'|trans }}</span>{% endif %}
+                            </p>
+                            <p class="text-stone-500">
+                                {{ passkey.lastUsedAt ? 'admin.passkeys.last_used'|trans({date: passkey.lastUsedAt|format_datetime('medium', 'short')}) : 'admin.passkeys.never_used'|trans }}
+                            </p>
+                        </div>
+                        {% if passkeys|length > 1 %}
+                            <form method="post" action="{{ path('admin_passkey_remove', {id: passkey.id}) }}" onsubmit="return confirm('{{ 'admin.passkeys.confirm_remove'|trans|e('js') }}')">
+                                <input type="hidden" name="_token" value="{{ csrf_token('admin') }}">
+                                <button type="submit" class="rounded-lg border border-stone-300 px-3 py-1.5 hover:bg-stone-100 dark:border-stone-700 dark:hover:bg-stone-800">{{ 'admin.passkeys.remove'|trans }}</button>
+                            </form>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <div class="mt-6 space-y-3"
+             data-controller="passkey"
+             data-passkey-mode-value="register"
+             data-passkey-options-url-value="{{ path('webauthn.controller.creation.request.admin_passkey') }}"
+             data-passkey-result-url-value="{{ path('webauthn.controller.creation.response.admin_passkey') }}"
+             data-passkey-redirect-url-value="{{ path('admin_passkeys') }}"
+             data-passkey-messages-value="{{ include('admin/_passkey_messages.html.twig') }}">
+            <button type="button" class="btn-primary" data-passkey-target="button" data-action="passkey#run">{{ 'admin.passkeys.add'|trans }}</button>
+            <p data-passkey-target="error" class="rounded-lg bg-brand-50 p-3 text-sm text-brand-700" role="alert" hidden></p>
+            <p class="text-xs text-stone-500">{{ 'admin.passkeys.add_help'|trans }}</p>
+        </div>
+    </div>
+{% endblock %}

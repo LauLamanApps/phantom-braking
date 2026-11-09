@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<ruleset name="Spookremmen-Meldpunt">
+    <description>
+        Safety net next to PHP-CS-Fixer, which owns formatting (PSR-12 +
+        Symfony). Everything here is about code that should not ship at all,
+        never about layout: running phpcs' own PSR-12 would fight the fixer
+        over string concatenation alone (Symfony writes 'a'.$b, PSR-12 as
+        phpcs reads it wants 'a' . $b), and that is not a fight worth having.
+
+        Keep this ruleset green: make cs-fix runs phpcbf over it and fails on
+        anything left unfixed.
+    </description>
+
+    <file>src</file>
+    <file>tests</file>
+    <file>migrations</file>
+    <file>config</file>
+    <file>public</file>
+
+    <arg name="colors"/>
+    <arg name="extensions" value="php"/>
+    <arg value="p"/>
+
+    <!--
+        Everything below is reported as a warning and does not fail the run,
+        so make pre-commit tells the author instead of blocking everyone.
+    -->
+    <config name="ignore_warnings_on_exit" value="1"/>
+
+    <!-- Error suppression hides the bug instead of fixing it. -->
+    <rule ref="Generic.PHP.NoSilencedErrors">
+        <type>warning</type>
+    </rule>
+
+    <!-- Debug statements and eval have no business in a shipped file. -->
+    <rule ref="Generic.PHP.ForbiddenFunctions">
+        <type>warning</type>
+        <properties>
+            <property name="forbiddenFunctions" type="array">
+                <element key="var_dump" value="null"/>
+                <element key="var_export" value="null"/>
+                <element key="print_r" value="null"/>
+                <element key="dump" value="null"/>
+                <element key="dd" value="null"/>
+                <element key="eval" value="null"/>
+            </property>
+        </properties>
+    </rule>
+    <rule ref="Squiz.PHP.Eval">
+        <type>warning</type>
+    </rule>
+
+    <!-- Code that can never run, and statements that do nothing. -->
+    <rule ref="Squiz.PHP.NonExecutableCode">
+        <type>warning</type>
+    </rule>
+    <rule ref="Generic.CodeAnalysis.EmptyStatement">
+        <type>warning</type>
+    </rule>
+    <rule ref="Generic.CodeAnalysis.UnconditionalIfStatement">
+        <type>warning</type>
+    </rule>
+    <rule ref="Generic.CodeAnalysis.UselessOverridingMethod">
+        <type>warning</type>
+    </rule>
+
+    <!-- An empty PHP file is a leftover. -->
+    <rule ref="Generic.Files.ExecutableFile">
+        <type>warning</type>
+    </rule>
+</ruleset>

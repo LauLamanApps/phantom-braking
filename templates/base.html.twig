@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}" class="h-full">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}{{ 'site.title'|trans }}{% endblock %} · {{ 'site.name'|trans }}</title>
+        <meta name="description" content="{{ 'site.description'|trans }}">
+        <link rel="icon" href="{{ asset('images/icon.svg') }}" type="image/svg+xml">
+        <link rel="apple-touch-icon" href="{{ asset('images/apple-touch-icon.png') }}">
+        <meta name="theme-color" content="#141110">
+        {% set alternate_route = app.request.attributes.get('_route') %}
+        {% if alternate_route %}
+            {% for locale in app.enabled_locales %}
+                <link rel="alternate" hreflang="{{ locale }}" href="{{ url(alternate_route, app.request.attributes.get('_route_params')|default({})|merge({_locale: locale})) }}">
+            {% endfor %}
+        {% endif %}
+        {% block stylesheets %}{% endblock %}
+        {% block javascripts %}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
+        {% endblock %}
+    </head>
+    <body class="flex min-h-full flex-col">
+        {% set route = app.request.attributes.get('_route') %}
+        {% set route_params = app.request.attributes.get('_route_params')|default({}) %}
+        <header class="border-b border-stone-200 bg-white/80 backdrop-blur dark:border-stone-800 dark:bg-stone-900/80">
+            <nav class="mx-auto flex max-w-6xl flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3">
+                <a href="{{ path('home') }}" class="flex items-center gap-2 font-bold tracking-tight">
+                    {{ include('partials/_logo.html.twig') }}
+                    {{ 'site.name'|trans }}
+                </a>
+                <div class="flex flex-1 items-center gap-4 text-sm">
+                    <a href="{{ path('home') }}" class="{{ route == 'home' ? 'font-semibold' : 'text-stone-600 hover:text-stone-900 dark:text-stone-400 dark:hover:text-white' }}">{{ 'nav.statistics'|trans }}</a>
+                    <a href="{{ path('incident_list') }}" class="{{ route starts with 'incident_list' or route == 'incident_show' ? 'font-semibold' : 'text-stone-600 hover:text-stone-900 dark:text-stone-400 dark:hover:text-white' }}">{{ 'nav.reports'|trans }}</a>
+                    <a href="{{ path('faq') }}" class="{{ route == 'faq' ? 'font-semibold' : 'text-stone-600 hover:text-stone-900 dark:text-stone-400 dark:hover:text-white' }}">{{ 'nav.faq'|trans }}</a>
+                </div>
+                <div class="flex items-center gap-3 text-sm">
+                    {% if route %}
+                        {% set current = app.request.locale %}
+                        <details class="language-switcher" data-controller="disclosure" data-action="click@window->disclosure#closeOutside keydown.esc@window->disclosure#close">
+                            <summary aria-label="{{ 'nav.language'|trans }}: {{ current|language_name(current)|capitalize }}">
+                                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.75 5.7 3.75 9S14.5 18.3 12 21c-2.5-2.7-3.75-5.7-3.75-9S9.5 5.7 12 3z"/></svg>
+                                <span class="uppercase">{{ current }}</span>
+                                <svg class="h-3 w-3 transition-transform" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5z"/></svg>
+                            </summary>
+                            <ul>
+                                {% for locale in app.enabled_locales %}
+                                    <li>
+                                        <a href="{{ path(route, route_params|merge({_locale: locale})|merge(app.request.query.all)) }}" hreflang="{{ locale }}" lang="{{ locale }}"{% if locale == current %} aria-current="true"{% endif %}>
+                                            {{ locale|language_name(locale)|capitalize }}
+                                            {% if locale == current %}<span aria-hidden="true">✓</span>{% endif %}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </details>
+                    {% endif %}
+                    <a href="{{ path('incident_report') }}" class="btn-primary">{{ 'nav.report'|trans }}</a>
+                </div>
+            </nav>
+        </header>
+
+        <main class="mx-auto w-full max-w-6xl flex-1 px-4 py-8">
+            {% for type, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="mb-6 rounded-xl border px-4 py-3 text-sm {{ type == 'success' ? 'border-emerald-200 bg-emerald-50 text-emerald-900 dark:border-emerald-900 dark:bg-emerald-950 dark:text-emerald-100' : 'border-brand-100 bg-brand-50 text-brand-700' }}" role="status">
+                        {{ message|trans }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            {% block body %}{% endblock %}
+        </main>
+
+        <footer class="border-t border-stone-200 py-8 text-sm text-stone-500 dark:border-stone-800 dark:text-stone-400">
+            <nav class="mx-auto flex max-w-6xl flex-wrap gap-x-5 gap-y-2 px-4" aria-label="{{ 'footer.nav'|trans }}">
+                <a href="{{ path('about') }}" class="underline hover:text-stone-800 dark:hover:text-stone-200">{{ 'about.title'|trans }}</a>
+                <a href="{{ path('faq') }}" class="underline hover:text-stone-800 dark:hover:text-stone-200">{{ 'faq.title'|trans }}</a>
+                {% for p in ['privacy', 'cookies', 'terms'] %}
+                    <a href="{{ path('legal', {page: p}) }}" class="underline hover:text-stone-800 dark:hover:text-stone-200">{{ ('legal.' ~ p)|trans }}</a>
+                {% endfor %}
+                <a href="{{ source_code_url }}" rel="noopener" class="inline-flex items-center gap-1.5 underline hover:text-stone-800 sm:ml-auto dark:hover:text-stone-200">
+                    <svg class="h-4 w-4" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+                    {{ 'footer.source_code'|trans }}
+                </a>
+                {% if release %}
+                    <a href="{{ source_code_url }}/commit/{{ build }}" rel="noopener" class="font-mono text-xs hover:text-stone-800 dark:hover:text-stone-200" title="{{ build }}">{{ release starts with 'dev-' ? release : 'v' ~ release }}</a>
+                {% endif %}
+            </nav>
+        </footer>
+    </body>
+</html>

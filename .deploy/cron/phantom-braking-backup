@@ -1,0 +1,2 @@
+# Nightly database dump, 14 days kept. Copy these off the server as well (see docs/deployment.md).
+30 3 * * * postgres pg_dump --format=custom phantom_braking > /var/backups/phantom-braking/db-$(date +\%F).dump && find /var/backups/phantom-braking -name 'db-*.dump' -mtime +14 -delete

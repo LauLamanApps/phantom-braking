@@ -1,0 +1,13 @@
+# The privacy statement promises web-server logs are kept for at most 14 days.
+/var/log/nginx/phantombraking.eu.*.log {
+    daily
+    rotate 14
+    missingok
+    notifempty
+    compress
+    delaycompress
+    sharedscripts
+    postrotate
+        invoke-rc.d nginx rotate >/dev/null 2>&1 || true
+    endscript
+}

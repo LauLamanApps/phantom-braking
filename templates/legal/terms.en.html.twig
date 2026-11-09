@@ -1,0 +1,90 @@
+{% extends 'legal/_layout.html.twig' %}
+{% import 'legal/_layout.html.twig' as legal %}
+
+{% block title %}Terms of use{% endblock %}
+
+{% block content %}
+    <p>
+        These terms apply to the Phantom Braking Report, operated by {{ legal.operator_field(operator.name, 'operator name') }}.
+        By submitting a report you agree to them.
+    </p>
+
+    <h2>1. What the reporting point is</h2>
+    <p>
+        An independent, free reporting point where drivers can report phantom braking incidents. Reports are published
+        without the plate and combined into statistics, to make the problem visible and measurable. We are not affiliated
+        with car manufacturers, importers, dealers or governments.
+    </p>
+
+    <h2>2. Reporting</h2>
+    <ul>
+        <li>Only report incidents you experienced yourself, as the driver or a passenger of the vehicle.</li>
+        <li>Fill in the report truthfully. Deliberately false reports are not allowed.</li>
+        <li>Don't put personal data (yours or anyone else's) in your description, nor anything offensive, threatening or unlawful.</li>
+        <li>Never use the reporting point while driving.</li>
+    </ul>
+
+    <h2>3. Dashcam footage and photos</h2>
+    <ul>
+        <li>Only upload footage and photos you took yourself, or are allowed to share.</li>
+        <li>Don't photograph injured people, and don't take photos during or right after an incident if that puts anyone's safety at risk.</li>
+        <li>By uploading footage or photos you consent to their publication. Because they often show other road users, that only happens after a moderator has reviewed them.</li>
+        <li>Black out plates on your photos when uploading. A moderator checks this; footage with a readable plate is not published.</li>
+        <li>You can withdraw your consent at any time by requesting deletion on your report's page, using the plate. A moderator then deletes the footage and photos.</li>
+        <li>We may refuse, not publish or remove footage and photos, for example if they show recognisable people or have nothing to do with phantom braking.</li>
+    </ul>
+
+    <h2>4. Use of your report</h2>
+    <p>
+        You give us free permission to store, analyse and publish your report (without the plate), and to include it in
+        statistics. For dashcam footage and photos this applies after review by a moderator. If you have your report
+        deleted, it also disappears from the statistics. What we publish is public, and others (such as researchers,
+        journalists and regulators) may use it with attribution.
+    </p>
+
+    <h2>5. Moderation</h2>
+    <p>
+        We may refuse, shorten or remove reports, descriptions, footage and photos without giving reasons. For example in case
+        of spam, abuse, incorrect or unlawful content, or to protect other people's privacy.
+    </p>
+
+    <h2>6. What the data does and doesn't say</h2>
+    <ul>
+        <li>
+            Reports are <strong>drivers' experiences</strong>. We don't verify their content.
+            A report is not technical proof that a vehicle is defective.
+        </li>
+        <li>
+            Statistics are not representative of all vehicles. A make or model with many reports may simply be common,
+            or have an engaged group of owners.
+        </li>
+        <li>Vehicle details come from the RDW and are used as the RDW provides them.</li>
+        <li>
+            The reporting point doesn't replace official reports. Please also report a dangerous vehicle to the Dutch
+            <a href="https://www.ilent.nl" rel="noopener">ILT</a> and your dealer. In an accident with injuries, always call 112.
+        </li>
+        <li>Make and model names are only used to identify vehicles and belong to their respective owners.</li>
+    </ul>
+
+    <h2>7. Liability and availability</h2>
+    <p>
+        We do our best to keep the reporting point available and accurate, but give no guarantees. To the extent permitted
+        by law, we are not liable for damage resulting from using the reporting point or from decisions based on the
+        published data. You are responsible for the content you submit.
+    </p>
+
+    <h2>8. Privacy</h2>
+    <p>How we handle personal data is described in our <a href="{{ path('legal', {page: 'privacy'}) }}">privacy statement</a>.</p>
+
+    <h2>9. Changes and governing law</h2>
+    <p>
+        We may update these terms. The date at the top shows when they last changed.
+        These terms are governed by Dutch law.
+    </p>
+
+    <h2>10. Contact</h2>
+    <p>
+        Questions, or want to flag content on the reporting point? E-mail
+        {% if operator.email %}<a href="mailto:{{ operator.email }}">{{ operator.email }}</a>{% else %}{{ legal.operator_field(null, 'e-mail address') }}{% endif %}.
+    </p>
+{% endblock %}

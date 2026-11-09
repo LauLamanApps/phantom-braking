@@ -1,0 +1,26 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ 'admin.login.title'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="mx-auto mt-12 max-w-sm">
+        <h1 class="text-2xl font-bold tracking-tight">{{ 'admin.login.title'|trans }}</h1>
+        {% if error %}
+            <p class="mt-4 rounded-lg bg-brand-50 p-3 text-sm text-brand-700" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+        {% endif %}
+        <div class="card mt-6 space-y-4"
+             data-controller="passkey"
+             data-passkey-mode-value="login"
+             data-passkey-options-url-value="{{ path('webauthn.controller.security.admin.request.options') }}"
+             data-passkey-result-url-value="{{ path('webauthn.controller.security.admin.request.result') }}"
+             data-passkey-redirect-url-value="{{ path('admin_dashboard') }}"
+             data-passkey-messages-value="{{ include('admin/_passkey_messages.html.twig') }}">
+            <p class="text-sm text-stone-600 dark:text-stone-400">{{ 'admin.login.intro'|trans }}</p>
+            <button type="button" class="btn-primary w-full" data-passkey-target="button" data-action="passkey#run">
+                {{ 'admin.login.submit'|trans }}
+            </button>
+            <p data-passkey-target="error" class="rounded-lg bg-brand-50 p-3 text-sm text-brand-700" role="alert" hidden></p>
+        </div>
+        <p class="mt-4 text-xs text-stone-500">{{ 'admin.login.no_passkey'|trans }}</p>
+    </div>
+{% endblock %}

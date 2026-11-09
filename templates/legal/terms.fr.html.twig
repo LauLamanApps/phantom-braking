@@ -1,0 +1,92 @@
+{% extends 'legal/_layout.html.twig' %}
+{% import 'legal/_layout.html.twig' as legal %}
+
+{% block title %}Conditions d’utilisation{% endblock %}
+
+{% block content %}
+    <p>
+        Les présentes conditions s’appliquent au Point de signalement des freinages fantômes, géré par {{ legal.operator_field(operator.name, 'nom du gestionnaire') }}.
+        En envoyant un signalement, vous les acceptez.
+    </p>
+
+    <h2>1. Ce qu’est le point de signalement</h2>
+    <p>
+        Un point de signalement indépendant et gratuit où les conducteurs peuvent signaler des freinages fantômes. Les
+        signalements sont publiés sans la plaque d’immatriculation et regroupés en statistiques, afin de rendre le problème
+        visible et mesurable. Nous n’avons aucun lien avec les constructeurs automobiles, importateurs, concessionnaires ou
+        pouvoirs publics.
+    </p>
+
+    <h2>2. Signaler</h2>
+    <ul>
+        <li>Ne signalez que des incidents que vous avez vécus vous-même, en tant que conducteur ou passager du véhicule.</li>
+        <li>Remplissez le signalement de manière sincère. Les signalements volontairement faux ne sont pas autorisés.</li>
+        <li>N’indiquez dans votre description aucune donnée personnelle (la vôtre ou celle d’autrui), ni aucun contenu offensant, menaçant ou illicite.</li>
+        <li>N’utilisez jamais le point de signalement en conduisant.</li>
+    </ul>
+
+    <h2>3. Vidéos de dashcam et photos</h2>
+    <ul>
+        <li>N’envoyez que des vidéos et photos que vous avez prises vous-même ou que vous êtes autorisé à partager.</li>
+        <li>Ne photographiez pas de personnes blessées, et ne prenez pas de photos pendant ou juste après un incident si cela met la sécurité de quiconque en danger.</li>
+        <li>En envoyant des vidéos ou des photos, vous consentez à leur publication. Comme elles montrent souvent d’autres usagers de la route, celle-ci n’a lieu qu’après vérification par un modérateur.</li>
+        <li>Masquez les plaques d’immatriculation sur vos photos lors de l’envoi. Un modérateur le vérifie ; une vidéo sur laquelle une plaque est lisible n’est pas publiée.</li>
+        <li>Vous pouvez retirer votre consentement à tout moment en demandant la suppression sur la page de votre signalement, à l’aide de la plaque. Un modérateur supprime alors la vidéo et les photos.</li>
+        <li>Nous pouvons refuser, ne pas publier ou retirer des vidéos et des photos, par exemple si elles montrent des personnes reconnaissables ou n’ont aucun rapport avec le freinage fantôme.</li>
+    </ul>
+
+    <h2>4. Utilisation de votre signalement</h2>
+    <p>
+        Vous nous autorisez gratuitement à conserver, analyser et publier votre signalement (sans la plaque) et à l’intégrer
+        aux statistiques. Pour les vidéos de dashcam et les photos, cela s’applique après vérification par un modérateur. Si
+        vous faites supprimer votre signalement, il disparaît également des statistiques. Ce que nous publions est public,
+        et d’autres personnes (chercheurs, journalistes, autorités de contrôle, etc.) peuvent l’utiliser en citant la source.
+    </p>
+
+    <h2>5. Modération</h2>
+    <p>
+        Nous pouvons refuser, raccourcir ou supprimer des signalements, descriptions, vidéos et photos sans avoir à nous
+        justifier. Par exemple en cas de spam, d’abus, de contenu inexact ou illicite, ou pour protéger la vie privée d’autrui.
+    </p>
+
+    <h2>6. Ce que les données disent et ne disent pas</h2>
+    <ul>
+        <li>
+            Les signalements sont des <strong>témoignages de conducteurs</strong>. Nous n’en vérifions pas le contenu.
+            Un signalement ne constitue pas une preuve technique qu’un véhicule est défectueux.
+        </li>
+        <li>
+            Les statistiques ne sont pas représentatives de l’ensemble des véhicules. Une marque ou un modèle très signalé
+            peut simplement être répandu, ou avoir une communauté de propriétaires très engagée.
+        </li>
+        <li>Les informations sur les véhicules proviennent du RDW et sont utilisées telles que le RDW les fournit.</li>
+        <li>
+            Le point de signalement ne remplace pas les déclarations officielles. Signalez aussi un véhicule dangereux à
+            l’inspection néerlandaise des transports (<a href="https://www.ilent.nl" rel="noopener">ILT</a>) et à votre
+            concessionnaire. En cas d’accident avec blessés, appelez toujours le 112.
+        </li>
+        <li>Les noms de marques et de modèles ne servent qu’à identifier les véhicules et appartiennent à leurs propriétaires respectifs.</li>
+    </ul>
+
+    <h2>7. Responsabilité et disponibilité</h2>
+    <p>
+        Nous faisons de notre mieux pour que le point de signalement reste disponible et exact, mais n’offrons aucune
+        garantie. Dans la mesure permise par la loi, nous ne sommes pas responsables des dommages résultant de l’utilisation
+        du point de signalement ou de décisions fondées sur les données publiées. Vous êtes responsable du contenu que vous envoyez.
+    </p>
+
+    <h2>8. Vie privée</h2>
+    <p>La manière dont nous traitons les données personnelles est décrite dans notre <a href="{{ path('legal', {page: 'privacy'}) }}">politique de confidentialité</a>.</p>
+
+    <h2>9. Modifications et droit applicable</h2>
+    <p>
+        Nous pouvons mettre à jour ces conditions. La date en haut de la page indique leur dernière modification.
+        Les présentes conditions sont régies par le droit néerlandais.
+    </p>
+
+    <h2>10. Contact</h2>
+    <p>
+        Une question, ou vous souhaitez signaler un contenu du point de signalement ? Écrivez à
+        {% if operator.email %}<a href="mailto:{{ operator.email }}">{{ operator.email }}</a>{% else %}{{ legal.operator_field(null, 'adresse e-mail') }}{% endif %}.
+    </p>
+{% endblock %}

@@ -1,0 +1,188 @@
+{% extends 'legal/_layout.html.twig' %}
+{% import 'legal/_layout.html.twig' as legal %}
+
+{% block title %}Politique de confidentialité{% endblock %}
+
+{% block content %}
+    <p>
+        Le Point de signalement des freinages fantômes recueille des signalements de <em>freinage fantôme</em> : une voiture
+        qui freine de manière inattendue alors qu’il n’y a aucun obstacle devant elle. Nous prenons soin de vos données.
+        Cette politique explique ce que nous traitons, pourquoi, pendant combien de temps, et quels sont vos droits.
+    </p>
+
+    <h2>En bref</h2>
+    <ul>
+        <li>Vous n’avez besoin d’<strong>aucun compte</strong>, et nous ne vous demandons ni votre nom ni votre adresse e-mail.</li>
+        <li>Nous <strong>ne conservons pas votre plaque d’immatriculation</strong>. Nous l’utilisons uniquement pour récupérer la marque, le modèle et l’année auprès du RDW, puis nous ne gardons qu’une empreinte irréversible.</li>
+        <li>Les signalements sont publiés <strong>sans la plaque</strong> et utilisés pour les statistiques.</li>
+        <li>Les vidéos de dashcam et les photos restent privées jusqu’à ce que nous les ayons vérifiées. En les envoyant, vous consentez à leur publication après cette vérification ; vous pouvez retirer ce consentement à tout moment.</li>
+        <li>Nous supprimons toutes les métadonnées des photos, comme la position GPS et l’appareil, et masquons les plaques d’immatriculation sur les photos avant leur publication.</li>
+        <li>Aucun suivi, aucune publicité, aucune mesure d’audience, aucune vente de données.</li>
+    </ul>
+
+    <h2>Qui est responsable ?</h2>
+    <p>
+        Le responsable du traitement est {{ legal.operator_field(operator.name, 'nom du gestionnaire') }}{% if operator.address %}, {{ operator.address }}{% endif %}.
+        Vous pouvez nous joindre à l’adresse {% if operator.email %}<a href="mailto:{{ operator.email }}">{{ operator.email }}</a>{% else %}{{ legal.operator_field(null, 'adresse e-mail') }}{% endif %}.
+    </p>
+
+    <h2>Ce que nous traitons, pourquoi, et sur quelle base légale</h2>
+    <table>
+        <thead><tr><th>Données</th><th>Finalité</th><th>Base légale (art. 6 du RGPD)</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><strong>Plaque d’immatriculation</strong></td>
+                <td>
+                    Récupération des informations du véhicule auprès du RDW, pendant la saisie (pour vérifier que le bon véhicule
+                    a été trouvé) et lors de l’envoi. Nous ne conservons pas la plaque : nous ne gardons qu’une empreinte
+                    (HMAC-SHA256 avec une clé secrète), afin de pouvoir compter les véhicules distincts et les signalements répétés.
+                    La plaque ne figure jamais dans une URL et ne se retrouve donc pas dans les journaux du serveur web.
+                </td>
+                <td>Consentement (lors de l’envoi) ; intérêt légitime (la recherche pendant la saisie)</td>
+            </tr>
+            <tr>
+                <td><strong>Informations du véhicule</strong> provenant du RDW</td>
+                <td>Marque, modèle, date de première immatriculation, carburant, réception par type, etc., pour le signalement et les statistiques.</td>
+                <td>Consentement</td>
+            </tr>
+            <tr>
+                <td><strong>Informations sur l’incident</strong></td>
+                <td>
+                    Date et heure, lieu (arrondi à environ 10 mètres), numéro de route, circonstances, vitesses, conséquences,
+                    réponse du concessionnaire, kilométrage, version du logiciel et votre description. Ensemble, elles constituent le signalement et les statistiques.
+                </td>
+                <td>Consentement</td>
+            </tr>
+            <tr>
+                <td><strong>Vidéo de dashcam</strong> (facultative)</td>
+                <td>
+                    Preuve qu’il n’y avait aucun obstacle. Les vidéos sont stockées de manière privée, en dehors du site web public.
+                    En envoyant une vidéo, vous consentez à sa publication après vérification par un modérateur. Le champ
+                    d’envoi l’indique, et vous pouvez retirer ce consentement à tout moment.
+                </td>
+                <td>Consentement (publication) ; intérêt légitime (conservation privée pour la recherche sur le freinage fantôme)</td>
+            </tr>
+            <tr>
+                <td><strong>Photos des conséquences</strong> (facultatives)</td>
+                <td>
+                    Montrer les conséquences, comme des dégâts ou la situation sur la route. Nous convertissons immédiatement chaque
+                    photo en un nouveau fichier sans métadonnées. La position GPS, l’appareil, l’horodatage et les autres données EXIF
+                    sont alors supprimés, et nous ne conservons pas le fichier d’origine. Les photos sont stockées de manière privée
+                    et, comme les vidéos, publiées uniquement après vérification ; en les envoyant, vous y consentez. Vous masquez
+                    vous-même les plaques lors de l’envoi ; un modérateur vérifie et complète ce masquage. Seule cette copie masquée
+                    est publiée. Une vidéo de dashcam n’est publiée que si aucune plaque n’y est lisible.
+                </td>
+                <td>Consentement (publication) ; intérêt légitime (conservation privée pour la recherche sur le freinage fantôme)</td>
+            </tr>
+            <tr>
+                <td><strong>Adresse IP</strong></td>
+                <td>Prévention des abus (nombre maximal de recherches et de signalements par période) et sécurisation du site web (journaux du serveur web).</td>
+                <td>Intérêt légitime</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>
+        <strong>Attention à votre description :</strong> n’y indiquez pas de noms, de numéros de téléphone ou d’autres données
+        personnelles, y compris celles d’autres personnes. Les modérateurs peuvent supprimer ces informations.
+    </p>
+    <p>
+        Un signalement sans plaque ne permet normalement pas de remonter jusqu’à vous. Dans de rares cas, la combinaison de
+        la date, de l’heure, du lieu et du modèle de voiture pourrait évoquer quelque chose à une personne qui vous connaît.
+        C’est pourquoi nous arrondissons le lieu et n’affichons jamais la plaque. Si vous voulez en être sûr, indiquez le
+        lieu de manière moins précise.
+    </p>
+
+    <h2>Que publions-nous ?</h2>
+    <p>
+        Chaque signalement dispose d’une page publique avec les informations sur le véhicule et l’incident, sans la plaque.
+        Les vidéos de dashcam et les photos n’y apparaissent qu’après approbation par un modérateur. La page d’accueil
+        présente des statistiques agrégées et une carte avec les lieux arrondis.
+    </p>
+
+    <h2>Avec qui partageons-nous des données ?</h2>
+    <ul>
+        <li>
+            <strong>RDW</strong> (l’autorité néerlandaise des véhicules) : notre serveur consulte les informations publiques du
+            véhicule à partir de la plaque via <a href="https://opendata.rdw.nl" rel="noopener">RDW Open Data</a>. Le RDW voit
+            l’adresse de notre serveur, pas la vôtre.
+        </li>
+        <li>
+            <strong>OpenStreetMap</strong> : votre navigateur charge les tuiles de carte directement depuis les serveurs de
+            l’OpenStreetMap Foundation, qui reçoit donc votre adresse IP. Consultez la
+            <a href="https://osmfoundation.org/wiki/Privacy_Policy" rel="noopener">politique de confidentialité de l’OSMF</a>.
+            L’OSMF est établie au Royaume-Uni.
+        </li>
+        <li>
+            <strong>OpenStreetMap Nominatim</strong> : lorsque vous cliquez sur la carte, notre serveur envoie les coordonnées
+            de ce point au service Nominatim de l’OSMF pour identifier la route (pays, numéro de route, type de route, vitesse
+            maximale autorisée). Nominatim ne reçoit que le point et l’adresse de notre serveur, pas votre adresse IP. Consultez la
+            <a href="https://osmfoundation.org/wiki/Privacy_Policy" rel="noopener">politique de confidentialité de l’OSMF</a>.
+        </li>
+        <li>
+            <strong>Hébergeur</strong> : le site web et la base de données fonctionnent chez un hébergeur qui agit en tant que sous-traitant.
+        </li>
+        <li>
+            <strong>Suivi des erreurs (Sentry)</strong> : lorsqu’une erreur se produit sur le serveur, nous envoyons des
+            informations techniques sur l’erreur à Sentry afin de la corriger. Elles ne contiennent ni adresses IP, ni cookies,
+            ni plaques d’immatriculation, ni données de formulaire envoyées.
+        </li>
+        <li>
+            <strong>Prestataire de stockage</strong> : les vidéos de dashcam et les photos sont conservées dans un espace de
+            stockage privé (non accessible au public) chez un prestataire de stockage qui agit en tant que sous-traitant.
+        </li>
+    </ul>
+    <p>Nous ne vendons pas de données et ne les partageons pas à des fins marketing. Ce que nous publions est public et peut être utilisé par des chercheurs, des journalistes et des autorités de contrôle.</p>
+
+    <h2>Combien de temps conservons-nous les données ?</h2>
+    <ul>
+        <li><strong>Signalements, informations du véhicule et empreinte</strong> : aussi longtemps que le point de signalement existe, car les statistiques prennent toute leur valeur dans la durée. Sauf si vous nous demandez de les supprimer plus tôt.</li>
+        <li><strong>Vidéos de dashcam et photos</strong> : aussi longtemps que le signalement existe. Les vidéos et photos refusées ne sont jamais publiées et restent privées avec le signalement. Le fichier photo d’origine, avec ses métadonnées, est supprimé immédiatement après traitement.</li>
+        <li><strong>Résultats des recherches auprès du RDW</strong> : 24 heures maximum dans un cache technique, sans la plaque.</li>
+        <li><strong>Informations routières pour un point de la carte</strong> : 30 jours maximum dans un cache technique (point arrondi et informations routières, sans lien avec une personne ou une adresse IP).</li>
+        <li><strong>Adresse IP pour la prévention des abus</strong> : 2 heures maximum.</li>
+        <li><strong>Journaux du serveur web</strong> : 14 jours maximum.</li>
+    </ul>
+
+    <h2>Sécurité</h2>
+    <p>
+        Le site web fonctionne uniquement via une connexion chiffrée (HTTPS). Les vidéos de dashcam et les photos sont stockées
+        en dehors de la partie publique du site web et ne sont accessibles qu’après approbation. Les plaques ne sont conservées
+        que sous forme d’empreinte avec une clé secrète. Seuls les administrateurs ont accès aux systèmes.
+    </p>
+
+    <h2>Vos droits</h2>
+    <p>
+        Vous avez le droit d’accéder à vos données, de les rectifier, de les effacer et d’en limiter le traitement, ainsi que
+        de vous y opposer. Lorsque vous avez donné votre consentement, vous pouvez le retirer à tout moment.
+    </p>
+    <p>
+        <strong>Faire supprimer des vidéos et des photos</strong> : faites-en la demande sur la page de votre signalement en
+        saisissant la plaque. Si elle correspond, votre demande est transmise à un modérateur, qui supprime définitivement
+        toutes les vidéos et photos de ce signalement. Le signalement lui-même (sans plaque) est conservé.
+    </p>
+    <p>
+        Pour toute autre demande, écrivez-nous par e-mail en indiquant le lien vers votre signalement.
+    </p>
+    <p>
+        Comme il n’y a pas de comptes, nous ne pouvons pas savoir simplement à qui appartient un signalement. Nous vous
+        demanderons donc la plaque : nous calculons son empreinte, la comparons avec le signalement, puis oublions la plaque.
+        Nous répondons dans un délai d’un mois.
+    </p>
+    <p>
+        <strong>Vous apparaissez sur la vidéo de dashcam ou les photos de quelqu’un ?</strong> Contactez-nous. Nous
+        retirerons la vidéo ou vous rendrons méconnaissable.
+    </p>
+
+    <h2>Réclamations</h2>
+    <p>
+        Si vous n’êtes pas satisfait de la manière dont nous traitons vos données, dites-le-nous d’abord. Vous pouvez aussi
+        introduire une réclamation auprès de votre autorité de protection des données. Aux Pays-Bas, il s’agit de
+        l’<a href="https://autoriteitpersoonsgegevens.nl" rel="noopener">Autoriteit Persoonsgegevens</a>.
+    </p>
+
+    <h2>Aucune décision automatisée</h2>
+    <p>Nous ne prenons aucune décision concernant des personnes sur la base d’un traitement automatisé, et nous ne créons pas de profils.</p>
+
+    <h2>Modifications</h2>
+    <p>Nous pouvons mettre à jour cette politique. La date en haut de la page indique sa dernière modification.</p>
+{% endblock %}

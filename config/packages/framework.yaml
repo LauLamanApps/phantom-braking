@@ -1,0 +1,62 @@
+framework:
+    secret: '%env(APP_SECRET)%'
+    session: true
+
+    trusted_proxies: '%env(default::TRUSTED_PROXIES)%'
+    trusted_headers: ['x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-port']
+
+    http_client:
+        scoped_clients:
+            rdw.client:
+                base_uri: 'https://opendata.rdw.nl'
+                timeout: 5
+                headers:
+                    Accept: 'application/json'
+                    X-App-Token: '%env(RDW_APP_TOKEN)%'
+            nominatim.client:
+                base_uri: 'https://nominatim.openstreetmap.org'
+                timeout: 5
+                headers:
+                    Accept: 'application/json'
+                    # Required by the Nominatim usage policy: identify the application.
+                    User-Agent: 'SpookremmenMeldpunt/1.0 (+%env(DEFAULT_URI)%)'
+
+    rate_limiter:
+        vehicle_lookup:
+            policy: sliding_window
+            limit: 30
+            interval: '1 minute'
+        incident_report:
+            policy: sliding_window
+            limit: 5
+            interval: '1 hour'
+        road_lookup:
+            policy: sliding_window
+            limit: 30
+            interval: '1 minute'
+        media_withdrawal:
+            policy: sliding_window
+            limit: 5
+            interval: '15 minutes'
+        # Site-wide: Nominatim allows at most 1 request per second per application.
+        nominatim:
+            policy: token_bucket
+            limit: 1
+            rate: { interval: '1 second', amount: 1 }
+
+when@test:
+    framework:
+        test: true
+        session:
+            storage_factory_id: session.storage.factory.mock_file
+        rate_limiter:
+            incident_report:
+                policy: no_limit
+            vehicle_lookup:
+                policy: no_limit
+            road_lookup:
+                policy: no_limit
+            media_withdrawal:
+                policy: no_limit
+            nominatim:
+                policy: no_limit

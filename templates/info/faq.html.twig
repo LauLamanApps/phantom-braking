@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'faq.title'|trans }}{% endblock %}
+
+{% set links = {
+    privacy: path('legal', {page: 'privacy'}),
+    terms: path('legal', {page: 'terms'}),
+    report: path('incident_report'),
+    reports: path('incident_list'),
+    github: source_code_url,
+} %}
+
+{% block stylesheets %}
+    {# FAQPage structured data, so search engines can show the answers directly. #}
+    <script type="application/ld+json">
+        {{ {
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: groups|reduce((all, ids) => all|merge(ids), [])|map(id => {
+                '@type': 'Question',
+                name: ('faq.' ~ id ~ '.q')|trans,
+                acceptedAnswer: {'@type': 'Answer', text: ('faq.' ~ id ~ '.a')|trans(links)|striptags},
+            }),
+        }|json_encode(constant('JSON_UNESCAPED_UNICODE') b-or constant('JSON_UNESCAPED_SLASHES') b-or constant('JSON_HEX_TAG'))|raw }}
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="mx-auto max-w-3xl">
+        <h1 class="text-3xl font-bold tracking-tight">{{ 'faq.title'|trans }}</h1>
+        <p class="mt-2 text-stone-600 dark:text-stone-300">{{ 'faq.intro'|trans }}</p>
+
+        {% for group, ids in groups %}
+            <section class="mt-10">
+                <h2 class="mb-3 text-lg font-semibold">{{ ('faq.group.' ~ group)|trans }}</h2>
+                <div class="divide-y divide-stone-200 rounded-2xl border border-stone-200 bg-white dark:divide-stone-800 dark:border-stone-800 dark:bg-stone-900">
+                    {% for id in ids %}
+                        <details id="{{ id }}" class="faq-item group">
+                            <summary>
+                                {{ ('faq.' ~ id ~ '.q')|trans }}
+                                <svg class="h-4 w-4 shrink-0 transition-transform group-open:rotate-180" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5z"/></svg>
+                            </summary>
+                            <div class="legal px-5 pb-5">
+                                <p>{{ ('faq.' ~ id ~ '.a')|trans(links)|raw }}</p>
+                            </div>
+                        </details>
+                    {% endfor %}
+                </div>
+            </section>
+        {% endfor %}
+
+        <p class="mt-10 text-sm text-stone-500 [&_a]:underline">{{ 'faq.more'|trans({privacy: links.privacy})|raw }}</p>
+    </div>
+{% endblock %}

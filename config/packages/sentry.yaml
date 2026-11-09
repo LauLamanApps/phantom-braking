@@ -1,0 +1,24 @@
+# Error monitoring. Off unless SENTRY_DSN is set (empty in dev by default, never in tests).
+# Privacy: this is a reporting point for vehicles; plates and IPs must never reach Sentry.
+sentry:
+    dsn: '%env(SENTRY_DSN)%'
+    options:
+        environment: '%kernel.environment%'
+        release: 'phantom-braking@%env(APP_VERSION)%+%env(APP_BUILD)%'
+        # No IP address, cookies or user data.
+        send_default_pii: false
+        # Request bodies contain license plates (report form, plate lookup, deletion requests): never send them.
+        max_request_body_size: 'never'
+        # Safety net: scrub plates from messages, exceptions, URLs and breadcrumbs.
+        before_send: 'App\SharedKernel\Infrastructure\Monitoring\SentryBeforeSend'
+        before_breadcrumb: 'App\SharedKernel\Infrastructure\Monitoring\SentryBeforeBreadcrumb'
+        ignore_exceptions:
+            - Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+            - Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException
+            - Symfony\Component\Security\Core\Exception\AccessDeniedException
+    # Errors only: performance tracing would record outgoing request URLs (the RDW one contains the plate).
+    tracing:
+        enabled: false
+    messenger:
+        enabled: true
+        capture_soft_fails: false

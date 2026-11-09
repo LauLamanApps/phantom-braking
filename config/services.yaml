@@ -1,0 +1,62 @@
+# yaml-language-server: $schema=../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
+parameters:
+    # Route requirement for {_locale}; keep in sync with framework.enabled_locales.
+    app.locales: 'nl|en|de|fr'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    _instanceof:
+        App\SharedKernel\Domain\Messenger\Handler\CommandHandlerInterface:
+            tags: [{ name: messenger.message_handler, bus: command.bus }]
+        App\SharedKernel\Domain\Messenger\Handler\EventHandlerInterface:
+            tags: [{ name: messenger.message_handler, bus: event.bus }]
+        App\Vehicle\Domain\Service\CountryVehicleRegistryInterface:
+            tags: [app.country_vehicle_registry]
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/Kernel.php'
+            - '../src/**/Domain/Model'
+            - '../src/**/Domain/ValueObject'
+            - '../src/**/Domain/Command'
+            - '../src/**/Domain/Event'
+            - '../src/**/Domain/Exception'
+
+    # Must run before RequestAttributeValueResolver (priority 100), which would pass the raw string.
+    App\SharedKernel\Presentation\ValueResolver\IdValueResolver:
+        autoconfigure: false
+        tags: [{ name: controller.argument_value_resolver, priority: 150 }]
+
+    App\Incident\Presentation\Filter\IncidentFilterQueryValueResolver:
+        autoconfigure: false
+        tags: [{ name: controller.argument_value_resolver, priority: 150 }]
+
+    # Media storage: a private S3-compatible bucket (Sliplane in production, RustFS in dev).
+    # One S3 client per bucket: Sliplane issues credentials per bucket; the endpoint is shared.
+    app.media_s3_photo_client:
+        class: AsyncAws\S3\S3Client
+        arguments:
+            $configuration:
+                endpoint: '%env(MEDIA_S3_ENDPOINT)%'
+                region: '%env(MEDIA_S3_REGION)%'
+                accessKeyId: '%env(MEDIA_S3_PHOTO_ACCESS_KEY)%'
+                accessKeySecret: '%env(MEDIA_S3_PHOTO_SECRET_KEY)%'
+                pathStyleEndpoint: '%env(MEDIA_S3_PATH_STYLE)%'
+            $httpClient: '@http_client'
+
+    app.media_s3_video_client:
+        class: AsyncAws\S3\S3Client
+        arguments:
+            $configuration:
+                endpoint: '%env(MEDIA_S3_ENDPOINT)%'
+                region: '%env(MEDIA_S3_REGION)%'
+                accessKeyId: '%env(MEDIA_S3_VIDEO_ACCESS_KEY)%'
+                accessKeySecret: '%env(MEDIA_S3_VIDEO_SECRET_KEY)%'
+                pathStyleEndpoint: '%env(MEDIA_S3_PATH_STYLE)%'
+            $httpClient: '@http_client'
+
+    App\Incident\Domain\Service\MediaStorageInterface: '@App\Incident\Infrastructure\Service\S3MediaStorage'

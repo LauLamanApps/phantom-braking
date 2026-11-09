@@ -1,0 +1,100 @@
+services:
+
+  php:
+    build:
+      context: ../.docker/php
+      dockerfile: Dockerfile
+      target: dev
+      args:
+        USERID: ${USERID:-1000}
+        GROUPID: ${GROUPID:-1000}
+    container_name: ${COMPOSE_PROJECT_NAME}-php
+    working_dir: /app
+    volumes:
+      - ../:/app
+      - ../.docker/php/php-ini-overrides.ini:/usr/local/etc/php/conf.d/99-overrides.ini
+      - ~/.ssh:/home/user/.ssh:ro
+      - ~/.composer:/home/user/.composer:rw
+      - ~/.composer:/root/.composer:rw
+      # The Makefile runs PHP as www-data (home /var/www)
+      - ~/.ssh:/var/www/.ssh:ro
+      - ~/.composer:/var/www/.composer:rw
+    ports:
+      - '9000'
+
+  nginx:
+    image: nginx:alpine
+    container_name: ${COMPOSE_PROJECT_NAME}-nginx
+    working_dir: /app
+    depends_on:
+      - php
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${PROJECT_URL}`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.entrypoints=websecure"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.tls=true"
+      - "traefik.http.services.${COMPOSE_PROJECT_NAME}.loadbalancer.server.port=80"
+    volumes:
+      - ../:/app
+      - ../.docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+
+  postgres:
+    image: postgres:17-alpine
+    container_name: ${COMPOSE_PROJECT_NAME}-postgres
+    volumes:
+      - postgres-volume:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${DATABASE_NAME}
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+    ports:
+      - 5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER} -d ${DATABASE_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  tailwind:
+    build:
+      context: ../.docker/php
+      dockerfile: Dockerfile
+      target: dev
+      args:
+        USERID: ${USERID:-1000}
+        GROUPID: ${GROUPID:-1000}
+    container_name: ${COMPOSE_PROJECT_NAME}-tailwind
+    working_dir: /app
+    depends_on:
+      - php
+    volumes:
+      - ../:/app
+    command: sh -c "php bin/console tailwind:build --watch"
+    restart: unless-stopped
+
+  # S3-compatible object storage for development (stand-in for Sliplane Object Storage in production).
+  rustfs:
+    image: rustfs/rustfs:latest
+    container_name: ${COMPOSE_PROJECT_NAME}-rustfs
+    restart: unless-stopped
+    environment:
+      # Dev-only credentials, mirrored in .env.dev (RustFS refuses its defaults on non-loopback).
+      - RUSTFS_ACCESS_KEY=phantom-dev
+      - RUSTFS_SECRET_KEY=phantom-dev-secret
+    volumes:
+      - rustfs-volume:/data
+    ports:
+      - '9000'
+
+volumes:
+  postgres-volume:
+    external: false
+    name: ${COMPOSE_PROJECT_NAME}-postgres-data
+  rustfs-volume:
+    external: false
+    name: ${COMPOSE_PROJECT_NAME}-rustfs-data
+
+networks:
+  default:
+    name: phantom-braking
+    driver: bridge

@@ -1,0 +1,90 @@
+{% extends 'legal/_layout.html.twig' %}
+{% import 'legal/_layout.html.twig' as legal %}
+
+{% block title %}Nutzungsbedingungen{% endblock %}
+
+{% block content %}
+    <p>
+        Diese Bedingungen gelten für die Phantombremsungen-Meldestelle, betrieben von {{ legal.operator_field(operator.name, 'Name des Betreibers') }}.
+        Mit dem Absenden einer Meldung erklärst du dich mit ihnen einverstanden.
+    </p>
+
+    <h2>1. Was die Meldestelle ist</h2>
+    <p>
+        Eine unabhängige, kostenlose Meldestelle, bei der Fahrerinnen und Fahrer Phantombremsungen melden können. Meldungen werden
+        ohne Kennzeichen veröffentlicht und zu Statistiken zusammengefasst, um das Problem sichtbar und messbar zu machen. Wir sind
+        nicht mit Autoherstellern, Importeuren, Händlern oder Behörden verbunden.
+    </p>
+
+    <h2>2. Melden</h2>
+    <ul>
+        <li>Melde nur Vorfälle, die du selbst erlebt hast, als Fahrerin, Fahrer oder Mitfahrende des Fahrzeugs.</li>
+        <li>Fülle die Meldung wahrheitsgemäß aus. Absichtlich falsche Meldungen sind nicht erlaubt.</li>
+        <li>Schreibe keine personenbezogenen Daten (deine oder die anderer) in deine Beschreibung, und auch nichts Beleidigendes, Bedrohliches oder Rechtswidriges.</li>
+        <li>Nutze die Meldestelle niemals während der Fahrt.</li>
+    </ul>
+
+    <h2>3. Dashcam-Aufnahmen und Fotos</h2>
+    <ul>
+        <li>Lade nur Aufnahmen und Fotos hoch, die du selbst gemacht hast oder teilen darfst.</li>
+        <li>Fotografiere keine verletzten Personen, und mache keine Fotos während oder direkt nach einem Vorfall, wenn das die Sicherheit anderer gefährdet.</li>
+        <li>Mit dem Hochladen von Aufnahmen oder Fotos willigst du in deren Veröffentlichung ein. Da sie oft andere Verkehrsteilnehmende zeigen, geschieht das erst, nachdem eine Moderatorin oder ein Moderator sie geprüft hat.</li>
+        <li>Schwärze Kennzeichen auf deinen Fotos beim Hochladen. Eine Moderatorin oder ein Moderator prüft das; Aufnahmen mit lesbarem Kennzeichen werden nicht veröffentlicht.</li>
+        <li>Du kannst deine Einwilligung jederzeit widerrufen, indem du auf der Seite deiner Meldung mit dem Kennzeichen die Löschung beantragst. Eine Moderatorin oder ein Moderator löscht dann die Aufnahmen und Fotos.</li>
+        <li>Wir können Aufnahmen und Fotos ablehnen, nicht veröffentlichen oder entfernen, zum Beispiel wenn darauf erkennbare Personen zu sehen sind oder sie nichts mit Phantombremsungen zu tun haben.</li>
+    </ul>
+
+    <h2>4. Nutzung deiner Meldung</h2>
+    <p>
+        Du erlaubst uns unentgeltlich, deine Meldung (ohne Kennzeichen) zu speichern, auszuwerten und zu veröffentlichen sowie in
+        Statistiken aufzunehmen. Für Dashcam-Aufnahmen und Fotos gilt das nach Prüfung durch eine Moderatorin oder einen Moderator.
+        Wenn du deine Meldung löschen lässt, verschwindet sie auch aus den Statistiken. Was wir veröffentlichen, ist öffentlich, und
+        andere (etwa Forschende, Journalistinnen und Journalisten sowie Behörden) dürfen es mit Quellenangabe verwenden.
+    </p>
+
+    <h2>5. Moderation</h2>
+    <p>
+        Wir können Meldungen, Beschreibungen, Aufnahmen und Fotos ohne Angabe von Gründen ablehnen, kürzen oder entfernen. Zum Beispiel
+        bei Spam, Missbrauch, falschen oder rechtswidrigen Inhalten oder um die Privatsphäre anderer zu schützen.
+    </p>
+
+    <h2>6. Was die Daten aussagen und was nicht</h2>
+    <ul>
+        <li>
+            Meldungen sind <strong>Erfahrungen von Fahrerinnen und Fahrern</strong>. Wir überprüfen ihren Inhalt nicht.
+            Eine Meldung ist kein technischer Beweis dafür, dass ein Fahrzeug defekt ist.
+        </li>
+        <li>
+            Die Statistiken sind nicht repräsentativ für alle Fahrzeuge. Eine Marke oder ein Modell mit vielen Meldungen ist vielleicht
+            einfach weit verbreitet oder hat eine engagierte Gruppe von Haltern.
+        </li>
+        <li>Fahrzeugdaten stammen vom RDW und werden so verwendet, wie der RDW sie bereitstellt.</li>
+        <li>
+            Die Meldestelle ersetzt keine offiziellen Meldungen. Melde ein gefährliches Fahrzeug bitte auch der niederländischen
+            <a href="https://www.ilent.nl" rel="noopener">ILT</a> und deinem Händler. Bei einem Unfall mit Verletzten rufe immer die 112 an.
+        </li>
+        <li>Marken- und Modellnamen werden nur zur Bezeichnung von Fahrzeugen verwendet und gehören ihren jeweiligen Inhabern.</li>
+    </ul>
+
+    <h2>7. Haftung und Verfügbarkeit</h2>
+    <p>
+        Wir tun unser Bestes, damit die Meldestelle verfügbar und korrekt ist, geben aber keine Garantien. Soweit gesetzlich zulässig,
+        haften wir nicht für Schäden, die aus der Nutzung der Meldestelle oder aus Entscheidungen auf Grundlage der veröffentlichten
+        Daten entstehen. Du bist für die Inhalte verantwortlich, die du einreichst.
+    </p>
+
+    <h2>8. Datenschutz</h2>
+    <p>Wie wir mit personenbezogenen Daten umgehen, steht in unserer <a href="{{ path('legal', {page: 'privacy'}) }}">Datenschutzerklärung</a>.</p>
+
+    <h2>9. Änderungen und anwendbares Recht</h2>
+    <p>
+        Wir können diese Bedingungen aktualisieren. Das Datum oben zeigt, wann sie zuletzt geändert wurden.
+        Für diese Bedingungen gilt niederländisches Recht.
+    </p>
+
+    <h2>10. Kontakt</h2>
+    <p>
+        Fragen, oder möchtest du einen Inhalt auf der Meldestelle melden? Schreib eine E-Mail an
+        {% if operator.email %}<a href="mailto:{{ operator.email }}">{{ operator.email }}</a>{% else %}{{ legal.operator_field(null, 'E-Mail-Adresse') }}{% endif %}.
+    </p>
+{% endblock %}

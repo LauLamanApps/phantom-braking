@@ -1,0 +1,145 @@
+{% extends 'base.html.twig' %}
+{% import 'partials/_stats.html.twig' as s %}
+
+{% block title %}{{ 'home.title'|trans }}{% endblock %}
+
+{% block body %}
+    <section class="mb-10 grid items-center gap-8 md:grid-cols-5">
+        <div class="md:col-span-3">
+            {% set scope_country = filter_bar.scopeCountry %}
+            <p class="text-sm font-semibold uppercase tracking-wider text-brand-600">
+                {{ scope_country ? 'home.eyebrow.country'|trans({country: scope_country|country_name}) : 'home.eyebrow.all'|trans }}
+            </p>
+            <h1 class="mt-2 text-4xl font-bold tracking-tight md:text-5xl">{{ 'home.headline'|trans }}</h1>
+            <p class="mt-4 max-w-2xl text-lg text-stone-600 dark:text-stone-300">{{ 'home.intro'|trans }}</p>
+            <div class="mt-6 flex flex-wrap gap-3">
+                <a href="{{ path('incident_report') }}" class="btn-primary text-base">{{ 'home.cta'|trans }}</a>
+                <a href="{{ path('incident_list') }}" class="btn-secondary">{{ 'home.browse'|trans }}</a>
+            </div>
+        </div>
+        <aside class="card md:col-span-2">
+            <h2 class="font-semibold">{{ 'home.why.title'|trans }}</h2>
+            <ul class="mt-3 space-y-2 text-sm text-stone-600 dark:text-stone-300">
+                <li>• {{ 'home.why.1'|trans }}</li>
+                <li>• {{ 'home.why.2'|trans }}</li>
+                <li>• {{ 'home.why.3'|trans }}</li>
+            </ul>
+        </aside>
+    </section>
+
+    {{ include('partials/_filter_bar.html.twig', {bar: filter_bar, switch_route: 'incident_list'}) }}
+
+    {% if totals.reports == 0 and filter_bar.query.active %}
+        <div class="card py-16 text-center">
+            <p class="text-lg font-semibold">{{ 'home.empty_filtered.title'|trans }}</p>
+            <a href="{{ path('home') }}" class="btn-secondary mt-6">{{ 'filter.reset'|trans }}</a>
+        </div>
+    {% elseif totals.reports == 0 %}
+        <div class="card py-16 text-center">
+            <p class="text-lg font-semibold">{{ 'home.empty.title'|trans }}</p>
+            <p class="mt-2 text-stone-500">{{ 'home.empty.text'|trans }}</p>
+            <a href="{{ path('incident_report') }}" class="btn-primary mt-6">{{ 'home.cta'|trans }}</a>
+        </div>
+    {% else %}
+        <h2 class="sr-only">{{ 'home.kpis'|trans }}</h2>
+        <section class="grid grid-cols-2 gap-4 md:grid-cols-4">
+            {{ s.tile(totals.reports|format_number, 'kpi.reports'|trans, 'kpi.reports.hint'|trans({vehicles: totals.vehicles, makes: totals.makes})) }}
+            {{ s.tile(s.pct(totals.share(totals.endangeredFollower)), 'kpi.endangered'|trans, 'kpi.endangered.hint'|trans({collisions: totals.collisions})) }}
+            {{ s.tile(totals.averageSpeedBefore is null ? '–' : totals.averageSpeedBefore|format_number({fraction_digit: 0}) ~ ' km/h', 'kpi.speed'|trans, totals.averageSpeedDrop is null ? null : 'kpi.speed.hint'|trans({drop: totals.averageSpeedDrop|format_number({fraction_digit: 0})})) }}
+            {{ s.tile(s.pct(totals.share(totals.onMotorway)), 'kpi.motorway'|trans, 'kpi.motorway.hint'|trans({pct: s.pct(totals.share(totals.atInfrastructure))})) }}
+            {{ s.tile(s.pct(totals.share(totals.recurring)), 'kpi.recurring'|trans, 'kpi.recurring.hint'|trans({repeat: totals.repeatVehicles})) }}
+            {{ s.tile(s.pct(totals.share(totals.emergencyStops)), 'kpi.emergency'|trans) }}
+            {{ s.tile(s.pct(totals.share(totals.dealerDismissive, totals.dealerContacted)), 'kpi.dismissed'|trans, 'kpi.dismissed.hint'|trans({contacted: totals.dealerContacted})) }}
+            {{ s.tile(s.pct(totals.share(totals.reportedToAuthority)), 'kpi.authority'|trans, 'kpi.authority.hint'|trans) }}
+        </section>
+
+        <section class="mt-8">
+            {{ s.chart_card('chart.trend'|trans, charts.trend, stats.byMonth, null, 'chart.trend.sub'|trans) }}
+        </section>
+
+        <h2 class="mt-12 text-2xl font-bold tracking-tight">{{ 'section.where'|trans }}</h2>
+        <p class="mt-1 text-stone-600 dark:text-stone-400">{{ 'section.where.sub'|trans }}</p>
+        <div class="mt-4 grid gap-4 lg:grid-cols-2">
+            <section class="card lg:row-span-2">
+                <h3 class="font-semibold">{{ 'chart.map'|trans }}</h3>
+                <div class="mt-4 h-[28rem] overflow-hidden rounded-xl"
+                     data-controller="incident-map"
+                     data-incident-map-url-value="{{ path('incident_map_points', filter_bar.query.toQuery) }}"
+                     data-incident-map-centre-value="{{ filter_bar.map.centre|json_encode }}" data-incident-map-zoom-value="{{ filter_bar.map.zoom }}"
+                     data-incident-map-show-url-value="{{ path('incident_show', {id: '__ID__'}) }}"
+                     data-incident-map-messages-value="{{ {open: 'map.open'|trans, wheel_hint: 'map.wheel_hint'|trans}|json_encode }}"></div>
+                <p class="mt-3 flex flex-wrap gap-4 text-xs text-stone-500">
+                    <span class="flex items-center gap-1.5"><span class="h-3 w-3 rounded-full" style="background: var(--series-1)"></span>{{ 'map.legend.incident'|trans }}</span>
+                    <span class="flex items-center gap-1.5"><span class="h-3 w-3 rounded-full" style="background: var(--status-critical)"></span>⚠ {{ 'map.legend.collision'|trans }}</span>
+                </p>
+            </section>
+            {{ s.chart_card('chart.situation'|trans, charts.situation, stats.dimension('road_situation'), 'enum.road_situation.', 'chart.situation.sub'|trans, true) }}
+            {{ s.chart_card('chart.road_type'|trans, charts.roadType, stats.dimension('road_type'), 'enum.road_type.') }}
+        </div>
+        {% if stats.topRoads|length > 0 %}
+            <section class="card mt-4">
+                <h3 class="font-semibold">{{ 'chart.roads'|trans }}</h3>
+                <div class="mt-3 flex flex-wrap gap-2">
+                    {% set mixed_countries = stats.topRoads|map(r => r.country)|reduce((carry, c) => c in carry ? carry : carry|merge([c]), [])|length > 1 %}
+                    {% for r in stats.topRoads %}
+                        <span class="inline-flex items-center gap-2 rounded-lg border border-stone-200 px-3 py-1.5 text-sm dark:border-stone-700"
+                              data-road="{{ r.country }}-{{ r.road }}"
+                              title="{{ r.road }} · {{ r.country|country_name }}">
+                            {% if mixed_countries %}<span class="text-xs font-semibold text-stone-500">{{ r.country }}</span>{% endif %}
+                            <span class="rounded px-1.5 font-bold {{ road_sign_class(r.country, r.road) }}">{{ r.road }}</span>
+                            <span class="tabular-nums">{{ r.reports }}</span>
+                        </span>
+                    {% endfor %}
+                </div>
+            </section>
+        {% endif %}
+
+        <h2 class="mt-12 text-2xl font-bold tracking-tight">{{ 'section.vehicles'|trans }}</h2>
+        <p class="mt-1 text-stone-600 dark:text-stone-400">{{ 'section.vehicles.sub'|trans }}</p>
+        <div class="mt-4 grid gap-4 lg:grid-cols-2">
+            {{ s.chart_card('chart.make'|trans, charts.make, stats.byMake, null, null, true) }}
+            <section class="card overflow-x-auto">
+                <h3 class="font-semibold">{{ 'chart.models'|trans }}</h3>
+                <table class="mt-3 w-full text-sm">
+                    <thead class="text-left text-stone-500">
+                        <tr><th class="py-1.5 font-medium">{{ 'table.vehicle'|trans }}</th><th class="py-1.5 text-right font-medium">{{ 'table.reports'|trans }}</th><th class="py-1.5 text-right font-medium">{{ 'table.vehicles'|trans }}</th></tr>
+                    </thead>
+                    <tbody>
+                    {% for m in stats.topModels %}
+                        <tr class="border-t border-stone-100 dark:border-stone-800">
+                            <td class="py-1.5"><a class="hover:underline" href="{{ path('incident_list', filter_bar.query.toQuery|merge({make: m.make, model: m.model})) }}">{{ m.make }} <span class="text-stone-500">{{ m.model }}</span></a></td>
+                            <td class="py-1.5 text-right tabular-nums">{{ m.reports }}</td>
+                            <td class="py-1.5 text-right tabular-nums">{{ m.vehicles }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+            {{ s.chart_card('chart.year'|trans, charts.year, stats.byFirstAdmissionYear, null, 'chart.year.sub'|trans) }}
+            {{ s.chart_card('chart.assist'|trans, charts.assist, stats.dimension('assist'), 'enum.assist.', 'chart.assist.sub'|trans) }}
+        </div>
+
+        <h2 class="mt-12 text-2xl font-bold tracking-tight">{{ 'section.circumstances'|trans }}</h2>
+        <p class="mt-1 text-stone-600 dark:text-stone-400">{{ 'section.circumstances.sub'|trans }}</p>
+        <div class="mt-4 grid gap-4 lg:grid-cols-2">
+            {{ s.chart_card('chart.trigger'|trans, charts.trigger, stats.dimension('trigger'), 'enum.trigger.', 'chart.trigger.sub'|trans, true) }}
+            {{ s.chart_card('chart.light'|trans, charts.light, stats.dimension('light'), 'enum.light.') }}
+            {{ s.chart_card('chart.weather'|trans, charts.weather, stats.dimension('weather'), 'enum.weather.') }}
+            {{ s.chart_card('chart.hour'|trans, charts.hour, stats.byHour, null) }}
+            {{ s.chart_card('chart.speed'|trans, charts.speed, stats.bySpeed, null, 'chart.speed.sub'|trans) }}
+        </div>
+
+        <h2 class="mt-12 text-2xl font-bold tracking-tight">{{ 'section.impact'|trans }}</h2>
+        <p class="mt-1 text-stone-600 dark:text-stone-400">{{ 'section.impact.sub'|trans }}</p>
+        <div class="mt-4 grid gap-4 lg:grid-cols-2">
+            {{ s.chart_card('chart.severity'|trans, charts.severity, stats.dimension('severity'), 'enum.severity.') }}
+            {{ s.chart_card('chart.consequence'|trans, charts.consequence, stats.dimension('consequence'), 'enum.consequence.') }}
+            {{ s.chart_card('chart.dealer'|trans, charts.dealer, stats.dimension('dealer'), 'enum.dealer.', 'chart.dealer.sub'|trans) }}
+        </div>
+    {% endif %}
+
+    <section class="card mt-12 text-sm text-stone-600 dark:text-stone-300">
+        <h2 class="text-base font-semibold text-stone-900 dark:text-stone-100">{{ 'method.title'|trans }}</h2>
+        <p class="mt-2">{{ 'method.text'|trans }}</p>
+    </section>
+{% endblock %}

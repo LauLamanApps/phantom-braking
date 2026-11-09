@@ -1,0 +1,187 @@
+{% extends 'legal/_layout.html.twig' %}
+{% import 'legal/_layout.html.twig' as legal %}
+
+{% block title %}Privacyverklaring{% endblock %}
+
+{% block content %}
+    <p>
+        Het Spookremmen Meldpunt verzamelt meldingen van <em>phantom braking</em>: een auto die onverwacht remt
+        zonder dat er een obstakel is. We gaan zuinig om met je gegevens. In deze verklaring lees je welke gegevens
+        we verwerken, waarom, hoe lang, en welke rechten je hebt.
+    </p>
+
+    <h2>In het kort</h2>
+    <ul>
+        <li>Je hebt <strong>geen account</strong> nodig en we vragen niet om je naam of e-mailadres.</li>
+        <li>We slaan je <strong>kenteken niet op</strong>. We gebruiken het alleen om bij de RDW merk, model en bouwjaar op te halen, en bewaren daarna een onomkeerbare vingerafdruk.</li>
+        <li>Meldingen worden <strong>zonder kenteken</strong> openbaar gepubliceerd en gebruikt voor statistieken.</li>
+        <li>Dashcambeelden en foto's blijven privé tot wij ze hebben gecontroleerd. Door ze te uploaden geef je toestemming om ze daarna te publiceren; die toestemming kun je altijd intrekken.</li>
+        <li>Uit foto's verwijderen we alle metagegevens, zoals de GPS-locatie en het toestel, en kentekens op foto's maken we zwart voordat ze openbaar worden.</li>
+        <li>Geen tracking, geen advertenties, geen analytics, geen verkoop van gegevens.</li>
+    </ul>
+
+    <h2>Wie is verantwoordelijk?</h2>
+    <p>
+        Verwerkingsverantwoordelijke is {{ legal.operator_field(operator.name, 'naam beheerder') }}{% if operator.address %}, {{ operator.address }}{% endif %}.
+        Je bereikt ons via {% if operator.email %}<a href="mailto:{{ operator.email }}">{{ operator.email }}</a>{% else %}{{ legal.operator_field(null, 'e-mailadres') }}{% endif %}.
+    </p>
+
+    <h2>Welke gegevens, waarvoor en op welke grondslag</h2>
+    <table>
+        <thead><tr><th>Gegevens</th><th>Doel</th><th>Grondslag (AVG art. 6)</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><strong>Kenteken</strong></td>
+                <td>
+                    Bij de RDW de voertuiggegevens opvragen, zowel tijdens het typen (controle of het juiste voertuig is gevonden) als bij het versturen.
+                    We slaan het kenteken niet op: we bewaren alleen een vingerafdruk (HMAC-SHA256 met een geheime sleutel),
+                    zodat we kunnen tellen hoeveel verschillende voertuigen er gemeld zijn en of een voertuig vaker voorkomt.
+                    Het kenteken staat ook niet in de URL, dus niet in logbestanden van de webserver.
+                </td>
+                <td>Toestemming (bij het versturen); gerechtvaardigd belang (de opzoeking tijdens het typen)</td>
+            </tr>
+            <tr>
+                <td><strong>Voertuiggegevens</strong> van de RDW</td>
+                <td>Merk, model, datum eerste toelating, brandstof, typegoedkeuring en dergelijke, voor de melding en de statistieken.</td>
+                <td>Toestemming</td>
+            </tr>
+            <tr>
+                <td><strong>Gegevens over het incident</strong></td>
+                <td>
+                    Datum en tijd, locatie (afgerond op circa 10 meter), wegnummer, omstandigheden, snelheden, gevolgen,
+                    reactie van de dealer, kilometerstand, softwareversie en je toelichting. Dit vormt de melding en de statistieken.
+                </td>
+                <td>Toestemming</td>
+            </tr>
+            <tr>
+                <td><strong>Dashcambeelden</strong> (optioneel)</td>
+                <td>
+                    Bewijs dat er geen obstakel was. Beelden worden privé opgeslagen, buiten het bereik van de website.
+                    Door ze te uploaden geef je toestemming om ze te publiceren nadat een beheerder ze heeft gecontroleerd.
+                    Dat staat bij het uploadveld; je kunt de toestemming altijd intrekken.
+                </td>
+                <td>Toestemming (publicatie); gerechtvaardigd belang (privé bewaren voor onderzoek naar phantom braking)</td>
+            </tr>
+            <tr>
+                <td><strong>Foto's van de nasleep</strong> (optioneel)</td>
+                <td>
+                    De gevolgen laten zien, zoals schade of de situatie op de weg. We maken van elke foto direct een nieuw
+                    bestand zonder metagegevens. GPS-locatie, toestel, tijdstip en andere EXIF-gegevens verdwijnen daarbij,
+                    en het originele bestand bewaren we niet. Foto's worden privé opgeslagen en net als dashcambeelden
+                    pas na controle gepubliceerd; door ze te uploaden geef je daar toestemming voor. Kentekens maak je bij
+                    het uploaden zelf zwart; een beheerder controleert dat en vult het aan. Alleen die gemaskeerde kopie
+                    wordt gepubliceerd. Dashcambeelden publiceren we alleen als er geen kenteken leesbaar is.
+                </td>
+                <td>Toestemming (publicatie); gerechtvaardigd belang (privé bewaren voor onderzoek naar phantom braking)</td>
+            </tr>
+            <tr>
+                <td><strong>IP-adres</strong></td>
+                <td>Misbruik voorkomen (maximaal aantal opzoekingen en meldingen per tijdseenheid) en de website beveiligen (logbestanden van de webserver).</td>
+                <td>Gerechtvaardigd belang</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>
+        <strong>Let op met je toelichting:</strong> zet er geen namen, telefoonnummers of andere persoonsgegevens in,
+        ook niet van anderen. Beheerders kunnen zulke informatie verwijderen.
+    </p>
+    <p>
+        Een melding zonder kenteken is in de regel niet tot jou te herleiden. In zeldzame gevallen kan de combinatie
+        van datum, tijd, plaats en automodel iemand die je kent toch iets vertellen. Daarom ronden we de locatie af en
+        tonen we nooit het kenteken. Wil je zekerheid, vul de locatie dan minder precies in.
+    </p>
+
+    <h2>Wat publiceren we?</h2>
+    <p>
+        Elke melding krijgt een openbare pagina met de voertuig- en incidentgegevens, zonder kenteken.
+        Dashcambeelden en foto's staan daar pas nadat een beheerder ze heeft goedgekeurd.
+        Op de homepage tonen we geaggregeerde statistieken en een kaart met de afgeronde locaties.
+    </p>
+
+    <h2>Met wie delen we gegevens?</h2>
+    <ul>
+        <li>
+            <strong>RDW</strong> (Rijksdienst voor het Wegverkeer): onze server vraagt met het kenteken de openbare
+            voertuiggegevens op via <a href="https://opendata.rdw.nl" rel="noopener">RDW Open Data</a>.
+            De RDW ziet daarbij ons serveradres, niet het jouwe.
+        </li>
+        <li>
+            <strong>OpenStreetMap</strong>: de kaarten worden door je browser rechtstreeks geladen van de servers van
+            de OpenStreetMap Foundation, die daardoor je IP-adres ontvangt. Zie het
+            <a href="https://osmfoundation.org/wiki/Privacy_Policy" rel="noopener">privacybeleid van de OSMF</a>.
+            De OSMF is gevestigd in het Verenigd Koninkrijk.
+        </li>
+        <li>
+            <strong>OpenStreetMap Nominatim</strong>: klik je op de kaart, dan stuurt onze server de coördinaten van
+            dat punt naar de Nominatim-dienst van de OSMF om de weg op te zoeken (land, wegnummer, type weg,
+            maximumsnelheid). Nominatim ontvangt daarbij alleen het punt en ons serveradres, niet jouw IP-adres.
+            Zie het <a href="https://osmfoundation.org/wiki/Privacy_Policy" rel="noopener">privacybeleid van de OSMF</a>.
+        </li>
+        <li>
+            <strong>Hostingpartij</strong>: de website en de database draaien bij een hostingpartij die als verwerker
+            voor ons optreedt.
+        </li>
+        <li>
+            <strong>Foutmonitoring (Sentry)</strong>: gaat er op de server iets mis, dan sturen we technische
+            foutgegevens naar Sentry om het probleem op te lossen. Daar zitten geen IP-adressen, cookies, kentekens
+            of ingevulde formuliergegevens in.
+        </li>
+        <li>
+            <strong>Opslagdienst</strong>: dashcambeelden en foto's staan in een afgeschermde opslag (niet openbaar
+            toegankelijk) bij een opslagdienst die als verwerker voor ons optreedt.
+        </li>
+    </ul>
+    <p>We verkopen geen gegevens en delen ze niet voor marketing. Wat we publiceren is openbaar en mag door onderzoekers, journalisten en toezichthouders worden gebruikt.</p>
+
+    <h2>Hoe lang bewaren we gegevens?</h2>
+    <ul>
+        <li><strong>Meldingen, voertuiggegevens en vingerafdruk</strong>: zolang het meldpunt bestaat, omdat de statistieken juist over langere tijd waardevol zijn. Tenzij je eerder om verwijdering vraagt.</li>
+        <li><strong>Dashcambeelden en foto's</strong>: zolang de melding bestaat. Afgekeurde beelden en foto's worden niet gepubliceerd en blijven privé bij de melding. Het originele fotobestand, met metagegevens, wordt direct na verwerking verwijderd.</li>
+        <li><strong>Opzoekgegevens van de RDW</strong>: maximaal 24 uur in een technische cache, zonder kenteken.</li>
+        <li><strong>Weggegevens bij een kaartpunt</strong>: maximaal 30 dagen in een technische cache (afgerond punt en weggegevens, niet gekoppeld aan een persoon of IP-adres).</li>
+        <li><strong>IP-adres voor misbruikpreventie</strong>: maximaal 2 uur.</li>
+        <li><strong>Logbestanden van de webserver</strong>: maximaal 14 dagen.</li>
+    </ul>
+
+    <h2>Beveiliging</h2>
+    <p>
+        De website werkt alleen via een versleutelde verbinding (HTTPS). Dashcambeelden en foto's staan buiten het openbare deel
+        van de website en zijn alleen bereikbaar na goedkeuring. Kentekens worden alleen als vingerafdruk met een
+        geheime sleutel bewaard. Alleen beheerders hebben toegang tot de systemen.
+    </p>
+
+    <h2>Jouw rechten</h2>
+    <p>
+        Je hebt recht op inzage, correctie, verwijdering en beperking van je gegevens, en je kunt bezwaar maken.
+        Heb je toestemming gegeven, dan kun je die altijd intrekken.
+    </p>
+    <p>
+        <strong>Beelden en foto's laten verwijderen</strong> vraag je aan op de pagina van je melding: vul het kenteken in.
+        Klopt het, dan gaat je verzoek naar een beheerder, die alle beelden en foto's van die melding definitief
+        verwijdert. De melding zelf (zonder kenteken) blijft bestaan.
+    </p>
+    <p>
+        Voor andere verzoeken stuur je een e-mail met de link naar je melding.
+    </p>
+    <p>
+        Omdat er geen accounts zijn, kunnen we niet zomaar zien welke melding van wie is. We vragen je daarom om het
+        kenteken: wij berekenen er de vingerafdruk van en vergelijken die met de melding. Daarna vergeten we het kenteken weer.
+        We reageren binnen een maand.
+    </p>
+    <p>
+        <strong>Sta je zelf op iemands dashcambeelden of foto's?</strong> Neem contact met ons op. Dan halen we de beelden offline
+        of maken we je onherkenbaar.
+    </p>
+
+    <h2>Klacht</h2>
+    <p>
+        Ben je niet tevreden over hoe we met je gegevens omgaan, laat het ons dan eerst weten. Je kunt ook een klacht
+        indienen bij de <a href="https://autoriteitpersoonsgegevens.nl" rel="noopener">Autoriteit Persoonsgegevens</a>.
+    </p>
+
+    <h2>Geen geautomatiseerde besluiten</h2>
+    <p>We nemen geen besluiten over personen op basis van geautomatiseerde verwerking en maken geen profielen.</p>
+
+    <h2>Wijzigingen</h2>
+    <p>We kunnen deze verklaring aanpassen. De datum bovenaan laat zien wanneer dat voor het laatst gebeurde.</p>
+{% endblock %}

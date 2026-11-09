@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'about.title'|trans }}{% endblock %}
+
+{% block body %}
+    <article class="legal mx-auto max-w-3xl">
+        <header class="flex flex-col gap-6 sm:flex-row sm:items-center">
+            {{ include('partials/_logo.html.twig', {class: 'h-32 w-32'}) }}
+            <div>
+                <h1 class="!mt-0">{{ 'about.title'|trans }}</h1>
+                <p class="!mb-0 mt-2 text-lg">{{ 'site.description'|trans }}</p>
+            </div>
+        </header>
+
+        <h2>{{ 'about.mission.title'|trans }}</h2>
+        <p>{{ 'about.mission'|trans }}</p>
+
+        <h2>{{ 'about.privacy.title'|trans }}</h2>
+        <p>{{ 'about.privacy'|trans }}</p>
+        <p><a href="{{ path('legal', {page: 'privacy'}) }}">{{ 'legal.privacy'|trans }} →</a></p>
+
+        <h2>{{ 'about.sources.title'|trans }}</h2>
+        <p>{{ 'about.sources'|trans|raw }}</p>
+
+        <h2>{{ 'about.open_source.title'|trans }}</h2>
+        <p>{{ 'about.open_source'|trans({github: source_code_url})|raw }}</p>
+
+        <p class="mt-8"><a href="{{ path('faq') }}">{{ 'faq.title'|trans }} →</a></p>
+    </article>
+{% endblock %}

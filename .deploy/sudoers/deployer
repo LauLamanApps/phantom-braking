@@ -1,0 +1,2 @@
+# The deploy user may only reload PHP-FPM (OPcache) and restart the worker.
+deployer ALL=(root) NOPASSWD: /usr/bin/systemctl reload php8.5-fpm, /usr/bin/supervisorctl restart phantom-braking-messenger\:

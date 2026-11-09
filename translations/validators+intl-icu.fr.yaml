@@ -1,0 +1,9 @@
+report.plate.invalid: Cette plaque ne semble pas valide.
+report.occurred_at.future: L’incident ne peut pas être dans le futur.
+report.road_number.invalid: Utilisez un numéro de route tel que A15 ou N325.
+report.speed_after.higher: La vitesse la plus basse ne peut pas être supérieure à la vitesse avant le freinage.
+report.location.incomplete: Le lieu est incomplet. Cliquez à nouveau sur la carte.
+report.footage.type: Veuillez envoyer un fichier vidéo (MP4, MOV, WebM, AVI ou MKV).
+report.consent.required: Vous devez donner votre accord pour envoyer le signalement.
+report.photos.type: "Veuillez envoyer uniquement des photos (JPEG, PNG ou WebP)."
+report.photos.masks_invalid: "Un ou plusieurs masques de photo ne sont pas valides."

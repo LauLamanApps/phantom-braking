@@ -1,0 +1,9 @@
+report.plate.invalid: Dit lijkt geen geldig kenteken.
+report.occurred_at.future: Het incident kan niet in de toekomst liggen.
+report.road_number.invalid: Gebruik een wegnummer zoals A15 of N325.
+report.speed_after.higher: De laagste snelheid kan niet hoger zijn dan de snelheid vóór het remmen.
+report.location.incomplete: De locatie is onvolledig. Klik opnieuw op de kaart.
+report.footage.type: Upload een videobestand (MP4, MOV, WebM, AVI of MKV).
+report.consent.required: Je moet akkoord gaan om de melding te versturen.
+report.photos.type: "Upload alleen foto's (JPEG, PNG of WebP)."
+report.photos.masks_invalid: "Een of meer maskeringen op de foto's zijn ongeldig."

@@ -1,0 +1,91 @@
+{% extends 'legal/_layout.html.twig' %}
+{% import 'legal/_layout.html.twig' as legal %}
+
+{% block title %}Gebruiksvoorwaarden{% endblock %}
+
+{% block content %}
+    <p>
+        Deze voorwaarden gelden voor het gebruik van het Spookremmen Meldpunt, beheerd door
+        {{ legal.operator_field(operator.name, 'naam beheerder') }}. Door een melding te versturen ga je ermee akkoord.
+    </p>
+
+    <h2>1. Wat het meldpunt is</h2>
+    <p>
+        Een onafhankelijk, gratis meldpunt waar bestuurders incidenten met phantom braking kunnen melden. De meldingen
+        worden zonder kenteken gepubliceerd en samengevoegd tot statistieken, om het probleem zichtbaar en meetbaar te maken.
+        We zijn niet verbonden aan autofabrikanten, importeurs, dealers of overheden.
+    </p>
+
+    <h2>2. Melden</h2>
+    <ul>
+        <li>Meld alleen incidenten die je zelf hebt meegemaakt, als bestuurder of inzittende van het voertuig.</li>
+        <li>Vul de melding naar waarheid in. Een opzettelijk onjuiste melding is niet toegestaan.</li>
+        <li>Zet in je toelichting geen persoonsgegevens van jezelf of anderen, en niets wat beledigend, bedreigend of onrechtmatig is.</li>
+        <li>Gebruik het meldpunt nooit tijdens het rijden.</li>
+    </ul>
+
+    <h2>3. Dashcambeelden en foto's</h2>
+    <ul>
+        <li>Upload alleen beelden en foto's die je zelf hebt gemaakt, of die je mag delen.</li>
+        <li>Fotografeer geen gewonden en maak tijdens of direct na een incident geen foto's als dat de veiligheid in gevaar brengt.</li>
+        <li>Door beelden of foto's te uploaden geef je toestemming om ze te publiceren. Omdat er vaak andere weggebruikers op staan, gebeurt dat pas nadat een beheerder ze heeft gecontroleerd.</li>
+        <li>Maak kentekens op je foto's zwart bij het uploaden. Een beheerder controleert dat; dashcambeelden met een leesbaar kenteken publiceren we niet.</li>
+        <li>Je kunt je toestemming altijd intrekken door op de pagina van je melding, met het kenteken, verwijdering aan te vragen. Een beheerder verwijdert de beelden en foto's dan.</li>
+        <li>We mogen beelden en foto's weigeren, niet publiceren of verwijderen, bijvoorbeeld als ze herkenbare personen tonen of niets met phantom braking te maken hebben.</li>
+    </ul>
+
+    <h2>4. Gebruik van je melding</h2>
+    <p>
+        Je geeft ons kosteloos toestemming om je melding (zonder kenteken) op te slaan, te analyseren, te publiceren en
+        te verwerken in statistieken. Voor dashcambeelden en foto's geldt dat na controle door een beheerder.
+        Laat je je melding verwijderen, dan verdwijnt die ook uit de statistieken.
+        Wat we publiceren is openbaar en mag door anderen, zoals onderzoekers, journalisten en toezichthouders,
+        worden gebruikt met bronvermelding.
+    </p>
+
+    <h2>5. Moderatie</h2>
+    <p>
+        We mogen meldingen, toelichtingen, beelden en foto's zonder opgaaf van reden weigeren, inkorten of verwijderen.
+        Bijvoorbeeld bij spam, misbruik, onjuiste of onrechtmatige inhoud, of om de privacy van anderen te beschermen.
+    </p>
+
+    <h2>6. Wat de gegevens wel en niet zeggen</h2>
+    <ul>
+        <li>
+            Meldingen zijn <strong>ervaringen van bestuurders</strong>. We controleren ze niet inhoudelijk.
+            Een melding is geen technisch bewijs dat een voertuig een gebrek heeft.
+        </li>
+        <li>
+            Statistieken zijn niet representatief voor alle voertuigen. Een merk of model met veel meldingen kan ook
+            simpelweg veel rijden, of een betrokken groep eigenaren hebben.
+        </li>
+        <li>Voertuiggegevens komen van de RDW en worden overgenomen zoals de RDW ze levert.</li>
+        <li>
+            Het meldpunt vervangt geen officiële meldingen. Meld een gevaarlijk voertuig ook bij de
+            <a href="https://www.ilent.nl" rel="noopener">ILT</a> en bij je dealer. Bel bij een ongeval met gewonden altijd 112.
+        </li>
+        <li>Merknamen en modelnamen worden alleen gebruikt om voertuigen aan te duiden. Ze zijn eigendom van hun rechthebbenden.</li>
+    </ul>
+
+    <h2>7. Aansprakelijkheid en beschikbaarheid</h2>
+    <p>
+        We doen ons best om het meldpunt beschikbaar en juist te houden, maar geven daarover geen garanties.
+        Voor zover de wet dat toestaat, zijn we niet aansprakelijk voor schade door het gebruik van het meldpunt of door
+        beslissingen op basis van de gepubliceerde gegevens. Jij bent verantwoordelijk voor de inhoud die je instuurt.
+    </p>
+
+    <h2>8. Privacy</h2>
+    <p>Hoe we met persoonsgegevens omgaan, staat in onze <a href="{{ path('legal', {page: 'privacy'}) }}">privacyverklaring</a>.</p>
+
+    <h2>9. Wijzigingen en toepasselijk recht</h2>
+    <p>
+        We kunnen deze voorwaarden aanpassen. De datum bovenaan laat zien wanneer dat voor het laatst gebeurde.
+        Op deze voorwaarden is Nederlands recht van toepassing.
+    </p>
+
+    <h2>10. Contact</h2>
+    <p>
+        Vragen of een melding over inhoud op het meldpunt? Mail naar
+        {% if operator.email %}<a href="mailto:{{ operator.email }}">{{ operator.email }}</a>{% else %}{{ legal.operator_field(null, 'e-mailadres') }}{% endif %}.
+    </p>
+{% endblock %}

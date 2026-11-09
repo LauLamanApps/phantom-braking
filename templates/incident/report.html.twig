@@ -1,0 +1,166 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'report.title'|trans }}{% endblock %}
+
+{% macro section(number, title, sub = null) %}
+    <div class="mb-5 flex items-start gap-3">
+        <span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-stone-900 text-sm font-bold text-white dark:bg-stone-100 dark:text-stone-900">{{ number }}</span>
+        <div>
+            <h2 class="font-semibold">{{ title }}</h2>
+            {% if sub %}<p class="text-sm text-stone-500 dark:text-stone-400">{{ sub }}</p>{% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% block body %}
+    {% import _self as m %}
+    <div class="mx-auto max-w-3xl">
+        <h1 class="text-3xl font-bold tracking-tight">{{ 'report.title'|trans }}</h1>
+        <p class="mt-2 text-stone-600 dark:text-stone-300">{{ 'report.intro'|trans }}</p>
+
+        {{ form_start(form, {attr: {
+            class: 'mt-8 space-y-6',
+            novalidate: null,
+            'data-controller': 'upload-progress',
+            'data-action': 'submit->upload-progress#submit',
+            'data-upload-progress-messages-value': {
+                processing: 'report.footage.processing'|trans,
+                failed: 'report.footage.failed'|trans,
+            }|json_encode,
+        }}) }}
+            {{ form_errors(form) }}
+
+            <fieldset class="card"
+                      data-controller="vehicle-lookup"
+                      data-vehicle-lookup-url-value="{{ path('vehicle_lookup') }}"
+                      data-vehicle-lookup-messages-value="{{ {
+                          loading: 'lookup.loading'|trans,
+                          not_found: 'lookup.not_found'|trans,
+                          invalid_plate: 'lookup.invalid'|trans,
+                          registry_unavailable: 'lookup.unavailable'|trans,
+                          rate_limited: 'lookup.rate_limited'|trans,
+                          error: 'lookup.error'|trans,
+                          year: 'lookup.year'|trans,
+                      }|json_encode }}">
+                {{ m.section(1, 'report.section.vehicle'|trans, 'report.section.vehicle.sub'|trans) }}
+                <div class="grid gap-4 sm:grid-cols-3">
+                    {{ form_row(form.country, {attr: {'data-vehicle-lookup-target': 'country', 'data-action': 'vehicle-lookup#schedule'}}) }}
+                    {{ form_row(form.licensePlate, {row_attr: {class: 'sm:col-span-2'}, attr: {'data-vehicle-lookup-target': 'input', 'data-action': 'input->vehicle-lookup#schedule'}}) }}
+                </div>
+                <div data-vehicle-lookup-target="result" hidden aria-live="polite"
+                     class="mt-4 rounded-xl border border-stone-200 bg-stone-50 px-4 py-3 text-sm data-[state=found]:border-emerald-300 data-[state=found]:bg-emerald-50 data-[state=not_found]:border-brand-100 data-[state=not_found]:bg-brand-50 dark:border-stone-700 dark:bg-stone-800 dark:data-[state=found]:border-emerald-800 dark:data-[state=found]:bg-emerald-950"></div>
+            </fieldset>
+
+            <fieldset class="card"
+                      data-controller="location-picker"
+                      data-location-picker-lookup-url-value="{{ path('road_lookup') }}"
+                      data-location-picker-messages-value="{{ {
+                          looking_up: 'map.looking_up'|trans,
+                          wheel_hint: 'map.wheel_hint'|trans,
+                          found: 'map.found'|trans,
+                          nothing_found: 'map.nothing_found'|trans,
+                          set: 'map.set'|trans,
+                          empty: 'map.empty'|trans,
+                          locating: 'map.locating'|trans,
+                          denied: 'map.denied'|trans,
+                          unsupported: 'map.unsupported'|trans,
+                      }|json_encode }}">
+                {{ m.section(2, 'report.section.where'|trans, 'report.section.where.sub'|trans) }}
+                <div class="grid gap-4 sm:grid-cols-2">
+                    {{ form_row(form.occurredAt) }}
+                </div>
+                <div class="mt-4">
+                    <p class="text-sm font-medium">{{ 'report.map'|trans }}</p>
+                    <p class="text-xs text-stone-500 dark:text-stone-400">{{ 'report.map.help'|trans }}</p>
+                    <div data-location-picker-target="map" class="mt-2 h-72 overflow-hidden rounded-xl border border-stone-200 dark:border-stone-700"></div>
+                    <div class="mt-2 flex flex-wrap items-center gap-3 text-sm">
+                        <button type="button" class="btn-secondary" data-action="location-picker#locate">{{ 'map.use_location'|trans }}</button>
+                        <button type="button" class="text-stone-500 underline" data-action="location-picker#clear">{{ 'map.clear'|trans }}</button>
+                        <span data-location-picker-target="status" class="text-stone-500" aria-live="polite">{{ 'map.empty'|trans }}</span>
+                    </div>
+                    {{ form_row(form.latitude) }}
+                    {{ form_row(form.longitude) }}
+                    {{ form_errors(form.latitude) }}
+                </div>
+                <div class="mt-4 grid gap-4 sm:grid-cols-2">
+                    {{ form_row(form.incidentCountry, {attr: {'data-location-picker-target': 'country', 'data-autofilled': '1'}}) }}
+                    {{ form_row(form.roadType, {attr: {'data-location-picker-target': 'roadType'}}) }}
+                    {{ form_row(form.roadSituation, {row_attr: {class: 'sm:col-span-2'}, attr: {'data-location-picker-target': 'roadSituation'}}) }}
+                    {{ form_row(form.roadNumber, {attr: {'data-location-picker-target': 'roadNumber'}}) }}
+                    {{ form_row(form.speedLimit, {attr: {'data-location-picker-target': 'speedLimit'}}) }}
+                    {{ form_row(form.direction, {row_attr: {class: 'sm:col-span-2'}}) }}
+                </div>
+            </fieldset>
+
+            <fieldset class="card">
+                {{ m.section(3, 'report.section.what'|trans) }}
+                <div class="grid gap-4 sm:grid-cols-2">
+                    {{ form_row(form.severity, {row_attr: {class: 'sm:col-span-2'}}) }}
+                    {{ form_row(form.speedBefore) }}
+                    {{ form_row(form.speedAfter) }}
+                    {{ form_row(form.trigger) }}
+                    {{ form_row(form.assistSystem) }}
+                    {{ form_row(form.warningShown) }}
+                    {{ form_row(form.consequence) }}
+                    {{ form_row(form.weather) }}
+                    {{ form_row(form.light) }}
+                </div>
+            </fieldset>
+
+            <fieldset class="card">
+                {{ m.section(4, 'report.section.history'|trans, 'report.section.history.sub'|trans) }}
+                <div class="grid gap-4 sm:grid-cols-2">
+                    {{ form_row(form.recurrence) }}
+                    {{ form_row(form.dealerResponse) }}
+                    {{ form_row(form.windscreenReplacedRecently) }}
+                    {{ form_row(form.odometerKm) }}
+                    {{ form_row(form.softwareVersion, {row_attr: {class: 'sm:col-span-2'}}) }}
+                    {{ form_row(form.description, {row_attr: {class: 'sm:col-span-2'}}) }}
+                    <div class="sm:col-span-2">{{ form_row(form.reportedToAuthority) }}</div>
+                </div>
+            </fieldset>
+
+            <fieldset class="card">
+                {{ m.section(5, 'report.section.media'|trans, 'report.section.media.sub'|trans) }}
+                {% set max_photos = constant('App\\Incident\\Domain\\Model\\Incident::MAX_PHOTOS') %}
+                <div class="grid gap-6 sm:grid-cols-2">
+                    <div class="min-w-0" data-controller="dropzone-feedback"
+                         data-dropzone-feedback-max-bytes-value="{{ 300 * 1024 * 1024 }}"
+                         data-dropzone-feedback-messages-value="{{ {type: 'report.footage.rejected_type'|trans, tooBig: 'report.footage.too_big'|trans}|json_encode }}">
+                        {{ form_row(form.footage) }}
+                        <p data-dropzone-feedback-target="error" class="mt-2 text-sm font-medium text-brand-600" role="alert" hidden></p>
+                    </div>
+                    <div class="min-w-0" data-controller="dropzone-feedback photo-masks"
+                         data-photo-masks-remove-label-value="{{ 'report.photos.mask_remove'|trans }}"
+                         data-dropzone-feedback-max-bytes-value="{{ 15 * 1024 * 1024 }}"
+                         data-dropzone-feedback-messages-value="{{ {
+                             type: 'report.photos.rejected_type'|trans,
+                             maxFiles: 'report.photos.too_many_client'|trans({max: max_photos}),
+                             tooBig: 'report.photos.too_big'|trans,
+                         }|json_encode }}">
+                        {{ form_row(form.photos) }}
+                        <p data-dropzone-feedback-target="error" class="mt-2 text-sm font-medium text-brand-600" role="alert" hidden></p>
+                        <p data-photo-masks-hint hidden class="mt-3 rounded-lg bg-yellow-50 p-2 text-xs text-yellow-900 dark:bg-yellow-900/30 dark:text-yellow-100">{{ 'report.photos.mask_hint'|trans }}</p>
+                        <div data-photo-masks-target="editors" class="mt-3 grid grid-cols-1 gap-3"></div>
+                        {{ form_widget(form.photoMasks) }}
+                    </div>
+                </div>
+                <div class="mt-4 space-y-1 rounded-lg bg-stone-100 p-3 text-sm text-stone-700 dark:bg-stone-800 dark:text-stone-300">
+                    <p class="font-medium">{{ 'report.media.consent_notice'|trans }}</p>
+                    <p class="text-xs text-stone-600 dark:text-stone-400">{{ 'report.media.privacy'|trans }}</p>
+                </div>
+                <div data-upload-progress-target="progress" hidden class="mt-4">
+                    <div class="h-2 overflow-hidden rounded-full bg-stone-200 dark:bg-stone-800">
+                        <div data-upload-progress-target="bar" class="h-full w-0 bg-brand-600 transition-[width]"></div>
+                    </div>
+                    <p data-upload-progress-target="percent" class="mt-1 text-sm tabular-nums text-stone-500" aria-live="polite">0%</p>
+                </div>
+            </fieldset>
+
+            <div class="card space-y-4">
+                {{ form_row(form.privacyConsent) }}
+                <button type="submit" class="btn-primary w-full text-base sm:w-auto" data-upload-progress-target="submit">{{ 'report.submit'|trans }}</button>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

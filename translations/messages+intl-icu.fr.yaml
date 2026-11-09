@@ -1,0 +1,483 @@
+site.name: Point de signalement des freinages fantômes
+site.title: Point de signalement central des freinages fantômes
+site.description: Signalez le déclenchement injustifié du freinage d’urgence de votre voiture (freinage fantôme). Ensemble, montrons à quelle fréquence, où et sur quelles voitures cela se produit.
+
+nav.statistics: Statistiques
+nav.reports: Signalements
+nav.report: Signaler un incident
+nav.language: Langue
+
+about.mission: Point de signalement indépendant. Les constructeurs n’ont aucune obligation d’enregistrer les freinages fantômes. Ces signalements rendent le problème mesurable.
+about.privacy: Nous ne conservons jamais votre plaque d’immatriculation, seulement une empreinte irréversible qui nous permet de compter les signalements répétés par véhicule. Les vidéos de dashcam ne sont publiées qu’après vérification et avec votre consentement.
+about.sources: 'Données des véhicules : <a class="underline" href="https://opendata.rdw.nl" rel="noopener">RDW Open Data</a>. Carte : <a class="underline" href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a>. Signalez aussi un véhicule dangereux à l’inspection néerlandaise des transports (<a class="underline" href="https://www.ilent.nl" rel="noopener">ILT</a>).'
+footer.source_code: Open source (MIT) sur GitHub
+nav.faq: "FAQ"
+footer.nav: "À propos et informations légales"
+about.title: "À propos"
+about.mission.title: "Pourquoi ce point de signalement existe"
+about.privacy.title: "Votre vie privée"
+about.sources.title: "Sources"
+about.open_source.title: "Open source"
+about.open_source: "Le code source de ce point de signalement est open source (licence MIT) et disponible sur <a href=\"{github}\" rel=\"noopener\">GitHub</a>. Chacun peut voir comment les signalements sont traités, signaler des bugs ou proposer des améliorations."
+faq.title: "Questions fréquentes"
+faq.intro: "Réponses aux questions les plus courantes sur les freinages fantômes, les signalements et ce que nous faisons de vos données."
+faq.more: "Votre question n’est pas dans la liste ? Contactez-nous grâce aux coordonnées indiquées dans la <a href=\"{privacy}\">politique de confidentialité</a>."
+faq.group.general: "Le freinage fantôme et ce site"
+faq.group.reporting: "Signaler"
+faq.group.privacy: "Vie privée et vidéos"
+faq.group.data: "Utilisation des données"
+faq.what.q: "Qu’est-ce qu’un freinage fantôme ?"
+faq.what.a: "On parle de freinage fantôme lorsque l’assistance au freinage d’urgence ou le régulateur de vitesse adaptatif d’une voiture freine soudainement alors qu’il n’y a aucune raison de freiner. Cela se produit souvent au passage d’un pont, à cause d’ombres, sous des portiques de signalisation ou à côté d’un camion sur la voie voisine. Depuis juillet 2024, le freinage d’urgence automatique (AEB) est obligatoire sur toute voiture neuve dans l’UE ; de plus en plus de conducteurs y sont donc confrontés."
+faq.who.q: "Qui gère ce point de signalement ?"
+faq.who.a: "Une initiative indépendante. Nous n’avons aucun lien avec les constructeurs, importateurs, concessionnaires, assureurs ou pouvoirs publics. Qui se trouve derrière et comment nous contacter est indiqué dans la <a href=\"{privacy}\">politique de confidentialité</a>."
+faq.why.q: "Pourquoi un point de signalement distinct ?"
+faq.why.a: "Les constructeurs n’ont aucune obligation d’enregistrer les freinages intempestifs et ne partagent pas les données de leurs véhicules. Les signalements officiels sont quasi inexistants. En regroupant les signalements avec la marque, le modèle, le lieu et les circonstances, des tendances apparaissent : quelles voitures, quels endroits, quelles situations."
+faq.official.q: "Est-ce un signalement officiel ?"
+faq.official.a: "Non. Signalez aussi un véhicule dangereux à l’inspection néerlandaise des transports (<a href=\"https://www.ilent.nl\" rel=\"noopener\">ILT</a>) et à votre concessionnaire, afin qu’il soit officiellement enregistré. En cas d’accident avec blessés, appelez toujours le 112."
+faq.representative.q: "Les statistiques disent-elles à quel point une marque est sûre ?"
+faq.representative.a: "Pas directement. Les signalements sont des expériences de conducteurs ; nous ne les vérifions pas techniquement. Un modèle qui se vend bien, ou dont les propriétaires forment une communauté active, reçoit naturellement plus de signalements. Utilisez les chiffres pour repérer des tendances, pas comme preuve qu’un véhicule est défectueux."
+faq.account.q: "Faut-il un compte ?"
+faq.account.a: "Non. Vous n’avez pas besoin de compte et nous ne demandons ni votre nom ni votre adresse e-mail. <a href=\"{report}\">Envoyer un signalement</a> prend environ trois minutes."
+faq.countries.q: "Quelles voitures puis-je signaler ?"
+faq.countries.a: "Pour l’instant, les voitures immatriculées aux Pays-Bas, car nous récupérons automatiquement les informations du véhicule auprès du RDW (l’autorité néerlandaise des véhicules). Les autres pays ne disposent pas (encore) d’un registre public des plaques que nous pouvons utiliser."
+faq.abroad.q: "C’est arrivé à l’étranger. Puis-je le signaler ?"
+faq.abroad.a: "Oui. Le pays de la plaque et le pays où l’incident s’est produit sont indépendants. Cliquez sur l’endroit sur la carte et nous remplissons le pays et la route pour vous."
+faq.passenger.q: "Je ne conduisais pas. Puis-je le signaler ?"
+faq.passenger.a: "Oui, si vous l’avez vécu vous-même en tant qu’occupant de la voiture. Ne signalez chaque incident qu’une seule fois par voiture. Ne remplissez jamais le signalement en conduisant."
+faq.unsure.q: "Je ne sais pas exactement ce qui l’a provoqué. Que dois-je indiquer ?"
+faq.unsure.a: "Choisissez ce qui correspond le mieux, ou « Rien de visible » ou « Autre », et décrivez-le dans les remarques. Un signalement incomplet reste utile : le lieu, la voiture et les circonstances suffisent souvent à faire apparaître une tendance."
+faq.plate.q: "Conservez-vous ma plaque d’immatriculation ?"
+faq.plate.a: "Non. Nous utilisons la plaque uniquement pour récupérer les informations du véhicule auprès du RDW. Ensuite, nous ne gardons qu’une empreinte irréversible (créée avec une clé secrète), afin de pouvoir compter les signalements répétés d’une même voiture. La plaque elle-même n’est jamais conservée ni affichée."
+faq.plate_needed.q: "Alors pourquoi dois-je saisir une plaque ?"
+faq.plate_needed.a: "Elle nous permet d’obtenir du RDW la marque, le modèle, l’année et la réception par type exacts, sans faute de frappe. Ce sont ces informations qui permettent de voir si un problème concerne un modèle ou une version logicielle précise."
+faq.footage.q: "Que deviennent mes vidéos de dashcam et mes photos ?"
+faq.footage.a: "Elles restent privées jusqu’à leur vérification par un modérateur. Nous supprimons les métadonnées comme la position GPS. Vous masquez les plaques sur les photos lors de l’envoi, et le modérateur le vérifie. Nous ne publions pas de vidéos de dashcam où une plaque est lisible."
+faq.withdraw.q: "Comment retirer mon consentement pour les vidéos et les photos ?"
+faq.withdraw.a: "Ouvrez votre signalement via <a href=\"{reports}\">Signalements</a> et demandez-y la suppression des vidéos et des photos en saisissant la plaque. Si elle correspond, un modérateur les supprime."
+faq.delete_report.q: "Puis-je faire supprimer tout mon signalement ?"
+faq.delete_report.a: "Oui. Contactez-nous grâce aux coordonnées indiquées dans la <a href=\"{privacy}\">politique de confidentialité</a>. Le signalement est alors aussi retiré des statistiques."
+faq.reuse.q: "Que deviennent les signalements ?"
+faq.reuse.a: "Les signalements sont publiés sans la plaque et intégrés aux statistiques de ce site. Ce que nous publions peut être réutilisé par d’autres, comme des chercheurs, des journalistes et des autorités de contrôle, avec mention de la source. Voir les <a href=\"{terms}\">conditions d’utilisation</a>."
+faq.open_source.q: "Le code est-il public ?"
+faq.open_source.a: "Oui. Le code source est open source (licence MIT) et disponible sur <a href=\"{github}\" rel=\"noopener\">GitHub</a>. Vous pouvez vérifier vous-même comment nous traitons les plaques et les vidéos."
+
+form.choose: '— choisir —'
+form.yes: 'Oui'
+form.no: 'Non'
+form.unknown: Je ne sais pas
+
+country.nl: Pays-Bas
+country.de: Allemagne
+country.fr: France
+
+home.title: Statistiques
+home.headline: Votre voiture pile. Pour rien.
+home.intro: "Depuis juillet 2024, le freinage d’urgence automatique (AEB) est obligatoire sur toute voiture neuve dans l’UE. De plus en plus de conducteurs signalent que leur voiture freine brutalement en pleine vitesse sans aucune raison. Presque personne ne l’enregistre officiellement."
+home.cta: Signaler un incident
+home.browse: Parcourir les signalements
+home.why.title: Pourquoi ce point de signalement ?
+home.why.1: "Kassa (une émission de consommateurs néerlandaise) estime qu’il y a au moins plusieurs centaines d’incidents par an. L’ILT n’a reçu que vingt signalements en quatre ans."
+home.why.2: Les constructeurs ne partagent pas les données des véhicules et n’ont pas à déclarer les freinages intempestifs.
+home.why.3: Avec la plaque, le lieu et les circonstances, un schéma se dessine que les constructeurs, les autorités de contrôle et les responsables politiques ne peuvent pas ignorer.
+home.empty.title: Aucun signalement pour l’instant
+home.empty.text: Soyez le premier. Chaque signalement aide à rendre le phénomène visible.
+home.kpis: Chiffres clés
+
+kpi.reports: signalements
+kpi.reports.hint: "{vehicles, plural, one {# véhicule} other {# véhicules}} de {makes, plural, one {# marque} other {# marques}}"
+kpi.endangered: ont mis en danger le véhicule suivant
+kpi.endangered.hint: "{collisions, plural, =0 {aucune collision pour l’instant} one {# collision} other {# collisions}}"
+kpi.speed: vitesse moyenne au moment du freinage
+kpi.speed.hint: "en moyenne {drop} km/h de vitesse perdue"
+kpi.motorway: sur autoroute ou voie express
+kpi.motorway.hint: "{pct} au niveau d’un tunnel, d’un viaduc, d’un pont ou d’un portique"
+kpi.recurring: la voiture l’avait déjà fait
+kpi.recurring.hint: "{repeat, plural, =0 {aucun véhicule signalé} one {# véhicule signalé} other {# véhicules signalés}} plusieurs fois ici"
+kpi.emergency: arrêt d’urgence complet
+kpi.dismissed: écartés par le concessionnaire
+kpi.dismissed.hint: "sur {contacted, plural, one {# signalement} other {# signalements}} à un concessionnaire"
+kpi.authority: également signalés à l’autorité
+kpi.authority.hint: Le point de signalement officiel passe à côté de la plupart des incidents.
+
+section.where: Où cela se produit-il ?
+section.where.sub: Les radars et caméras sont surtout trompés par les structures au-dessus et à côté de la route.
+section.vehicles: Quelles voitures ?
+section.vehicles.sub: La marque et le modèle proviennent du registre national des véhicules (le RDW aux Pays-Bas), et non de ce que saisit l’auteur du signalement.
+section.circumstances: Dans quelles conditions ?
+section.circumstances.sub: Luminosité, météo, heure de la journée et ce qui, selon le conducteur, a déclenché le freinage.
+section.impact: Quelle gravité ?
+section.impact.sub: Un arrêt d’urgence inattendu sur l’autoroute est surtout dangereux pour ceux qui vous suivent.
+
+chart.trend: Signalements par mois
+chart.trend.sub: 'Par date de l’incident, sur la période choisie (par défaut : les 12 derniers mois)'
+chart.map: Carte des incidents
+chart.situation: Configuration de la route à cet endroit
+chart.situation.sub: Les tunnels, viaducs et portiques sont des déclencheurs connus
+chart.road_type: Type de route
+chart.roads: Routes les plus signalées
+chart.make: Marques les plus signalées
+chart.models: Modèles
+chart.year: Année de première immatriculation
+chart.year.sub: AEB obligatoire depuis le 7 juillet 2024 (GSR2 de l’UE)
+chart.assist: Aide à la conduite active
+chart.assist.sub: '« Aucun » = l’assistance au freinage d’urgence toujours active'
+chart.trigger: Déclencheur présumé
+chart.trigger.sub: Selon le conducteur
+chart.light: Conditions de luminosité
+chart.weather: Météo
+chart.hour: Heure de la journée
+chart.speed: Vitesse au moment du freinage
+chart.speed.sub: Vitesse juste avant l’intervention
+chart.severity: Avec quelle force la voiture a-t-elle freiné ?
+chart.consequence: Conséquence
+chart.dealer: Réponse du concessionnaire ou de l’importateur
+chart.dealer.sub: Beaucoup de conducteurs s’entendent dire que tout est normal
+
+stats.reports: Signalements
+stats.no_data: Pas encore assez de données.
+stats.show_table: Afficher sous forme de tableau
+
+table.vehicle: Véhicule
+table.reports: Signalements
+table.vehicles: Véhicules
+
+map.legend.incident: Signalement
+map.legend.collision: Collision
+map.open: Voir le signalement
+map.set: 'Position définie :'
+map.empty: Cliquez sur la carte pour indiquer l’endroit (facultatif).
+map.locating: Localisation…
+map.denied: Impossible de déterminer votre position. Cliquez plutôt sur la carte.
+map.unsupported: Votre navigateur ne prend pas en charge la géolocalisation.
+map.use_location: Utiliser ma position
+map.clear: Effacer
+
+method.title: À propos de ces chiffres
+method.text: "Il s’agit de signalements de conducteurs, et non de données d’accidents vérifiées. La marque, le modèle et l’année proviennent du registre national via la plaque ; nous n’acceptons que les signalements de pays dont nous pouvons interroger le registre. Une marque plus signalée peut simplement avoir plus de voitures sur la route : comparez donc avec la taille du parc. Les signalements répétés d’un même véhicule comptent comme des incidents distincts, mais « véhicules » compte chaque plaque une seule fois."
+
+report.title: Signaler un freinage fantôme
+report.intro: Environ 3 minutes. Nous utilisons votre plaque uniquement pour récupérer la marque, le modèle et l’année auprès du RDW. Nous ne la conservons pas.
+report.section.vehicle: Le véhicule
+report.section.vehicle.sub: Nous récupérons les informations auprès du RDW.
+report.section.where: Quand et où
+report.section.where.sub: L’endroit exact est essentiel pour repérer les points noirs, comme un viaduc précis.
+report.section.what: Que s’est-il passé ?
+report.section.history: Historique et suivi
+report.section.history.sub: Facultatif, mais précieux pour la recherche.
+report.country: Pays d’immatriculation (plaque)
+report.license_plate: Plaque d’immatriculation
+report.license_plate.help: Non conservée.
+report.occurred_at: Date et heure
+report.road_type: Type de route
+report.road_situation: Configuration de la route à cet endroit
+report.road_situation.help: Où étiez-vous exactement lorsque la voiture a freiné ?
+report.road_number: Numéro de route
+report.direction: Sens de circulation
+report.direction.placeholder: p. ex. direction Arnhem, point kilométrique 142,3
+report.speed_limit: Vitesse maximale autorisée (km/h)
+report.map: Endroit sur la carte
+report.severity: Avec quelle force la voiture a-t-elle freiné ?
+report.speed_before: Vitesse avant le freinage (km/h)
+report.speed_after: Vitesse la plus basse pendant le freinage (km/h)
+report.speed_after.help: Une estimation suffit. Laissez vide si vous ne savez pas.
+report.trigger: Selon vous, qu’est-ce qui a déclenché le freinage ?
+report.assist: Quel système était activé ?
+report.assist.help: Choisissez « Aucun » si vous conduisiez simplement vous-même.
+report.assist.not_available: Ce système n’existe que sur une Tesla. Choisissez un autre système ou vérifiez la plaque.
+report.warning_shown: Un avertissement s’est-il affiché au tableau de bord ?
+report.consequence: Quelle a été la conséquence ?
+report.weather: Météo
+report.light: Luminosité
+report.recurrence: Combien de fois cette voiture l’a-t-elle déjà fait ?
+report.dealer: Réponse du concessionnaire ou de l’importateur
+report.reported_to_authority: J’ai également signalé cet incident à l’inspection néerlandaise de l’environnement et des transports (ILT)
+report.windscreen: Le pare-brise a-t-il été remplacé récemment ?
+report.windscreen.help: La caméra doit être recalibrée après un remplacement.
+report.odometer: Kilométrage (km)
+report.software_version: Version du logiciel
+report.software_version.help: Affichée dans le menu de l’écran multimédia, si vous la connaissez.
+report.description: Détails
+report.description.placeholder: Décrivez ce que vous avez vu et ce qu’a fait la voiture.
+report.footage: Fichier vidéo
+report.footage.help: MP4, MOV, WebM, AVI ou MKV, 300 Mo maximum. Coupez-la à environ une minute autour de l’incident.
+report.footage.too_big: "Le fichier dépasse 300 Mo. Coupez la vidéo à environ une minute autour de l’incident."
+report.footage.processing: Envoi terminé, traitement du signalement…
+report.footage.failed: L’envoi a échoué. Vérifiez votre connexion et réessayez.
+report.privacy_consent: 'J’ai lu la <a class="underline" href="{privacy}" target="_blank">politique de confidentialité</a> et j’accepte les <a class="underline" href="{terms}" target="_blank">conditions d’utilisation</a> ainsi que la publication de ce signalement sans la plaque.'
+report.submit: Envoyer le signalement
+report.thanks: Merci pour votre signalement ! Voici comment il apparaît sur le site.
+report.plate.not_found: Cette plaque ne figure pas dans le registre du RDW.
+report.registry_unavailable: Le registre du RDW est actuellement inaccessible. Réessayez dans quelques minutes.
+report.rate_limited: Vous avez envoyé de nombreux signalements au cours de la dernière heure. Réessayez plus tard.
+
+lookup.loading: Récupération des informations auprès du RDW…
+lookup.not_found: Cette plaque ne figure pas dans le registre du RDW.
+lookup.invalid: Cette plaque ne semble pas valide.
+lookup.unavailable: Le RDW est actuellement inaccessible. Vous pourrez envoyer le signalement plus tard.
+lookup.rate_limited: Trop de recherches. Veuillez patienter un instant.
+lookup.error: La recherche a échoué.
+lookup.year: Année
+
+list.title: Signalements
+list.count: "{count, plural, =0 {Aucun signalement} one {# signalement} other {# signalements}}"
+list.empty: Aucun signalement trouvé.
+list.previous: Précédent
+list.next: Suivant
+
+incident.has_footage: Vidéo de dashcam
+incident.footage: Vidéo de dashcam
+incident.footage_status.pending: Une vidéo de dashcam a été envoyée et est en cours de vérification.
+incident.footage_status.approved: Vidéo de dashcam disponible.
+incident.footage_status.rejected: Une vidéo de dashcam a été envoyée, mais elle ne sera pas affichée publiquement.
+incident.location: Lieu
+incident.description: Récit du conducteur
+incident.circumstances: Circonstances
+incident.vehicle: Véhicule
+incident.vehicle.source: Tel qu’enregistré dans le registre national des véhicules au moment du signalement
+incident.reported_at: "Signalé le {date}"
+
+vehicle.make: Marque
+vehicle.model: Modèle
+vehicle.first_admission: Première immatriculation
+vehicle.fuel: Carburant
+vehicle.hybrid: Type d’hybridation
+vehicle.category: Catégorie de véhicule UE
+vehicle.type_approval: Réception par type
+vehicle.variant: Variante
+vehicle.gsr2: Immatriculé après l’obligation AEB (GSR2)
+vehicle.open_recall: Rappel en cours
+
+enum.road_type.motorway: Autoroute
+enum.road_type.expressway: Voie express
+enum.road_type.provincial: Route départementale ou provinciale
+enum.road_type.urban: Route en agglomération
+enum.road_type.rural: Route hors agglomération
+enum.road_type.residential: Zone résidentielle ou parking
+
+enum.road_situation.straight: Ligne droite
+enum.road_situation.curve: Virage
+enum.road_situation.tunnel_entrance: Entrée de tunnel
+enum.road_situation.tunnel_inside: Dans un tunnel
+enum.road_situation.tunnel_exit: Sortie de tunnel
+enum.road_situation.under_viaduct: Sous un viaduc
+enum.road_situation.bridge: Sur un pont
+enum.road_situation.sign_gantry: Sous un portique de signalisation
+enum.road_situation.on_ramp: Bretelle d’accès ou voie d’insertion
+enum.road_situation.off_ramp: Bretelle de sortie ou voie de décélération
+enum.road_situation.lane_merge: Réduction du nombre de voies / rabattement
+enum.road_situation.roadworks: Travaux
+enum.road_situation.intersection: Carrefour
+enum.road_situation.roundabout: Rond-point
+enum.road_situation.railway_crossing: Passage à niveau
+enum.road_situation.hill: Côte ou pente
+
+enum.trigger.nothing_visible: Rien de visible
+enum.trigger.shadow: Ombre sur la route
+enum.trigger.viaduct_gantry: Viaduc, pont ou portique
+enum.trigger.oncoming: Véhicule venant en sens inverse
+enum.trigger.truck_adjacent: Camion sur la voie adjacente
+enum.trigger.vehicle_adjacent: Voiture sur la voie adjacente
+enum.trigger.merging: Véhicule qui s’insère
+enum.trigger.turning_ahead: Voiture qui tourne devant moi
+enum.trigger.parked: Voiture garée en bord de route
+enum.trigger.road_sign: Panneau de signalisation ou panneau à messages variables
+enum.trigger.guardrail: Glissière de sécurité
+enum.trigger.road_marking: Marquage au sol ou réparation de chaussée
+enum.trigger.low_sun: Soleil rasant ou reflet
+enum.trigger.rain_spray: Pluie ou projections d’eau
+enum.trigger.other: Autre
+
+enum.severity.warning_only: Avertissement uniquement
+enum.severity.light: Freinage léger
+enum.severity.strong: Freinage fort
+enum.severity.emergency: Arrêt d’urgence complet
+
+enum.weather.dry: Temps sec
+enum.weather.rain: Pluie
+enum.weather.heavy_rain: Forte pluie
+enum.weather.fog: Brouillard
+enum.weather.snow: Neige ou verglas
+
+enum.light.daylight: Plein jour
+enum.light.low_sun: Soleil rasant
+enum.light.twilight: Crépuscule
+enum.light.dark_lit: Nuit, route éclairée
+enum.light.dark_unlit: Nuit, route non éclairée
+
+enum.assist.none: Aucun (je conduisais moi-même)
+enum.assist.cruise: Régulateur de vitesse classique
+enum.assist.acc: Régulateur de vitesse adaptatif (ACC)
+enum.assist.acc_lane: ACC avec aide au centrage dans la voie
+enum.assist.tesla_tad: Tesla Assisted Driving (TAD, anciennement FSD)
+enum.assist.unknown: Je ne sais pas
+
+enum.consequence.none: Aucune
+enum.consequence.startled: J’ai eu peur, rien de plus
+enum.consequence.follower_braked: Le véhicule suivant a dû freiner fort
+enum.consequence.near_rear_end: Collision évitée de justesse
+enum.consequence.rear_end: Collision par l’arrière
+enum.consequence.injury: Collision avec blessés
+
+enum.recurrence.first: Première fois
+enum.recurrence.few: 2 à 5 fois
+enum.recurrence.regular: 6 à 20 fois
+enum.recurrence.frequent: Plus de 20 fois
+
+enum.dealer.not_contacted: Pas encore signalé
+enum.dealer.pending: Signalé, en attente de réponse
+enum.dealer.acknowledged: Reconnu, en cours d’analyse
+enum.dealer.software_update: Mise à jour logicielle effectuée
+enum.dealer.recalibrated: Caméra/radar recalibré
+enum.dealer.no_fault_found: Aucun défaut constaté
+enum.dealer.blamed_driver: On m’a rejeté la faute
+enum.dealer.refused: Refus d’intervenir
+
+enum.moderation_status.pending: En cours de vérification
+enum.moderation_status.approved: Approuvé
+enum.moderation_status.rejected: Refusé
+
+home.eyebrow.country: "Freinage fantôme – {country}"
+home.eyebrow.all: Freinage fantôme en Europe
+home.empty_filtered.title: Aucun signalement ne correspond à cette sélection.
+
+filter.label: Filtrer les signalements
+filter.country: Pays
+filter.all_countries: Tous les pays
+filter.make: Marque
+filter.all_makes: Toutes les marques
+filter.model: Modèle
+filter.all_models: Tous les modèles
+filter.pick_make_first: Choisissez d’abord une marque
+filter.road_type: Type de route
+filter.all_roads: Toutes les routes
+filter.period: Période
+filter.period.all: Depuis le début
+filter.period.30d: 30 derniers jours
+filter.period.90d: 90 derniers jours
+filter.period.12m: 12 derniers mois
+filter.period.ytd: Cette année
+filter.period.custom: Personnalisée…
+filter.from: Du
+filter.to: Au (inclus)
+filter.apply: Appliquer
+filter.reset: Effacer les filtres
+filter.to_list: Voir ces signalements
+filter.to_stats: Statistiques pour cette sélection
+
+report.country.unsupported: Nous ne pouvons pas encore rechercher les plaques de ce pays.
+lookup.unsupported_country: Nous ne pouvons pas encore rechercher les plaques de ce pays.
+
+legal.nav: Informations légales
+legal.privacy: Politique de confidentialité
+legal.cookies: Cookies
+legal.terms: Conditions d’utilisation
+legal.last_updated: "Dernière mise à jour : {date}"
+legal.operator_missing: "Remarque : les coordonnées du gestionnaire n’ont pas encore été renseignées (OPERATOR_NAME et OPERATOR_EMAIL)."
+
+report.section.media: Vidéo de dashcam et photos
+report.section.media.sub: Facultatif. Une vidéo est la meilleure preuve qu’il n’y avait aucun obstacle ; les photos montrent les conséquences.
+report.photos: Photos des conséquences
+report.photos.help: "Par exemple des dégâts ou la situation sur la route. Jusqu’à {max} photos (JPEG, PNG ou WebP), 15 Mo chacune."
+report.photos.too_many_client: "Vous pouvez ajouter jusqu’à {max} photos."
+report.photos.too_big: L’une des photos dépasse 15 Mo.
+report.photos.invalid: L’une des photos n’a pas pu être lue. Essayez une autre photo ou un autre format de fichier.
+report.media.privacy: "Nous supprimons toutes les métadonnées des photos, comme la position GPS et l’appareil. Les vidéos et les photos restent privées jusqu’à leur vérification par un modérateur."
+
+incident.photos: Photos des conséquences
+incident.photo_alt: "Photo des conséquences {n}"
+incident.photos_hidden: "{count, plural, one {# photo a été envoyée mais n’est pas (encore) publique.} other {# photos ont été envoyées mais ne sont pas (encore) publiques.}}"
+incident.has_photos: "{count, plural, one {# photo} other {# photos}}"
+report.footage.placeholder: Faites glisser votre vidéo ici ou cliquez pour la choisir
+report.footage.rejected_type: Ce n’est pas un fichier vidéo.
+report.photos.placeholder: Faites glisser des photos ici ou cliquez pour les choisir
+report.photos.remove: Supprimer
+report.photos.rejected_type: Seules les photos (JPEG, PNG ou WebP) sont acceptées.
+report.incident_country: Pays où l’incident s’est produit
+report.incident_country.help: Vous rouliez à l’étranger ? Choisissez ce pays.
+filter.incident_country: Pays de l’incident
+report.map.help: Cliquez à l’endroit où cela s’est produit. Nous remplirons alors le pays, le numéro de route, le type de route et la vitesse maximale autorisée à partir d’OpenStreetMap. Vérifiez-les.
+map.looking_up: Recherche de la route…
+map.found: "Trouvé :"
+map.nothing_found: Aucune route trouvée à cet endroit. Veuillez remplir les informations vous-même.
+map.wheel_hint: Cliquez sur la carte ou maintenez Ctrl/⌘ pour zoomer
+report.media.consent_notice: "En envoyant des fichiers, vous acceptez leur publication après vérification. Vous pouvez retirer ce consentement à tout moment sur la page de votre signalement, à l’aide de votre plaque."
+withdraw.title: Vous êtes l’auteur de ce signalement ? Demandez la suppression de la vidéo et des photos
+withdraw.intro: "Saisissez la plaque de la voiture. Si elle correspond à ce signalement, nous transmettons votre demande à un modérateur, qui supprime la vidéo et les photos. Nous ne conservons pas la plaque."
+withdraw.plate: Plaque d’immatriculation
+withdraw.plate.help: La même plaque que dans votre signalement.
+withdraw.submit: Demander la suppression
+withdraw.mismatch: Cette plaque ne correspond pas à ce signalement.
+withdraw.invalid: Veuillez saisir une plaque.
+withdraw.rate_limited: Trop de tentatives. Réessayez dans 15 minutes.
+incident.footage_status.withdrawn: L’auteur du signalement a retiré la vidéo de dashcam.
+enum.moderation_status.withdrawn: Retiré
+
+admin.title: Administration
+admin.to_site: Vers le site
+admin.logout: Se déconnecter
+admin.public_page: Page publique
+admin.approve: Approuver
+admin.reject: Refuser
+admin.media_count: "{footage, plural, =0 {} other {# vidéo · }}{photos, plural, =0 {aucune photo} one {# photo} other {# photos}}"
+admin.login.title: "Connexion à l’administration"
+admin.login.intro: "Connectez-vous avec votre clé d’accès (passkey) : Face ID, empreinte digitale, code PIN de l’appareil ou clé de sécurité. Ni adresse e-mail ni mot de passe."
+admin.login.submit: "Se connecter avec une clé d’accès"
+admin.login.no_passkey: "Pas encore de clé d’accès, ou perdue ? Demandez un lien de connexion à usage unique à une personne ayant accès au serveur."
+admin.login_link.title: "Lien de connexion à usage unique"
+admin.login_link.intro: "Ce lien ne fonctionne qu’une fois et pour peu de temps. Après la connexion, ajoutez une clé d’accès pour vous connecter ensuite sans lien."
+admin.login_link.submit: "Se connecter et ajouter une clé d’accès"
+admin.passkey.unsupported: "Ce navigateur ne prend pas en charge les clés d’accès. Utilisez une version récente de Chrome, Edge, Firefox ou Safari."
+admin.passkey.cancelled: "Annulé ou expiré. Veuillez réessayer."
+admin.passkey.failed: "Cela n’a pas fonctionné. Réessayez ou utilisez une autre clé d’accès."
+admin.passkeys.title: "Clés d’accès"
+admin.passkeys.intro: "Elles vous permettent de vous connecter à l’administration. Ajoutez-en au moins deux, par exemple sur votre téléphone et votre ordinateur, pour ne pas être bloqué si vous perdez un appareil."
+admin.passkeys.none: "Vous n’avez pas encore de clé d’accès. Ajoutez-en une maintenant : sans clé, après la déconnexion, vous ne pourrez revenir qu’avec un nouveau lien généré sur le serveur."
+admin.passkeys.added: "Ajoutée le {date}"
+admin.passkeys.synced: "Synchronisée"
+admin.passkeys.last_used: "Utilisée pour la dernière fois le {date}"
+admin.passkeys.never_used: "Pas encore utilisée pour se connecter"
+admin.passkeys.remove: "Supprimer"
+admin.passkeys.confirm_remove: "Supprimer cette clé d’accès ? Vous ne pourrez plus vous connecter avec."
+admin.passkeys.removed: "Clé d’accès supprimée."
+admin.passkeys.last: "Vous ne pouvez pas supprimer votre dernière clé d’accès ; ajoutez-en d’abord une autre."
+admin.passkeys.add: "Ajouter une clé d’accès"
+admin.passkeys.add_help: "Votre navigateur vous demande où enregistrer la clé d’accès : sur cet appareil, sur votre téléphone (via le QR code) ou sur une clé de sécurité."
+admin.deletions.title: Demandes de suppression
+admin.deletions.intro: "L’auteur a confirmé avec la plaque qu’il s’agit bien de son signalement. L’approbation supprime définitivement toutes les vidéos et photos du signalement ; le signalement lui-même est conservé."
+admin.deletions.requested_at: "Demandé le {date}"
+admin.deletions.approve: Supprimer
+admin.deletions.deny: Refuser
+admin.deletions.confirm: "Supprimer définitivement toutes les vidéos et photos de ce signalement ?"
+admin.deletions.empty: Aucune demande de suppression en attente.
+admin.pending.title: À vérifier
+admin.pending.intro: Signalements avec vidéo ou photos qui n’ont pas encore été vérifiés.
+admin.pending.empty: Rien à vérifier.
+admin.review.deletion_pending: L’auteur a demandé la suppression pour ce signalement (voir la vue d’ensemble).
+admin.review.footage_rule: "N’approuvez une vidéo que si aucune plaque n’est lisible. Les vidéos ne peuvent pas être masquées ; si une plaque est lisible, refusez-la (la vidéo reste privée)."
+admin.review.photo: "Photo {n}"
+admin.review.mask_help: "Tracez un cadre sur chaque plaque lisible (y compris celles d’autres voitures) et enregistrez. Seule la copie masquée est publiée ; l’original reste privé."
+admin.review.save_masks: Enregistrer les masques
+admin.review.clear_masks: Effacer tous les cadres
+admin.review.view_public: Voir la version publique
+admin.review.no_media: Ce signalement n’a pas (ou plus) de vidéo ni de photos.
+admin.flash.footage_approved: Vidéo approuvée.
+admin.flash.footage_rejected: Vidéo refusée.
+admin.flash.photo_approved: Photo approuvée.
+admin.flash.photo_rejected: Photo refusée.
+admin.flash.masks_saved: Masques enregistrés ; la copie publique a été mise à jour.
+admin.flash.masks_invalid: Les masques n’ont pas pu être lus.
+admin.flash.deletion_approved: Toutes les vidéos et photos du signalement ont été supprimées.
+admin.flash.deletion_denied: Demande de suppression refusée.
+report.photos.mask_hint: "Des plaques sont visibles sur vos photos ? Tracez un cadre dessus pour les noircir. Un modérateur vérifie également."
+report.photos.mask_remove: Supprimer le cadre
+withdraw.requested: "Nous avons bien reçu votre demande. Un modérateur supprimera la vidéo et les photos dès que possible."
+incident.media_deleted: "La vidéo et les photos de ce signalement ont été supprimées à la demande de son auteur."
+admin.storage.title: Stockage
+admin.storage.objects: "{count, plural, one {# fichier} other {# fichiers}}"
+admin.storage.total: Total
+admin.storage.per_month: par mois
+admin.storage.pricing_note: "Estimation basée sur la taille actuelle : Sliplane ne facture pas le premier Go, puis 5 € par tranche de 250 Go entamée, sur la moyenne mensuelle."
+admin.storage.measured_at: "Mesuré le {date}"
+admin.storage.refresh: Mesurer à nouveau
+enum.media_kind.photo: Photos
+enum.media_kind.video: Vidéos

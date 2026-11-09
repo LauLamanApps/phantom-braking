@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}" class="h-full">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noindex, nofollow">
+        <title>{% block title %}{{ 'admin.title'|trans }}{% endblock %} · {{ 'site.name'|trans }}</title>
+        <link rel="icon" href="{{ asset('images/icon.svg') }}" type="image/svg+xml">
+        {{ importmap('app') }}
+    </head>
+    <body class="flex min-h-full flex-col">
+        <header class="border-b border-stone-200 bg-stone-900 text-white dark:border-stone-800">
+            <nav class="mx-auto flex max-w-6xl flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3 text-sm">
+                <a href="{{ path('admin_dashboard') }}" class="flex items-center gap-2 font-bold">
+                    {{ include('partials/_logo.html.twig', {class: 'h-9 w-9'}) }}
+                    {{ 'admin.title'|trans }}
+                </a>
+                <a href="{{ path('home', {_locale: app.request.locale}) }}" class="text-stone-300 hover:text-white">{{ 'admin.to_site'|trans }} ↗</a>
+                {% if app.user %}
+                    <a href="{{ path('admin_passkeys') }}" class="ml-auto text-stone-300 hover:text-white">{{ 'admin.passkeys.title'|trans }}</a>
+                    <span class="text-stone-400">{{ app.user.userIdentifier }}</span>
+                    <a href="{{ path('admin_logout') }}" class="rounded-lg border border-stone-600 px-3 py-1 hover:bg-stone-800">{{ 'admin.logout'|trans }}</a>
+                {% endif %}
+            </nav>
+        </header>
+        <main class="mx-auto w-full max-w-6xl flex-1 px-4 py-8">
+            {% for type, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="mb-6 rounded-xl border px-4 py-3 text-sm {{ type == 'success' ? 'border-emerald-200 bg-emerald-50 text-emerald-900 dark:border-emerald-900 dark:bg-emerald-950 dark:text-emerald-100' : 'border-brand-100 bg-brand-50 text-brand-700' }}" role="status">
+                        {{ message|trans }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            {% block body %}{% endblock %}
+        </main>
+    </body>
+</html>

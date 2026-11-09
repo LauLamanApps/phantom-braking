@@ -1,0 +1,483 @@
+site.name: Phantombremsungen-Meldestelle
+site.title: Zentrale Meldestelle für Phantombremsungen
+site.description: Melde, wenn der Notbremsassistent deines Autos ohne Grund eingreift (Phantombremsung). Gemeinsam zeigen wir, wie oft, wo und bei welchen Autos das passiert.
+
+nav.statistics: Statistiken
+nav.reports: Meldungen
+nav.report: Vorfall melden
+nav.language: Sprache
+
+about.mission: Unabhängige Meldestelle. Hersteller müssen Phantombremsungen nirgends registrieren. Diese Meldungen machen das Problem messbar.
+about.privacy: Wir speichern dein Kennzeichen nie. Wir behalten nur einen nicht umkehrbaren Fingerabdruck, um wiederholte Meldungen pro Fahrzeug zählen zu können. Dashcam-Aufnahmen werden erst nach Prüfung und mit deiner Einwilligung veröffentlicht.
+about.sources: 'Fahrzeugdaten: <a class="underline" href="https://opendata.rdw.nl" rel="noopener">RDW Open Data</a>. Karte: <a class="underline" href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a>. Melde ein gefährliches Fahrzeug bitte auch der niederländischen <a class="underline" href="https://www.ilent.nl" rel="noopener">ILT</a>.'
+footer.source_code: Open Source (MIT) auf GitHub
+nav.faq: "FAQ"
+footer.nav: "Über uns und rechtliche Hinweise"
+about.title: "Über uns"
+about.mission.title: "Warum es diese Meldestelle gibt"
+about.privacy.title: "Deine Privatsphäre"
+about.sources.title: "Quellen"
+about.open_source.title: "Open Source"
+about.open_source: "Der Quellcode dieser Meldestelle ist Open Source (MIT-Lizenz) und auf <a href=\"{github}\" rel=\"noopener\">GitHub</a> verfügbar. Alle können sehen, wie Meldungen verarbeitet werden, Fehler melden oder Verbesserungen vorschlagen."
+faq.title: "Häufig gestellte Fragen"
+faq.intro: "Antworten auf die häufigsten Fragen zu Phantombremsungen, zum Melden und dazu, was wir mit deinen Daten machen."
+faq.more: "Deine Frage ist nicht dabei? Melde dich über die Kontaktdaten in der <a href=\"{privacy}\">Datenschutzerklärung</a>."
+faq.group.general: "Über Phantombremsungen und diese Website"
+faq.group.reporting: "Melden"
+faq.group.privacy: "Datenschutz und Aufnahmen"
+faq.group.data: "Wie die Daten verwendet werden"
+faq.what.q: "Was ist eine Phantombremsung?"
+faq.what.a: "Von einer Phantombremsung spricht man, wenn der Notbremsassistent oder der Abstandsregeltempomat eines Autos plötzlich bremst, obwohl es keinen Grund dafür gibt. Das passiert oft an Überführungen, bei Schatten, unter Schilderbrücken oder neben einem Lkw auf der Nachbarspur. Seit Juli 2024 ist der automatische Notbremsassistent (AEB) in jedem Neuwagen in der EU Pflicht, deshalb erleben es immer mehr Fahrerinnen und Fahrer."
+faq.who.q: "Wer betreibt diese Meldestelle?"
+faq.who.a: "Eine unabhängige Initiative. Wir sind nicht mit Autoherstellern, Importeuren, Händlern, Versicherern oder Behörden verbunden. Wer dahintersteht und wie du Kontakt aufnimmst, steht in der <a href=\"{privacy}\">Datenschutzerklärung</a>."
+faq.why.q: "Warum eine eigene Meldestelle?"
+faq.why.a: "Hersteller müssen Fehlbremsungen nirgends registrieren und teilen ihre Fahrzeugdaten nicht. Offizielle Meldungen gibt es kaum. Wenn Meldungen mit Marke, Modell, Ort und Umständen gebündelt werden, zeigen sich Muster: welche Autos, welche Orte, welche Situationen."
+faq.official.q: "Ist das eine offizielle Meldung?"
+faq.official.a: "Nein. Melde ein gefährliches Fahrzeug bitte auch der niederländischen <a href=\"https://www.ilent.nl\" rel=\"noopener\">ILT</a> und deinem Händler, damit es offiziell erfasst ist. Bei einem Unfall mit Verletzten ruf immer 112 an."
+faq.representative.q: "Sagen die Statistiken, wie sicher eine Marke ist?"
+faq.representative.a: "Nicht direkt. Meldungen sind Erfahrungen von Fahrerinnen und Fahrern; wir prüfen sie nicht technisch. Ein Modell, das sich gut verkauft oder eine engagierte Gruppe von Besitzerinnen und Besitzern hat, bekommt naturgemäß mehr Meldungen. Nutze die Zahlen, um Muster zu erkennen, nicht als Beweis, dass ein Fahrzeug defekt ist."
+faq.account.q: "Brauche ich ein Konto?"
+faq.account.a: "Nein. Du brauchst kein Konto, und wir fragen nicht nach deinem Namen oder deiner E-Mail-Adresse. <a href=\"{report}\">Eine Meldung abzugeben</a> dauert etwa drei Minuten."
+faq.countries.q: "Welche Autos kann ich melden?"
+faq.countries.a: "Vorerst Autos mit niederländischem Kennzeichen, weil wir die Fahrzeugdaten automatisch beim RDW (der niederländischen Fahrzeugbehörde) abrufen. Andere Länder haben (noch) kein öffentliches Kennzeichenregister, das wir nutzen können."
+faq.abroad.q: "Es ist im Ausland passiert. Kann ich es melden?"
+faq.abroad.a: "Ja. Das Land des Kennzeichens und das Land, in dem es passiert ist, sind voneinander unabhängig. Klicke die Stelle auf der Karte an, dann tragen wir Land und Straße für dich ein."
+faq.passenger.q: "Ich bin nicht selbst gefahren. Darf ich es melden?"
+faq.passenger.a: "Ja, wenn du es selbst als Insasse des Autos erlebt hast. Melde jeden Vorfall nur einmal pro Auto. Fülle die Meldung nie während der Fahrt aus."
+faq.unsure.q: "Ich weiß nicht genau, was die Ursache war. Was soll ich angeben?"
+faq.unsure.a: "Wähle, was am besten passt, oder „Nichts zu sehen“ bzw. „Sonstiges“, und beschreibe es in den Anmerkungen. Auch eine unvollständige Meldung hilft: Ort, Auto und Umstände reichen oft schon, um ein Muster zu erkennen."
+faq.plate.q: "Speichert ihr mein Kennzeichen?"
+faq.plate.a: "Nein. Wir nutzen das Kennzeichen nur, um die Fahrzeugdaten beim RDW abzurufen. Danach behalten wir nur einen nicht umkehrbaren Fingerabdruck (erstellt mit einem geheimen Schlüssel), damit wir wiederholte Meldungen desselben Autos zählen können. Das Kennzeichen selbst wird nie gespeichert oder angezeigt."
+faq.plate_needed.q: "Warum muss ich dann überhaupt ein Kennzeichen eingeben?"
+faq.plate_needed.a: "So bekommen wir vom RDW genau Marke, Modell, Baujahr und Typgenehmigung, ohne Tippfehler. Erst diese Angaben machen sichtbar, ob ein Problem zu einem bestimmten Modell oder einer bestimmten Softwareversion gehört."
+faq.footage.q: "Was passiert mit meinen Dashcam-Aufnahmen und Fotos?"
+faq.footage.a: "Sie bleiben privat, bis eine Moderatorin oder ein Moderator sie geprüft hat. Wir entfernen Metadaten wie den GPS-Standort. Kennzeichen auf Fotos schwärzt du beim Hochladen, und die Moderatorin oder der Moderator prüft das. Dashcam-Aufnahmen mit lesbarem Kennzeichen veröffentlichen wir nicht."
+faq.withdraw.q: "Wie widerrufe ich meine Einwilligung für Aufnahmen und Fotos?"
+faq.withdraw.a: "Öffne deine Meldung über <a href=\"{reports}\">Meldungen</a> und beantrage dort die Löschung der Aufnahmen und Fotos, indem du das Kennzeichen eingibst. Passt es, löscht eine Moderatorin oder ein Moderator sie."
+faq.delete_report.q: "Kann ich meine ganze Meldung löschen lassen?"
+faq.delete_report.a: "Ja. Melde dich über die Kontaktdaten in der <a href=\"{privacy}\">Datenschutzerklärung</a>. Die Meldung wird dann auch aus den Statistiken entfernt."
+faq.reuse.q: "Was passiert mit den Meldungen?"
+faq.reuse.a: "Meldungen werden ohne Kennzeichen veröffentlicht und in die Statistiken auf dieser Website aufgenommen. Was wir veröffentlichen, dürfen andere, etwa Forschende, Journalistinnen und Journalisten sowie Aufsichtsbehörden, mit Quellenangabe verwenden. Siehe die <a href=\"{terms}\">Nutzungsbedingungen</a>."
+faq.open_source.q: "Ist der Code öffentlich?"
+faq.open_source.a: "Ja. Der Quellcode ist Open Source (MIT-Lizenz) und auf <a href=\"{github}\" rel=\"noopener\">GitHub</a> verfügbar. Du kannst selbst nachsehen, wie wir mit Kennzeichen und Aufnahmen umgehen."
+
+form.choose: '— bitte wählen —'
+form.yes: 'Ja'
+form.no: 'Nein'
+form.unknown: Weiß ich nicht
+
+country.nl: Niederlande
+country.de: Deutschland
+country.fr: Frankreich
+
+home.title: Statistiken
+home.headline: Dein Auto macht eine Vollbremsung. Für nichts.
+home.intro: "Seit Juli 2024 ist der automatische Notbremsassistent (AEB) in jedem Neuwagen in der EU Pflicht. Immer mehr Fahrerinnen und Fahrer berichten, dass ihr Auto bei voller Fahrt stark bremst, ohne dass es einen Anlass dafür gibt. Offiziell erfasst wird das kaum."
+home.cta: Vorfall melden
+home.browse: Meldungen ansehen
+home.why.title: Warum diese Meldestelle?
+home.why.1: "Kassa (eine niederländische Verbrauchersendung) schätzt mindestens Hunderte Vorfälle pro Jahr. Die ILT erhielt in vier Jahren nur zwanzig Meldungen."
+home.why.2: Hersteller teilen keine Fahrzeugdaten und müssen Fehlauslösungen der Bremse nicht melden.
+home.why.3: Mit Kennzeichen, Ort und Umständen entsteht ein Muster, das Hersteller, Behörden und Politik nicht ignorieren können.
+home.empty.title: Noch keine Meldungen
+home.empty.text: Sei die oder der Erste. Jede Meldung hilft, das Muster sichtbar zu machen.
+home.kpis: Kennzahlen
+
+kpi.reports: Meldungen
+kpi.reports.hint: "{vehicles, plural, one {# Fahrzeug} other {# Fahrzeuge}} von {makes, plural, one {# Marke} other {# Marken}}"
+kpi.endangered: brachte den Hintermann in Gefahr
+kpi.endangered.hint: "{collisions, plural, =0 {noch keine Unfälle} one {# Unfall} other {# Unfälle}}"
+kpi.speed: Durchschnittsgeschwindigkeit beim Bremsen
+kpi.speed.hint: "im Schnitt {drop} km/h Geschwindigkeitsverlust"
+kpi.motorway: auf Autobahn oder Schnellstraße
+kpi.motorway.hint: "{pct} an Tunnel, Brücke, Überführung oder Schilderbrücke"
+kpi.recurring: Auto hatte das schon früher getan
+kpi.recurring.hint: "{repeat, plural, =0 {keine Fahrzeuge} one {# Fahrzeug} other {# Fahrzeuge}} hier mehr als einmal gemeldet"
+kpi.emergency: volle Notbremsung
+kpi.dismissed: vom Händler abgewimmelt
+kpi.dismissed.hint: "von {contacted, plural, one {# Meldung} other {# Meldungen}} an einen Händler"
+kpi.authority: auch der Behörde gemeldet
+kpi.authority.hint: Die offizielle Meldestelle verpasst die meisten Vorfälle.
+
+section.where: Wo passiert es?
+section.where.sub: Radar und Kameras lassen sich vor allem von Bauwerken über und neben der Straße täuschen.
+section.vehicles: Welche Autos?
+section.vehicles.sub: Marke und Modell stammen aus dem nationalen Fahrzeugregister (in den Niederlanden der RDW), nicht aus den Angaben der meldenden Person.
+section.circumstances: Unter welchen Bedingungen?
+section.circumstances.sub: Licht, Wetter, Tageszeit und was die Fahrerin oder der Fahrer für den Auslöser der Bremsung hält.
+section.impact: Wie schwer?
+section.impact.sub: Eine unerwartete Notbremsung auf der Autobahn ist vor allem für den Hintermann gefährlich.
+
+chart.trend: Meldungen pro Monat
+chart.trend.sub: 'Nach Datum des Vorfalls, im gewählten Zeitraum (Standard: letzte 12 Monate)'
+chart.map: Karte der Vorfälle
+chart.situation: Straßensituation an der Stelle
+chart.situation.sub: Tunnel, Überführungen und Schilderbrücken sind bekannte Auslöser
+chart.road_type: Straßentyp
+chart.roads: Am häufigsten gemeldete Straßen
+chart.make: Marken mit den meisten Meldungen
+chart.models: Modelle
+chart.year: Jahr der Erstzulassung
+chart.year.sub: AEB Pflicht ab 7. Juli 2024 (EU GSR2)
+chart.assist: Aktives Fahrerassistenzsystem
+chart.assist.sub: '„Keines“ = der immer aktive Notbremsassistent'
+chart.trigger: Vermuteter Auslöser
+chart.trigger.sub: Laut Fahrerin oder Fahrer
+chart.light: Lichtverhältnisse
+chart.weather: Wetter
+chart.hour: Tageszeit
+chart.speed: Geschwindigkeit beim Bremsen
+chart.speed.sub: Geschwindigkeit kurz vor dem Eingriff
+chart.severity: Wie stark hat das Auto gebremst?
+chart.consequence: Folge
+chart.dealer: Reaktion von Händler oder Importeur
+chart.dealer.sub: Vielen wird gesagt, es sei alles in Ordnung
+
+stats.reports: Meldungen
+stats.no_data: Noch nicht genug Daten.
+stats.show_table: Als Tabelle anzeigen
+
+table.vehicle: Fahrzeug
+table.reports: Meldungen
+table.vehicles: Fahrzeuge
+
+map.legend.incident: Meldung
+map.legend.collision: Unfall
+map.open: Meldung öffnen
+map.set: 'Ort gesetzt:'
+map.empty: Klicke auf die Karte, um die Stelle zu markieren (optional).
+map.locating: Standort wird ermittelt…
+map.denied: Dein Standort konnte nicht ermittelt werden. Klicke stattdessen auf die Karte.
+map.unsupported: Dein Browser unterstützt keine Standortbestimmung.
+map.use_location: Meinen Standort verwenden
+map.clear: Löschen
+
+method.title: Über diese Zahlen
+method.text: "Das sind Meldungen von Fahrerinnen und Fahrern, keine geprüften Unfalldaten. Marke, Modell und Baujahr stammen über das Kennzeichen aus dem nationalen Register; wir nehmen nur Meldungen aus Ländern an, deren Register wir abfragen können. Eine Marke mit mehr Meldungen hat vielleicht einfach mehr Autos auf der Straße, vergleiche daher mit dem Fahrzeugbestand. Wiederholte Meldungen desselben Fahrzeugs zählen als eigene Vorfälle, aber „Fahrzeuge“ zählt jedes Kennzeichen nur einmal."
+
+report.title: Phantombremsung melden
+report.intro: Dauert etwa 3 Minuten. Dein Kennzeichen nutzen wir nur, um Marke, Modell und Baujahr beim RDW abzurufen. Wir speichern es nicht.
+report.section.vehicle: Das Fahrzeug
+report.section.vehicle.sub: Wir rufen die Daten beim RDW ab.
+report.section.where: Wann und wo
+report.section.where.sub: Die genaue Stelle ist entscheidend, um Hotspots zu finden, zum Beispiel eine bestimmte Überführung.
+report.section.what: Was ist passiert?
+report.section.history: Vorgeschichte und Nachverfolgung
+report.section.history.sub: Optional, aber wertvoll für die Forschung.
+report.country: Zulassungsland (Kennzeichen)
+report.license_plate: Kennzeichen
+report.license_plate.help: Wird nicht gespeichert.
+report.occurred_at: Datum und Uhrzeit
+report.road_type: Straßentyp
+report.road_situation: Straßensituation an der Stelle
+report.road_situation.help: Wo genau warst du, als das Auto gebremst hat?
+report.road_number: Straßennummer
+report.direction: Fahrtrichtung
+report.direction.placeholder: z. B. Richtung Arnheim, Kilometer 142,3
+report.speed_limit: Höchstgeschwindigkeit (km/h)
+report.map: Stelle auf der Karte
+report.severity: Wie stark hat das Auto gebremst?
+report.speed_before: Geschwindigkeit vor dem Bremsen (km/h)
+report.speed_after: Niedrigste Geschwindigkeit beim Bremsen (km/h)
+report.speed_after.help: Eine Schätzung reicht. Leer lassen, wenn unbekannt.
+report.trigger: Was hat die Bremsung deiner Meinung nach ausgelöst?
+report.assist: Welches System war aktiv?
+report.assist.help: Wähle „Keines“, wenn du einfach selbst gefahren bist.
+report.assist.not_available: Dieses System gibt es nur bei Tesla. Wähle ein anderes System oder prüfe das Kennzeichen.
+report.warning_shown: Hat das Armaturenbrett eine Warnung angezeigt?
+report.consequence: Was war die Folge?
+report.weather: Wetter
+report.light: Licht
+report.recurrence: Wie oft hat dieses Auto das schon gemacht?
+report.dealer: Reaktion von Händler oder Importeur
+report.reported_to_authority: Ich habe das auch der niederländischen Inspektion für Umwelt und Verkehr (ILT) gemeldet
+report.windscreen: Wurde die Windschutzscheibe kürzlich getauscht?
+report.windscreen.help: Nach einem Austausch muss die Kamera neu kalibriert werden.
+report.odometer: Kilometerstand (km)
+report.software_version: Softwareversion
+report.software_version.help: Im Infotainment-Menü zu finden, falls du sie kennst.
+report.description: Details
+report.description.placeholder: Beschreibe, was du gesehen hast und was das Auto gemacht hat.
+report.footage: Videodatei
+report.footage.help: MP4, MOV, WebM, AVI oder MKV, max. 300 MB. Kürze das Video auf etwa eine Minute rund um den Vorfall.
+report.footage.too_big: "Die Datei ist größer als 300 MB. Kürze das Video auf etwa eine Minute rund um den Vorfall."
+report.footage.processing: Upload abgeschlossen, Meldung wird verarbeitet…
+report.footage.failed: Upload fehlgeschlagen. Prüfe deine Verbindung und versuche es erneut.
+report.privacy_consent: 'Ich habe die <a class="underline" href="{privacy}" target="_blank">Datenschutzerklärung</a> gelesen und bin mit den <a class="underline" href="{terms}" target="_blank">Nutzungsbedingungen</a> sowie mit der Veröffentlichung dieser Meldung ohne Kennzeichen einverstanden.'
+report.submit: Meldung senden
+report.thanks: Danke für deine Meldung! Unten siehst du, wie sie auf der Website erscheint.
+report.plate.not_found: Dieses Kennzeichen ist nicht im RDW-Register.
+report.registry_unavailable: Das RDW-Register ist gerade nicht erreichbar. Bitte versuche es in ein paar Minuten erneut.
+report.rate_limited: Du hast in der letzten Stunde viele Meldungen gesendet. Bitte versuche es später erneut.
+
+lookup.loading: Daten werden beim RDW abgerufen…
+lookup.not_found: Dieses Kennzeichen ist nicht im RDW-Register.
+lookup.invalid: Das sieht nicht nach einem gültigen Kennzeichen aus.
+lookup.unavailable: Der RDW ist gerade nicht erreichbar. Du kannst die Meldung später senden.
+lookup.rate_limited: Zu viele Abfragen. Bitte warte einen Moment.
+lookup.error: Abfrage fehlgeschlagen.
+lookup.year: Baujahr
+
+list.title: Meldungen
+list.count: "{count, plural, =0 {Keine Meldungen} one {# Meldung} other {# Meldungen}}"
+list.empty: Keine Meldungen gefunden.
+list.previous: Zurück
+list.next: Weiter
+
+incident.has_footage: Dashcam-Aufnahmen
+incident.footage: Dashcam-Aufnahmen
+incident.footage_status.pending: Dashcam-Aufnahmen wurden eingereicht und werden geprüft.
+incident.footage_status.approved: Dashcam-Aufnahmen verfügbar.
+incident.footage_status.rejected: Dashcam-Aufnahmen wurden eingereicht, werden aber nicht öffentlich gezeigt.
+incident.location: Ort
+incident.description: Schilderung der Fahrerin oder des Fahrers
+incident.circumstances: Umstände
+incident.vehicle: Fahrzeug
+incident.vehicle.source: Laut nationalem Fahrzeugregister zum Zeitpunkt der Meldung
+incident.reported_at: "Gemeldet am {date}"
+
+vehicle.make: Marke
+vehicle.model: Modell
+vehicle.first_admission: Erstzulassung
+vehicle.fuel: Kraftstoff
+vehicle.hybrid: Hybridklasse
+vehicle.category: EU-Fahrzeugklasse
+vehicle.type_approval: Typgenehmigung
+vehicle.variant: Variante
+vehicle.gsr2: Zugelassen nach AEB-Pflicht (GSR2)
+vehicle.open_recall: Offener Rückruf
+
+enum.road_type.motorway: Autobahn
+enum.road_type.expressway: Schnellstraße
+enum.road_type.provincial: Landstraße (Provinzstraße)
+enum.road_type.urban: Innerorts
+enum.road_type.rural: Außerorts
+enum.road_type.residential: Wohngebiet oder Parkplatz
+
+enum.road_situation.straight: Gerade Strecke
+enum.road_situation.curve: Kurve
+enum.road_situation.tunnel_entrance: Tunneleinfahrt
+enum.road_situation.tunnel_inside: In einem Tunnel
+enum.road_situation.tunnel_exit: Tunnelausfahrt
+enum.road_situation.under_viaduct: Unter einer Überführung
+enum.road_situation.bridge: Auf einer Brücke
+enum.road_situation.sign_gantry: Unter einer Schilderbrücke
+enum.road_situation.on_ramp: Auffahrt oder Beschleunigungsstreifen
+enum.road_situation.off_ramp: Ausfahrt oder Verzögerungsstreifen
+enum.road_situation.lane_merge: Fahrstreifenreduzierung / Einfädeln
+enum.road_situation.roadworks: Baustelle
+enum.road_situation.intersection: Kreuzung
+enum.road_situation.roundabout: Kreisverkehr
+enum.road_situation.railway_crossing: Bahnübergang
+enum.road_situation.hill: Hügel oder Steigung
+
+enum.trigger.nothing_visible: Nichts zu sehen
+enum.trigger.shadow: Schatten auf der Fahrbahn
+enum.trigger.viaduct_gantry: Überführung, Brücke oder Schilderbrücke
+enum.trigger.oncoming: Gegenverkehr
+enum.trigger.truck_adjacent: Lkw auf dem Nachbarfahrstreifen
+enum.trigger.vehicle_adjacent: Auto auf dem Nachbarfahrstreifen
+enum.trigger.merging: Einfädelndes Fahrzeug
+enum.trigger.turning_ahead: Abbiegendes Auto vor mir
+enum.trigger.parked: Am Straßenrand geparktes Auto
+enum.trigger.road_sign: Verkehrszeichen oder Wechselverkehrszeichen
+enum.trigger.guardrail: Leitplanke
+enum.trigger.road_marking: Fahrbahnmarkierung oder Flickstelle
+enum.trigger.low_sun: Tief stehende Sonne oder Spiegelung
+enum.trigger.rain_spray: Regen oder Gischt
+enum.trigger.other: Sonstiges
+
+enum.severity.warning_only: Nur Warnung
+enum.severity.light: Leichte Bremsung
+enum.severity.strong: Starke Bremsung
+enum.severity.emergency: Volle Notbremsung
+
+enum.weather.dry: Trocken
+enum.weather.rain: Regen
+enum.weather.heavy_rain: Starkregen
+enum.weather.fog: Nebel
+enum.weather.snow: Schnee oder Glätte
+
+enum.light.daylight: Tageslicht
+enum.light.low_sun: Tief stehende Sonne
+enum.light.twilight: Dämmerung
+enum.light.dark_lit: Dunkel, beleuchtete Straße
+enum.light.dark_unlit: Dunkel, unbeleuchtete Straße
+
+enum.assist.none: Keines (selbst gefahren)
+enum.assist.cruise: Normaler Tempomat
+enum.assist.acc: Abstandsregeltempomat (ACC)
+enum.assist.acc_lane: ACC mit Spurhalteassistent
+enum.assist.tesla_tad: Tesla Assisted Driving (TAD, früher FSD)
+enum.assist.unknown: Weiß ich nicht
+
+enum.consequence.none: Keine
+enum.consequence.startled: Ich habe mich erschreckt, sonst nichts
+enum.consequence.follower_braked: Hintermann musste stark bremsen
+enum.consequence.near_rear_end: Beinahe-Unfall
+enum.consequence.rear_end: Auffahrunfall
+enum.consequence.injury: Unfall mit Verletzten
+
+enum.recurrence.first: Zum ersten Mal
+enum.recurrence.few: 2 bis 5 Mal
+enum.recurrence.regular: 6 bis 20 Mal
+enum.recurrence.frequent: Mehr als 20 Mal
+
+enum.dealer.not_contacted: Noch nicht gemeldet
+enum.dealer.pending: Gemeldet, warte auf Antwort
+enum.dealer.acknowledged: Anerkannt, wird untersucht
+enum.dealer.software_update: Software-Update erhalten
+enum.dealer.recalibrated: Kamera/Radar neu kalibriert
+enum.dealer.no_fault_found: Kein Fehler gefunden
+enum.dealer.blamed_driver: Mir die Schuld gegeben
+enum.dealer.refused: Wollte nichts unternehmen
+
+enum.moderation_status.pending: In Prüfung
+enum.moderation_status.approved: Freigegeben
+enum.moderation_status.rejected: Abgelehnt
+
+home.eyebrow.country: "Phantombremsungen in {country}"
+home.eyebrow.all: Phantombremsungen in Europa
+home.empty_filtered.title: Keine Meldungen für diese Auswahl.
+
+filter.label: Meldungen filtern
+filter.country: Land
+filter.all_countries: Alle Länder
+filter.make: Marke
+filter.all_makes: Alle Marken
+filter.model: Modell
+filter.all_models: Alle Modelle
+filter.pick_make_first: Wähle zuerst eine Marke
+filter.road_type: Straßentyp
+filter.all_roads: Alle Straßen
+filter.period: Zeitraum
+filter.period.all: Gesamter Zeitraum
+filter.period.30d: Letzte 30 Tage
+filter.period.90d: Letzte 90 Tage
+filter.period.12m: Letzte 12 Monate
+filter.period.ytd: Dieses Jahr
+filter.period.custom: Benutzerdefiniert…
+filter.from: Von
+filter.to: Bis einschließlich
+filter.apply: Anwenden
+filter.reset: Filter zurücksetzen
+filter.to_list: Diese Meldungen ansehen
+filter.to_stats: Statistiken für diese Auswahl
+
+report.country.unsupported: Für dieses Land können wir noch keine Kennzeichen abfragen.
+lookup.unsupported_country: Für dieses Land können wir noch keine Kennzeichen abfragen.
+
+legal.nav: Rechtliche Hinweise
+legal.privacy: Datenschutzerklärung
+legal.cookies: Cookies
+legal.terms: Nutzungsbedingungen
+legal.last_updated: "Zuletzt aktualisiert: {date}"
+legal.operator_missing: "Hinweis: Die Angaben zum Betreiber wurden noch nicht ausgefüllt (OPERATOR_NAME und OPERATOR_EMAIL)."
+
+report.section.media: Dashcam-Aufnahmen und Fotos
+report.section.media.sub: Optional. Aufnahmen sind der stärkste Beweis, dass kein Hindernis da war; Fotos zeigen die Folgen.
+report.photos: Fotos der Folgen
+report.photos.help: "Zum Beispiel Schäden oder die Situation auf der Straße. Bis zu {max} Fotos (JPEG, PNG oder WebP), je 15 MB."
+report.photos.too_many_client: "Du kannst bis zu {max} Fotos hinzufügen."
+report.photos.too_big: Eines der Fotos ist größer als 15 MB.
+report.photos.invalid: Eines der Fotos konnte nicht gelesen werden. Versuche ein anderes Foto oder Dateiformat.
+report.media.privacy: "Wir entfernen alle Metadaten aus Fotos, etwa den GPS-Standort und das Gerät. Aufnahmen und Fotos bleiben privat, bis eine Moderatorin oder ein Moderator sie geprüft hat."
+
+incident.photos: Fotos der Folgen
+incident.photo_alt: "Foto {n} der Folgen"
+incident.photos_hidden: "{count, plural, one {# Foto wurde eingereicht, das (noch) nicht öffentlich ist.} other {# Fotos wurden eingereicht, die (noch) nicht öffentlich sind.}}"
+incident.has_photos: "{count, plural, one {# Foto} other {# Fotos}}"
+report.footage.placeholder: Video hierher ziehen oder zum Auswählen klicken
+report.footage.rejected_type: Das ist keine Videodatei.
+report.photos.placeholder: Fotos hierher ziehen oder zum Auswählen klicken
+report.photos.remove: Entfernen
+report.photos.rejected_type: Nur Fotos (JPEG, PNG oder WebP) sind erlaubt.
+report.incident_country: Land, in dem es passiert ist
+report.incident_country.help: Im Ausland unterwegs gewesen? Wähle dieses Land.
+filter.incident_country: Land des Vorfalls
+report.map.help: Klicke auf die Stelle, an der es passiert ist. Wir füllen dann Land, Straßennummer, Straßentyp und Höchstgeschwindigkeit anhand von OpenStreetMap aus. Bitte prüfe die Angaben.
+map.looking_up: Straße wird gesucht…
+map.found: "Gefunden:"
+map.nothing_found: An dieser Stelle wurde keine Straße gefunden. Bitte trage die Angaben selbst ein.
+map.wheel_hint: Klicke auf die Karte oder halte Strg/⌘ gedrückt, um zu zoomen
+report.media.consent_notice: "Mit dem Hochladen von Dateien willigst du ein, dass sie nach Prüfung veröffentlicht werden. Du kannst diese Einwilligung jederzeit auf der Seite deiner Meldung mit deinem Kennzeichen widerrufen."
+withdraw.title: Hast du diese Meldung eingereicht? Lösche die Aufnahmen und Fotos
+withdraw.intro: "Gib das Kennzeichen des Autos ein. Passt es zu dieser Meldung, leiten wir deine Anfrage an eine Moderatorin oder einen Moderator weiter, die bzw. der die Aufnahmen und Fotos löscht. Wir speichern das Kennzeichen nicht."
+withdraw.plate: Kennzeichen
+withdraw.plate.help: Dasselbe Kennzeichen wie in deiner Meldung.
+withdraw.submit: Löschung beantragen
+withdraw.mismatch: Dieses Kennzeichen gehört nicht zu dieser Meldung.
+withdraw.invalid: Bitte gib ein Kennzeichen ein.
+withdraw.rate_limited: Zu viele Versuche. Bitte versuche es in 15 Minuten erneut.
+incident.footage_status.withdrawn: Die meldende Person hat die Dashcam-Aufnahmen offline genommen.
+enum.moderation_status.withdrawn: Zurückgezogen
+
+admin.title: Verwaltung
+admin.to_site: Zur Website
+admin.logout: Abmelden
+admin.public_page: Öffentliche Seite
+admin.approve: Freigeben
+admin.reject: Ablehnen
+admin.media_count: "{footage, plural, =0 {} other {# Video · }}{photos, plural, =0 {keine Fotos} one {# Foto} other {# Fotos}}"
+admin.login.title: "Anmeldung Verwaltung"
+admin.login.intro: "Melde dich mit deinem Passkey an: Face ID, Fingerabdruck, Geräte-PIN oder Sicherheitsschlüssel. Du brauchst weder E-Mail-Adresse noch Passwort."
+admin.login.submit: "Mit Passkey anmelden"
+admin.login.no_passkey: "Noch kein Passkey oder verloren? Bitte eine Person mit Serverzugang um einen einmaligen Anmeldelink."
+admin.login_link.title: "Einmaliger Anmeldelink"
+admin.login_link.intro: "Dieser Link funktioniert nur einmal und nur kurz. Füge nach der Anmeldung einen Passkey hinzu, damit du dich danach ohne Link anmelden kannst."
+admin.login_link.submit: "Anmelden und Passkey hinzufügen"
+admin.passkey.unsupported: "Dieser Browser unterstützt keine Passkeys. Verwende eine aktuelle Version von Chrome, Edge, Firefox oder Safari."
+admin.passkey.cancelled: "Abgebrochen oder abgelaufen. Bitte versuche es erneut."
+admin.passkey.failed: "Das hat nicht geklappt. Versuche es erneut oder verwende einen anderen Passkey."
+admin.passkeys.title: "Passkeys"
+admin.passkeys.intro: "Damit meldest du dich in der Verwaltung an. Füge mindestens zwei hinzu, zum Beispiel auf Handy und Laptop, damit du dich nicht aussperrst, wenn ein Gerät verloren geht."
+admin.passkeys.none: "Du hast noch keinen Passkey. Füge jetzt einen hinzu: Ohne Passkey kommst du nach dem Abmelden nur mit einem neuen Link vom Server wieder hinein."
+admin.passkeys.added: "Hinzugefügt am {date}"
+admin.passkeys.synced: "Synchronisiert"
+admin.passkeys.last_used: "Zuletzt verwendet am {date}"
+admin.passkeys.never_used: "Noch nicht zur Anmeldung verwendet"
+admin.passkeys.remove: "Entfernen"
+admin.passkeys.confirm_remove: "Diesen Passkey entfernen? Du kannst dich danach nicht mehr damit anmelden."
+admin.passkeys.removed: "Passkey entfernt."
+admin.passkeys.last: "Deinen letzten Passkey kannst du nicht entfernen; füge zuerst einen anderen hinzu."
+admin.passkeys.add: "Passkey hinzufügen"
+admin.passkeys.add_help: "Dein Browser fragt, wo der Passkey gespeichert werden soll: auf diesem Gerät, auf deinem Handy (per QR-Code) oder auf einem Sicherheitsschlüssel."
+admin.deletions.title: Löschanfragen
+admin.deletions.intro: "Die meldende Person hat mit dem Kennzeichen bestätigt, dass es ihre Meldung ist. Mit der Freigabe werden alle Aufnahmen und Fotos der Meldung endgültig gelöscht; die Meldung selbst bleibt bestehen."
+admin.deletions.requested_at: "Beantragt am {date}"
+admin.deletions.approve: Löschen
+admin.deletions.deny: Ablehnen
+admin.deletions.confirm: "Alle Aufnahmen und Fotos dieser Meldung endgültig löschen?"
+admin.deletions.empty: Keine offenen Löschanfragen.
+admin.pending.title: Zu prüfen
+admin.pending.intro: Meldungen mit Aufnahmen oder Fotos, die noch nicht geprüft wurden.
+admin.pending.empty: Nichts zu prüfen.
+admin.review.deletion_pending: Die meldende Person hat für diese Meldung eine Löschung beantragt (siehe Übersicht).
+admin.review.footage_rule: "Gib Aufnahmen nur frei, wenn kein Kennzeichen lesbar ist. Videos können nicht maskiert werden; ist ein Kennzeichen lesbar, lehne sie ab (die Aufnahmen bleiben privat)."
+admin.review.photo: "Foto {n}"
+admin.review.mask_help: "Ziehe ein Rechteck über jedes lesbare Kennzeichen (auch von anderen Autos) und speichere. Veröffentlicht wird immer nur die maskierte Kopie; das Original bleibt privat."
+admin.review.save_masks: Masken speichern
+admin.review.clear_masks: Alle Rechtecke entfernen
+admin.review.view_public: Öffentliche Version ansehen
+admin.review.no_media: Diese Meldung hat keine Aufnahmen oder Fotos (mehr).
+admin.flash.footage_approved: Aufnahmen freigegeben.
+admin.flash.footage_rejected: Aufnahmen abgelehnt.
+admin.flash.photo_approved: Foto freigegeben.
+admin.flash.photo_rejected: Foto abgelehnt.
+admin.flash.masks_saved: Masken gespeichert; die öffentliche Kopie wurde aktualisiert.
+admin.flash.masks_invalid: Die Masken konnten nicht gelesen werden.
+admin.flash.deletion_approved: Alle Aufnahmen und Fotos der Meldung wurden gelöscht.
+admin.flash.deletion_denied: Löschanfrage abgelehnt.
+report.photos.mask_hint: "Sind Kennzeichen auf deinen Fotos? Ziehe ein Rechteck darüber, um sie zu schwärzen. Eine Moderatorin oder ein Moderator prüft das zusätzlich."
+report.photos.mask_remove: Rechteck entfernen
+withdraw.requested: "Wir haben deine Anfrage erhalten. Eine Moderatorin oder ein Moderator löscht die Aufnahmen und Fotos so schnell wie möglich."
+incident.media_deleted: "Die Aufnahmen und Fotos dieser Meldung wurden auf Wunsch der meldenden Person gelöscht."
+admin.storage.title: Speicher
+admin.storage.objects: "{count, plural, one {# Datei} other {# Dateien}}"
+admin.storage.total: Gesamt
+admin.storage.per_month: pro Monat
+admin.storage.pricing_note: "Schätzung auf Basis der aktuellen Größe: Sliplane berechnet für das erste GB nichts, danach 5 € pro angefangene 250 GB, bezogen auf den Monatsdurchschnitt."
+admin.storage.measured_at: "Gemessen {date}"
+admin.storage.refresh: Erneut messen
+enum.media_kind.photo: Fotos
+enum.media_kind.video: Videos

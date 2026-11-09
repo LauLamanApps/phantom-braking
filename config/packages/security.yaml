@@ -1,0 +1,41 @@
+security:
+    providers:
+        admin_users:
+            id: App\Admin\Infrastructure\Security\AdminUserProvider
+
+    firewalls:
+        dev:
+            pattern: ^/(_profiler(/|$)|(_wdt|assets|build)/)
+            security: false
+        # Only /admin has users; the public site never starts a session for authentication.
+        # There are no passwords: admins log in with a passkey. A one-time login link from the CLI
+        # (app:admin:login-link) is the way in for a new admin and the recovery route for a lost passkey.
+        admin:
+            pattern: ^/admin
+            lazy: true
+            provider: admin_users
+            entry_point: App\Admin\Infrastructure\Security\AdminLoginEntryPoint
+            webauthn:
+                authentication:
+                    routes:
+                        options_path: /admin/login/options
+                        result_path: /admin/login/passkey
+            login_link:
+                check_route: admin_login_link
+                check_post_only: true # the GET shows a button, so link previews and scanners can't use up the link
+                signature_properties: [userIdentifier]
+                lifetime: 900
+                max_uses: 1
+                default_target_path: admin_passkeys
+                always_use_default_target_path: true
+                failure_path: admin_login
+            logout:
+                path: admin_logout
+                target: admin_login
+            login_throttling:
+                max_attempts: 5
+                interval: '15 minutes'
+
+    access_control:
+        - { path: ^/admin/login, roles: PUBLIC_ACCESS }
+        - { path: ^/admin, roles: ROLE_ADMIN }

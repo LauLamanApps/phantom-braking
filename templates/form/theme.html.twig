@@ -1,0 +1,64 @@
+{% use 'form_div_layout.html.twig' %}
+
+{%- block form_row -%}
+    {%- set row_attr = row_attr|merge({class: (row_attr.class|default('') ~ ' space-y-1.5')|trim}) -%}
+    <div{% with {attr: row_attr} %}{{ block('attributes') }}{% endwith %}>
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+        {{- form_help(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{%- endblock form_row -%}
+
+{%- block form_label -%}
+    {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' block text-sm font-medium text-stone-800 dark:text-stone-200')|trim}) -%}
+    {{- parent() -}}
+{%- endblock form_label -%}
+
+{%- block form_label_content -%}
+    {{- parent() -}}
+    {%- if required and not compound -%}<span class="text-brand-600" aria-hidden="true"> *</span>{%- endif -%}
+{%- endblock form_label_content -%}
+
+{%- block form_help -%}
+    {%- if help is not empty -%}
+        <p id="{{ id }}_help" class="text-xs text-stone-500 dark:text-stone-400">{{ help|trans(help_translation_parameters, translation_domain) }}</p>
+    {%- endif -%}
+{%- endblock form_help -%}
+
+{%- block form_errors -%}
+    {%- if errors|length > 0 -%}
+        <ul class="{{ compound and form.parent is null ? 'mb-4 rounded-lg bg-brand-50 p-3 text-brand-700 ' : 'text-brand-600 ' }}text-sm font-medium">
+            {%- for error in errors -%}<li>{{ error.message }}</li>{%- endfor -%}
+        </ul>
+    {%- endif -%}
+{%- endblock form_errors -%}
+
+{# Radio groups render as selectable pills #}
+{%- block choice_widget_expanded -%}
+    <div {{ block('widget_container_attributes') }} class="flex flex-wrap gap-2">
+        {%- for child in form -%}
+            <label class="cursor-pointer">
+                <input type="radio" id="{{ child.vars.id }}" name="{{ child.vars.full_name }}" value="{{ child.vars.value }}" class="peer sr-only"{% if child.vars.checked %} checked{% endif %}{% if child.vars.required %} required{% endif %}>
+                <span class="inline-block rounded-full border border-stone-300 px-4 py-1.5 text-sm transition peer-checked:border-brand-600 peer-checked:bg-brand-600 peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-brand-500/50 hover:border-stone-500 dark:border-stone-700">
+                    {{- child.vars.label|trans({}, choice_translation_domain) -}}
+                </span>
+            </label>
+        {%- endfor -%}
+    </div>
+{%- endblock choice_widget_expanded -%}
+
+{%- block checkbox_row -%}
+    <div class="space-y-1">
+        <label class="flex items-start gap-3 text-sm">
+            {{- form_widget(form, {attr: attr|merge({class: 'mt-0.5 h-4 w-4'})}) -}}
+            <span>{% if label_html %}{{ label|trans(label_translation_parameters, translation_domain)|raw }}{% else %}{{ label|trans(label_translation_parameters, translation_domain) }}{% endif %}{% if required %}<span class="text-brand-600" aria-hidden="true"> *</span>{% endif %}</span>
+        </label>
+        {{- form_help(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{%- endblock checkbox_row -%}
+
+{%- block hidden_row -%}
+    {{- form_widget(form) -}}
+{%- endblock hidden_row -%}

@@ -1,0 +1,53 @@
+{% extends 'legal/_layout.html.twig' %}
+
+{% block title %}Cookie notice{% endblock %}
+
+{% block content %}
+    <p>
+        We use <strong>no tracking, analytics or advertising cookies</strong>. You can browse the statistics and reports
+        without a single cookie being set. That's why there is no cookie banner.
+    </p>
+
+    <h2>Which cookies do we set?</h2>
+    <p>Only when you submit a report do we set two functional cookies that the form needs to work:</p>
+    <table>
+        <thead><tr><th>Name</th><th>Purpose</th><th>Retention</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><code>__Host-csrf-token_…</code></td>
+                <td>Security: stops another website from submitting a report on your behalf (CSRF protection).</td>
+                <td>Until you close your browser</td>
+            </tr>
+            <tr>
+                <td><code>PHPSESSID</code></td>
+                <td>Session: shows the "Thank you for your report" confirmation after submitting.</td>
+                <td>Until you close your browser</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>
+        These cookies are strictly necessary for a service you ask for, so no consent is required (Dutch
+        Telecommunications Act, article 11.7a, implementing the EU ePrivacy Directive). They contain no plate or other
+        report data. We also don't use <code>localStorage</code> or similar browser storage.
+    </p>
+
+    <p>
+        Moderators who log in to the admin area also get a session cookie (<code>PHPSESSID</code>) to stay logged in.
+        Visitors and reporters only get it as described above.
+    </p>
+
+    <h2>OpenStreetMap maps</h2>
+    <p>
+        Your browser loads the maps from OpenStreetMap's servers, which therefore receive your IP address. As far as we
+        know, OpenStreetMap sets no cookies through these map tiles. See the
+        <a href="https://osmfoundation.org/wiki/Privacy_Policy" rel="noopener">OSMF privacy policy</a>.
+    </p>
+
+    <h2>Deleting cookies</h2>
+    <p>
+        You can delete or block cookies at any time in your browser settings. If you block the functional cookies, you
+        can't submit a report, but browsing still works.
+    </p>
+
+    <p>Read more about how we handle data in our <a href="{{ path('legal', {page: 'privacy'}) }}">privacy statement</a>.</p>
+{% endblock %}

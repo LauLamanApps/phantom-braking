@@ -1,0 +1,13 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ 'admin.login.title'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="mx-auto mt-12 max-w-sm">
+        <h1 class="text-2xl font-bold tracking-tight">{{ 'admin.login_link.title'|trans }}</h1>
+        <form method="post" action="{{ path('admin_login_link', query) }}" class="card mt-6 space-y-4">
+            <p class="text-sm text-stone-600 dark:text-stone-400">{{ 'admin.login_link.intro'|trans }}</p>
+            <button type="submit" class="btn-primary w-full">{{ 'admin.login_link.submit'|trans }}</button>
+        </form>
+    </div>
+{% endblock %}

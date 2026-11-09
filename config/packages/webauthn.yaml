@@ -1,0 +1,27 @@
+# Passkeys (WebAuthn) for /admin. Login is wired into the admin firewall (security.yaml);
+# adding a passkey to the logged-in admin is the "admin_passkey" creation controller below.
+webauthn:
+    credential_repository: App\Admin\Infrastructure\Webauthn\PasskeyCredentialRepository
+    user_repository: App\Admin\Infrastructure\Webauthn\AdminUserEntityRepository
+    # Only accept ceremonies from our own origin, e.g. https://phantom-braking.dev.
+    allowed_origins: ['%env(string:key:scheme:url:DEFAULT_URI)%://%env(string:key:host:url:DEFAULT_URI)%']
+    creation_profiles:
+        default:
+            rp:
+                name: 'Spookremmen Meldpunt beheer'
+                id: '%env(string:key:host:url:DEFAULT_URI)%'
+            authenticator_selection_criteria:
+                resident_key: required # a discoverable passkey: log in without typing an e-mail address
+                user_verification: required # Face ID, fingerprint or device PIN on every login
+            attestation_conveyance: none
+    request_profiles:
+        default:
+            rp_id: '%env(string:key:host:url:DEFAULT_URI)%'
+            user_verification: required
+    controllers:
+        enabled: true
+        creation:
+            admin_passkey:
+                options_path: /admin/passkeys/options
+                result_path: /admin/passkeys/register
+                user_entity_guesser: Webauthn\Bundle\Security\Guesser\CurrentUserEntityGuesser

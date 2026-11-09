@@ -1,0 +1,9 @@
+report.plate.invalid: Das sieht nicht nach einem gültigen Kennzeichen aus.
+report.occurred_at.future: Der Vorfall kann nicht in der Zukunft liegen.
+report.road_number.invalid: Verwende eine Straßennummer wie A15 oder N325.
+report.speed_after.higher: Die niedrigste Geschwindigkeit kann nicht höher sein als die Geschwindigkeit vor dem Bremsen.
+report.location.incomplete: Der Ort ist unvollständig. Klicke erneut auf die Karte.
+report.footage.type: Bitte lade eine Videodatei hoch (MP4, MOV, WebM, AVI oder MKV).
+report.consent.required: Du musst zustimmen, um die Meldung zu senden.
+report.photos.type: "Bitte lade nur Fotos hoch (JPEG, PNG oder WebP)."
+report.photos.masks_invalid: "Eine oder mehrere Fotomasken sind ungültig."

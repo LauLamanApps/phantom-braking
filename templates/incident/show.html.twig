@@ -1,0 +1,136 @@
+{% extends 'base.html.twig' %}
+
+{% set v = incident.vehicle %}
+{% set loc = incident.location %}
+{% block title %}{{ v.make }} {{ v.model }} – {{ incident.occurredAt|format_date('medium') }}{% endblock %}
+
+{% macro row(label, value) %}
+    {% if value is not empty %}
+        <div class="flex justify-between gap-4 border-t border-stone-100 py-2 text-sm first:border-0 dark:border-stone-800">
+            <dt class="text-stone-500">{{ label }}</dt>
+            <dd class="text-right font-medium">{{ value }}</dd>
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{% macro yesno(value) %}{{ value is null ? null : (value ? 'form.yes'|trans : 'form.no'|trans) }}{% endmacro %}
+
+{% block body %}
+    {% import _self as m %}
+    <a href="{{ path('incident_list') }}" class="text-sm text-stone-500 hover:underline">← {{ 'nav.reports'|trans }}</a>
+    <div class="mt-2 flex flex-wrap items-baseline justify-between gap-4">
+        <h1 class="text-3xl font-bold tracking-tight">{{ v.make }} <span class="font-normal">{{ v.model }}</span></h1>
+        <p class="text-stone-500">{{ incident.occurredAt|format_datetime('full', 'short') }}</p>
+    </div>
+    <p class="mt-2 text-lg text-stone-600 dark:text-stone-300">
+        {{ incident.severity.translationKey|trans }}: {{ incident.speedBefore }}{% if incident.speedAfter is not null %} → {{ incident.speedAfter }}{% endif %} km/h
+        · {{ loc.situation.translationKey|trans }} · {{ loc.roadType.translationKey|trans }}{% if loc.roadNumber %} {{ loc.roadNumber }}{% endif %}
+        · {{ loc.country.code|country_name }}
+    </p>
+
+    <div class="mt-6 grid gap-4 lg:grid-cols-3">
+        <div class="space-y-4 lg:col-span-2">
+            {% if incident.footage.public %}
+                <section class="card">
+                    <h2 class="font-semibold">{{ 'incident.footage'|trans }}</h2>
+                    <video class="mt-3 w-full rounded-xl bg-black" controls preload="metadata" src="{{ path('incident_footage', {id: incident.id}) }}"></video>
+                </section>
+            {% elseif incident.footage.exists %}
+                <p class="card text-sm text-stone-500">🎥 {{ ('incident.footage_status.' ~ incident.footage.status.value)|trans }}</p>
+            {% endif %}
+
+            {% set public_photos = incident.publicPhotos %}
+            {% if public_photos|length > 0 %}
+                <section class="card">
+                    <h2 class="font-semibold">{{ 'incident.photos'|trans }}</h2>
+                    <div class="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
+                        {% for photo in public_photos %}
+                            <a href="{{ path('incident_photo', {id: photo.id}) }}" target="_blank" class="block overflow-hidden rounded-lg">
+                                <img src="{{ path('incident_photo', {id: photo.id}) }}" width="{{ photo.width }}" height="{{ photo.height }}"
+                                     alt="{{ 'incident.photo_alt'|trans({n: loop.index}) }}" loading="lazy" class="aspect-[4/3] h-auto w-full object-cover transition hover:scale-105">
+                            </a>
+                        {% endfor %}
+                    </div>
+                </section>
+            {% endif %}
+            {% set hidden_photos = incident.photos|length - public_photos|length %}
+            {% if hidden_photos > 0 %}
+                <p class="card text-sm text-stone-500">📷 {{ 'incident.photos_hidden'|trans({count: hidden_photos}) }}</p>
+            {% endif %}
+
+            {% if incident.mediaDeletedAt %}
+                <p class="card text-sm text-stone-500">{{ 'incident.media_deleted'|trans }}</p>
+            {% elseif incident.mediaDeletionRequestedAt %}
+                <p class="card text-sm text-stone-500">{{ 'withdraw.requested'|trans }}</p>
+            {% endif %}
+            {% if withdraw_form %}
+                <details id="withdraw" class="card text-sm">
+                    <summary class="cursor-pointer font-semibold">{{ 'withdraw.title'|trans }}</summary>
+                    <p class="mt-2 text-stone-600 dark:text-stone-300">{{ 'withdraw.intro'|trans }}</p>
+                    {{ form_start(withdraw_form, {attr: {class: 'mt-4 flex flex-wrap items-end gap-3'}}) }}
+                        {{ form_row(withdraw_form.licensePlate, {row_attr: {class: 'w-56'}}) }}
+                        <button type="submit" class="btn-secondary">{{ 'withdraw.submit'|trans }}</button>
+                    {{ form_end(withdraw_form) }}
+                </details>
+            {% endif %}
+
+            {% if loc.hasCoordinates %}
+                <section class="card">
+                    <h2 class="font-semibold">{{ 'incident.location'|trans }}</h2>
+                    <div class="mt-3 h-72 overflow-hidden rounded-xl"
+                         data-controller="incident-map"
+                         data-incident-map-messages-value="{{ {wheel_hint: 'map.wheel_hint'|trans}|json_encode }}"
+                         data-incident-map-points-value="{{ [{latitude: loc.latitude, longitude: loc.longitude, collision: incident.consequence.isCollision}]|json_encode }}"></div>
+                </section>
+            {% endif %}
+
+            {% if incident.description %}
+                <section class="card">
+                    <h2 class="font-semibold">{{ 'incident.description'|trans }}</h2>
+                    <p class="mt-2 whitespace-pre-line text-stone-700 dark:text-stone-300">{{ incident.description }}</p>
+                </section>
+            {% endif %}
+
+            <section class="card">
+                <h2 class="font-semibold">{{ 'incident.circumstances'|trans }}</h2>
+                <dl class="mt-2">
+                    {{ m.row('report.trigger'|trans, incident.trigger.translationKey|trans) }}
+                    {{ m.row('report.assist'|trans, incident.assistSystem.translationKey|trans) }}
+                    {{ m.row('report.warning_shown'|trans, m.yesno(incident.wasWarningShown())) }}
+                    {{ m.row('report.consequence'|trans, incident.consequence.translationKey|trans) }}
+                    {{ m.row('report.weather'|trans, incident.weather.translationKey|trans) }}
+                    {{ m.row('report.light'|trans, incident.light.translationKey|trans) }}
+                    {{ m.row('report.incident_country'|trans, loc.country.code|country_name) }}
+                    {{ m.row('report.speed_limit'|trans, loc.speedLimit ? loc.speedLimit ~ ' km/h' : null) }}
+                    {{ m.row('report.direction'|trans, loc.direction) }}
+                    {{ m.row('report.recurrence'|trans, incident.recurrence.translationKey|trans) }}
+                    {{ m.row('report.dealer'|trans, incident.dealerResponse.translationKey|trans) }}
+                    {{ m.row('report.reported_to_authority'|trans, m.yesno(incident.isReportedToAuthority())) }}
+                </dl>
+            </section>
+        </div>
+
+        <aside class="space-y-4">
+            <section class="card">
+                <h2 class="font-semibold">{{ 'incident.vehicle'|trans }}</h2>
+                <p class="mt-1 text-xs text-stone-500">{{ 'incident.vehicle.source'|trans }}</p>
+                <dl class="mt-2">
+                    {{ m.row('vehicle.make'|trans, v.make) }}
+                    {{ m.row('vehicle.model'|trans, v.model) }}
+                    {{ m.row('vehicle.first_admission'|trans, v.firstAdmission ? v.firstAdmission|format_date('medium') : null) }}
+                    {{ m.row('vehicle.fuel'|trans, v.fuel) }}
+                    {{ m.row('vehicle.hybrid'|trans, v.hybridClass) }}
+                    {{ m.row('vehicle.category'|trans, v.europeanCategory) }}
+                    {{ m.row('vehicle.type_approval'|trans, v.typeApprovalNumber) }}
+                    {{ m.row('vehicle.variant'|trans, v.variant) }}
+                    {{ m.row('vehicle.gsr2'|trans, m.yesno(v.subjectToGsr2)) }}
+                    {{ m.row('vehicle.open_recall'|trans, m.yesno(v.hasOpenRecall)) }}
+                    {{ m.row('report.windscreen'|trans, m.yesno(incident.wasWindscreenReplacedRecently())) }}
+                    {{ m.row('report.odometer'|trans, incident.odometerKm ? incident.odometerKm|format_number ~ ' km' : null) }}
+                    {{ m.row('report.software_version'|trans, incident.softwareVersion) }}
+                </dl>
+            </section>
+            <p class="px-1 text-xs text-stone-500">{{ 'incident.reported_at'|trans({date: incident.reportedAt|format_datetime('medium', 'short')}) }}</p>
+        </aside>
+    </div>
+{% endblock %}

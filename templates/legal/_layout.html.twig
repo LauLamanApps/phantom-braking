@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% macro operator_field(value, placeholder) %}
+    {%- if value -%}{{ value }}{%- else -%}<mark class="rounded bg-yellow-200 px-1 text-stone-900">[{{ placeholder }}]</mark>{%- endif -%}
+{% endmacro %}
+
+{% block body %}
+    <div class="mx-auto grid max-w-5xl gap-10 lg:grid-cols-[12rem_1fr]">
+        <nav class="text-sm lg:sticky lg:top-8 lg:self-start" aria-label="{{ 'legal.nav'|trans }}">
+            <ul class="flex gap-4 lg:flex-col lg:gap-2">
+                {% for p in ['privacy', 'cookies', 'terms'] %}
+                    <li><a href="{{ path('legal', {page: p}) }}" class="{{ page == p ? 'font-semibold text-stone-900 dark:text-white' : 'text-stone-500 hover:text-stone-900 dark:hover:text-white' }}">{{ ('legal.' ~ p)|trans }}</a></li>
+                {% endfor %}
+            </ul>
+        </nav>
+        <article class="legal">
+            <h1>{{ block('title') }}</h1>
+            <p class="text-sm text-stone-500">{{ 'legal.last_updated'|trans({date: last_updated|format_date('long')}) }}</p>
+            {% if not operator.name or not operator.email %}
+                <p class="rounded-lg border border-yellow-300 bg-yellow-50 p-3 text-sm text-yellow-900">{{ 'legal.operator_missing'|trans }}</p>
+            {% endif %}
+            {% block content %}{% endblock %}
+        </article>
+    </div>
+{% endblock %}

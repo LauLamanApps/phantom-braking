@@ -1,0 +1,60 @@
+doctrine:
+    dbal:
+        url: '%env(resolve:DATABASE_URL)%'
+        profiling_collect_backtrace: '%kernel.debug%'
+        types:
+            incident_id: App\Incident\Infrastructure\Persistence\IncidentIdDoctrineType
+            photo_id: App\Incident\Infrastructure\Persistence\PhotoIdDoctrineType
+            admin_user_id: App\Admin\Infrastructure\Persistence\AdminUserIdDoctrineType
+            admin_passkey_id: App\Admin\Infrastructure\Persistence\AdminPasskeyIdDoctrineType
+    orm:
+        validate_xml_mapping: true
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        identity_generation_preferences:
+            Doctrine\DBAL\Platforms\PostgreSQLPlatform: identity
+        auto_mapping: true
+        mappings:
+            Incident:
+                type: attribute
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Incident/Domain/Model'
+                prefix: 'App\Incident\Domain\Model'
+            Admin:
+                type: attribute
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Admin/Domain/Model'
+                prefix: 'App\Admin\Domain\Model'
+            # Mapped superclass of AdminPasskey (public key, counter, …); the bundle registers its DBAL types itself.
+            Webauthn:
+                type: xml
+                is_bundle: false
+                dir: '%kernel.project_dir%/vendor/web-auth/webauthn-symfony-bundle/src/Resources/config/doctrine-mapping'
+                prefix: 'Webauthn'
+            Vehicle:
+                type: attribute
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Vehicle/Domain/Model'
+                prefix: 'App\Vehicle\Domain\Model'
+
+when@test:
+    doctrine:
+        dbal:
+            dbname_suffix: '_test%env(default::TEST_TOKEN)%'
+
+when@prod:
+    doctrine:
+        orm:
+            query_cache_driver:
+                type: pool
+                pool: doctrine.system_cache_pool
+            result_cache_driver:
+                type: pool
+                pool: doctrine.result_cache_pool
+
+    framework:
+        cache:
+            pools:
+                doctrine.result_cache_pool:
+                    adapter: cache.app
+                doctrine.system_cache_pool:
+                    adapter: cache.system

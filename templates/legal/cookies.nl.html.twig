@@ -1,0 +1,53 @@
+{% extends 'legal/_layout.html.twig' %}
+
+{% block title %}Cookieverklaring{% endblock %}
+
+{% block content %}
+    <p>
+        We gebruiken <strong>geen tracking-, analyse- of advertentiecookies</strong>. Je kunt de statistieken en meldingen
+        bekijken zonder dat er één cookie wordt geplaatst. Daarom zie je bij ons ook geen cookiebanner.
+    </p>
+
+    <h2>Welke cookies plaatsen we?</h2>
+    <p>Alleen als je een melding verstuurt, plaatsen we twee functionele cookies die nodig zijn om het formulier te laten werken:</p>
+    <table>
+        <thead><tr><th>Naam</th><th>Doel</th><th>Bewaartermijn</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><code>__Host-csrf-token_…</code></td>
+                <td>Beveiliging: voorkomt dat een andere website namens jou een melding instuurt (CSRF-bescherming).</td>
+                <td>Tot je de browser sluit</td>
+            </tr>
+            <tr>
+                <td><code>PHPSESSID</code></td>
+                <td>Sessie: toont na het versturen de bevestiging "Bedankt voor je melding".</td>
+                <td>Tot je de browser sluit</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>
+        Deze cookies zijn strikt noodzakelijk voor de dienst die je zelf vraagt. Daarvoor is volgens de
+        Telecommunicatiewet (artikel 11.7a) geen toestemming nodig. Ze bevatten geen kenteken of andere meldingsgegevens.
+        We gebruiken ook geen <code>localStorage</code> of vergelijkbare opslag in je browser.
+    </p>
+
+    <p>
+        Beheerders die inloggen op het beheergedeelte krijgen ook een sessiecookie (<code>PHPSESSID</code>) om ingelogd te
+        blijven. Bezoekers en melders krijgen die alleen zoals hierboven beschreven.
+    </p>
+
+    <h2>Kaarten van OpenStreetMap</h2>
+    <p>
+        De kaarten worden door je browser geladen van de servers van OpenStreetMap. Daarbij ontvangt OpenStreetMap je
+        IP-adres. Voor zover wij weten plaatst OpenStreetMap via deze kaarttegels geen cookies. Zie het
+        <a href="https://osmfoundation.org/wiki/Privacy_Policy" rel="noopener">privacybeleid van de OSMF</a>.
+    </p>
+
+    <h2>Cookies verwijderen</h2>
+    <p>
+        Je kunt cookies altijd verwijderen of blokkeren via de instellingen van je browser. Blokkeer je de functionele
+        cookies, dan kun je geen melding versturen. Bekijken blijft gewoon werken.
+    </p>
+
+    <p>Meer over hoe we met gegevens omgaan lees je in onze <a href="{{ path('legal', {page: 'privacy'}) }}">privacyverklaring</a>.</p>
+{% endblock %}

@@ -1,0 +1,9 @@
+report.plate.invalid: This doesn't look like a valid plate.
+report.occurred_at.future: The incident cannot be in the future.
+report.road_number.invalid: Use a road number such as A15 or N325.
+report.speed_after.higher: The lowest speed cannot be higher than the speed before braking.
+report.location.incomplete: The location is incomplete. Click the map again.
+report.footage.type: Please upload a video file (MP4, MOV, WebM, AVI or MKV).
+report.consent.required: You must agree in order to send the report.
+report.photos.type: "Please upload photos only (JPEG, PNG or WebP)."
+report.photos.masks_invalid: "One or more photo masks are invalid."

@@ -1,0 +1,483 @@
+site.name: Phantom Braking Report
+site.title: Central reporting point for phantom braking
+site.description: Report your car's emergency brake activating for no reason (phantom braking). Together we show how often, where and in which cars it happens.
+
+nav.statistics: Statistics
+nav.reports: Reports
+nav.report: Report incident
+nav.language: Language
+
+about.mission: Independent reporting point. Manufacturers don't have to register phantom braking anywhere. These reports make the problem measurable.
+about.privacy: We never store your license plate. We keep only an irreversible fingerprint so we can count repeat reports per vehicle. Dashcam footage is only published after review and with your consent.
+about.sources: 'Vehicle data: <a class="underline" href="https://opendata.rdw.nl" rel="noopener">RDW Open Data</a>. Map: <a class="underline" href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a>. Please also report a dangerous vehicle to the Dutch <a class="underline" href="https://www.ilent.nl" rel="noopener">ILT</a>.'
+footer.source_code: Open source (MIT) on GitHub
+nav.faq: "FAQ"
+footer.nav: "About and legal information"
+about.title: "About"
+about.mission.title: "Why this reporting point exists"
+about.privacy.title: "Your privacy"
+about.sources.title: "Sources"
+about.open_source.title: "Open source"
+about.open_source: "The source code of this reporting point is open source (MIT licence) and available on <a href=\"{github}\" rel=\"noopener\">GitHub</a>. Anyone can see how reports are processed, report bugs or suggest improvements."
+faq.title: "Frequently asked questions"
+faq.intro: "Answers to the most common questions about phantom braking, reporting and what we do with your data."
+faq.more: "Question not listed? Get in touch using the details in the <a href=\"{privacy}\">privacy statement</a>."
+faq.group.general: "About phantom braking and this site"
+faq.group.reporting: "Reporting"
+faq.group.privacy: "Privacy and footage"
+faq.group.data: "How the data is used"
+faq.what.q: "What is phantom braking?"
+faq.what.a: "Phantom braking is when a car’s emergency brake assist or adaptive cruise control suddenly brakes although there is nothing to brake for. It often happens at overpasses, shadows, overhead signs or next to a truck in the adjacent lane. Since July 2024 automatic emergency braking (AEB) is mandatory in every new car in the EU, so more and more drivers run into it."
+faq.who.q: "Who runs this reporting point?"
+faq.who.a: "An independent initiative. We are not affiliated with car makers, importers, dealers, insurers or governments. Who runs it and how to get in touch is in the <a href=\"{privacy}\">privacy statement</a>."
+faq.why.q: "Why a separate reporting point?"
+faq.why.a: "Manufacturers don’t have to register false braking events anywhere and don’t share their vehicle data. Official reports barely exist. Bundling reports with make, model, location and circumstances reveals patterns: which cars, which places, which situations."
+faq.official.q: "Is this an official report?"
+faq.official.a: "No. Please also report a dangerous vehicle to the Dutch <a href=\"https://www.ilent.nl\" rel=\"noopener\">ILT</a> and to your dealer, so it is officially on record. In an accident with injuries, always call 112."
+faq.representative.q: "Do the statistics say how safe a make is?"
+faq.representative.a: "Not directly. Reports are drivers’ experiences; we don’t verify them technically. A model that sells well, or has an engaged group of owners, naturally gets more reports. Use the figures to spot patterns, not as proof that a vehicle is defective."
+faq.account.q: "Do I need an account?"
+faq.account.a: "No. You don’t need an account and we don’t ask for your name or email address. <a href=\"{report}\">Submitting a report</a> takes about three minutes."
+faq.countries.q: "Which cars can I report?"
+faq.countries.a: "For now, cars with a Dutch licence plate, because we fetch the vehicle details automatically from the RDW (the Dutch vehicle authority). Other countries don’t (yet) have a public plate register we can use."
+faq.abroad.q: "It happened abroad. Can I report it?"
+faq.abroad.a: "Yes. The country of the plate and the country where it happened are separate. Click the spot on the map and we fill in the country and road for you."
+faq.passenger.q: "I wasn’t driving. May I report it?"
+faq.passenger.a: "Yes, if you experienced it yourself as an occupant of the car. Report each incident only once per car. Never fill in the report while driving."
+faq.unsure.q: "I’m not sure what caused it. What should I fill in?"
+faq.unsure.a: "Choose what fits best, or “Nothing visible” or “Other”, and describe it in the comments. An incomplete report still helps: the place, the car and the circumstances are often enough to see a pattern."
+faq.plate.q: "Do you store my licence plate?"
+faq.plate.a: "No. We only use the plate to fetch the vehicle details from the RDW. After that we keep only an irreversible fingerprint (made with a secret key), so we can count repeat reports of the same car. The plate itself is never stored or shown."
+faq.plate_needed.q: "Then why do I have to enter a plate?"
+faq.plate_needed.a: "It gets us the exact make, model, year and type approval from the RDW, without typos. Those details are what make it possible to see whether a problem belongs to a specific model or software version."
+faq.footage.q: "What happens to my dashcam footage and photos?"
+faq.footage.a: "They stay private until a moderator has reviewed them. We remove metadata such as the GPS location. You black out plates on photos when uploading, and the moderator checks that. We don’t publish dashcam footage with a readable plate."
+faq.withdraw.q: "How do I withdraw my consent for footage and photos?"
+faq.withdraw.a: "Open your report via <a href=\"{reports}\">Reports</a> and request deletion of the footage and photos there by entering the plate. If it matches, a moderator deletes them."
+faq.delete_report.q: "Can I have my whole report deleted?"
+faq.delete_report.a: "Yes. Get in touch using the details in the <a href=\"{privacy}\">privacy statement</a>. The report is then also removed from the statistics."
+faq.reuse.q: "What happens to the reports?"
+faq.reuse.a: "Reports are published without the plate and included in the statistics on this site. What we publish may be used by others, such as researchers, journalists and regulators, with attribution. See the <a href=\"{terms}\">terms of use</a>."
+faq.open_source.q: "Is the code public?"
+faq.open_source.a: "Yes. The source code is open source (MIT licence) and available on <a href=\"{github}\" rel=\"noopener\">GitHub</a>. You can check for yourself how we handle plates and footage."
+
+form.choose: '— choose —'
+form.yes: 'Yes'
+form.no: 'No'
+form.unknown: Don't know
+
+country.nl: Netherlands
+country.de: Germany
+country.fr: France
+
+home.title: Statistics
+home.headline: Your car slams on the brakes. For nothing.
+home.intro: "Since July 2024, automatic emergency braking (AEB) has been mandatory in every new car in the EU. More and more drivers report their car braking hard at full speed for no reason. Hardly anyone records this officially."
+home.cta: Report an incident
+home.browse: Browse reports
+home.why.title: Why this reporting point?
+home.why.1: "Kassa (a Dutch consumer TV show) estimates at least hundreds of incidents a year. The ILT received only twenty reports in four years."
+home.why.2: Manufacturers don't share vehicle data and don't have to report false brake interventions.
+home.why.3: With plate, location and circumstances, a pattern emerges that manufacturers, regulators and politicians cannot ignore.
+home.empty.title: No reports yet
+home.empty.text: Be the first. Every report helps make the pattern visible.
+home.kpis: Key figures
+
+kpi.reports: reports
+kpi.reports.hint: "{vehicles, plural, one {# vehicle} other {# vehicles}} from {makes, plural, one {# make} other {# makes}}"
+kpi.endangered: endangered the car behind
+kpi.endangered.hint: "{collisions, plural, =0 {no collisions yet} one {# collision} other {# collisions}}"
+kpi.speed: average speed when braking
+kpi.speed.hint: "on average {drop} km/h speed lost"
+kpi.motorway: on motorway or expressway
+kpi.motorway.hint: "{pct} at a tunnel, viaduct, bridge or gantry"
+kpi.recurring: car had done it before
+kpi.recurring.hint: "{repeat, plural, =0 {no vehicles} one {# vehicle} other {# vehicles}} reported here more than once"
+kpi.emergency: full emergency stop
+kpi.dismissed: dismissed by the dealer
+kpi.dismissed.hint: "of {contacted, plural, one {# report} other {# reports}} to a dealer"
+kpi.authority: also reported to the authority
+kpi.authority.hint: The official reporting point misses most incidents.
+
+section.where: Where does it happen?
+section.where.sub: Radar and cameras are mostly fooled by structures above and beside the road.
+section.vehicles: Which cars?
+section.vehicles.sub: Make and model come from the national vehicle register (the RDW in the Netherlands), not from what the reporter types.
+section.circumstances: Under which conditions?
+section.circumstances.sub: Light, weather, time of day, and what the driver thinks set the brake off.
+section.impact: How serious?
+section.impact.sub: An unexpected emergency stop on the motorway is most dangerous for whoever is behind you.
+
+chart.trend: Reports per month
+chart.trend.sub: 'By incident date, in the selected period (default: last 12 months)'
+chart.map: Incident map
+chart.situation: Road situation at the spot
+chart.situation.sub: Tunnels, viaducts and gantries are known triggers
+chart.road_type: Road type
+chart.roads: Most reported roads
+chart.make: Makes with the most reports
+chart.models: Models
+chart.year: Year of first registration
+chart.year.sub: AEB mandatory from 7 July 2024 (EU GSR2)
+chart.assist: Active driver-assistance system
+chart.assist.sub: '"None" = the always-on emergency brake assist'
+chart.trigger: Suspected trigger
+chart.trigger.sub: According to the driver
+chart.light: Light conditions
+chart.weather: Weather
+chart.hour: Time of day
+chart.speed: Speed when braking
+chart.speed.sub: Speed just before the intervention
+chart.severity: How hard did the car brake?
+chart.consequence: Consequence
+chart.dealer: Dealer or importer response
+chart.dealer.sub: Many drivers are told nothing is wrong
+
+stats.reports: Reports
+stats.no_data: Not enough data yet.
+stats.show_table: Show as table
+
+table.vehicle: Vehicle
+table.reports: Reports
+table.vehicles: Vehicles
+
+map.legend.incident: Report
+map.legend.collision: Collision
+map.open: Open report
+map.set: 'Location set:'
+map.empty: Click the map to mark the spot (optional).
+map.locating: Locating…
+map.denied: Could not determine your location. Click the map instead.
+map.unsupported: Your browser does not support geolocation.
+map.use_location: Use my location
+map.clear: Clear
+
+method.title: About these numbers
+method.text: "These are reports by drivers, not verified accident data. Make, model and year come from the national register via the plate; we only accept reports from countries whose register we can query. A make with more reports may simply have more cars on the road, so compare with fleet size. Repeat reports of the same vehicle count as separate incidents, but 'vehicles' counts each plate once."
+
+report.title: Report a phantom braking incident
+report.intro: Takes about 3 minutes. We only use your plate to fetch make, model and year from the RDW. We don't store it.
+report.section.vehicle: The vehicle
+report.section.vehicle.sub: We fetch the details from the RDW.
+report.section.where: When and where
+report.section.where.sub: The exact spot is key to finding hotspots, such as one particular viaduct.
+report.section.what: What happened?
+report.section.history: History and follow-up
+report.section.history.sub: Optional, but valuable for research.
+report.country: Country of registration (plate)
+report.license_plate: License plate
+report.license_plate.help: Not stored.
+report.occurred_at: Date and time
+report.road_type: Road type
+report.road_situation: Road situation at that spot
+report.road_situation.help: Where exactly were you when the car braked?
+report.road_number: Road number
+report.direction: Direction of travel
+report.direction.placeholder: e.g. towards Arnhem, km marker 142.3
+report.speed_limit: Speed limit (km/h)
+report.map: Spot on the map
+report.severity: How hard did the car brake?
+report.speed_before: Speed before braking (km/h)
+report.speed_after: Lowest speed during braking (km/h)
+report.speed_after.help: An estimate is fine. Leave empty if unknown.
+report.trigger: What do you think set the brake off?
+report.assist: Which system was on?
+report.assist.help: Choose "None" if you were simply driving yourself.
+report.assist.not_available: This system only exists on a Tesla. Choose another system or check the plate.
+report.warning_shown: Did the dashboard show a warning?
+report.consequence: What was the consequence?
+report.weather: Weather
+report.light: Light
+report.recurrence: How often has this car done this?
+report.dealer: Dealer or importer response
+report.reported_to_authority: I also reported this to the Dutch Human Environment and Transport Inspectorate (ILT)
+report.windscreen: Was the windscreen replaced recently?
+report.windscreen.help: The camera needs recalibrating after a replacement.
+report.odometer: Odometer (km)
+report.software_version: Software version
+report.software_version.help: Shown in the infotainment menu, if you know it.
+report.description: Details
+report.description.placeholder: Describe what you saw and what the car did.
+report.footage: Video file
+report.footage.help: MP4, MOV, WebM, AVI or MKV, max 300 MB. Trim it to about a minute around the incident.
+report.footage.too_big: "File is larger than 300 MB. Trim the video to about a minute around the incident."
+report.footage.processing: Upload done, processing report…
+report.footage.failed: Upload failed. Check your connection and try again.
+report.privacy_consent: 'I have read the <a class="underline" href="{privacy}" target="_blank">privacy statement</a> and agree to the <a class="underline" href="{terms}" target="_blank">terms of use</a> and to this report being published without the plate.'
+report.submit: Send report
+report.thanks: Thank you for your report! Below is how it appears on the site.
+report.plate.not_found: This plate is not in the RDW register.
+report.registry_unavailable: The RDW register is unreachable right now. Please try again in a few minutes.
+report.rate_limited: You have sent many reports in the last hour. Please try again later.
+
+lookup.loading: Fetching details from the RDW…
+lookup.not_found: This plate is not in the RDW register.
+lookup.invalid: This doesn't look like a valid plate.
+lookup.unavailable: The RDW is unreachable right now. You can send the report later.
+lookup.rate_limited: Too many lookups. Please wait a moment.
+lookup.error: Lookup failed.
+lookup.year: Year
+
+list.title: Reports
+list.count: "{count, plural, =0 {No reports} one {# report} other {# reports}}"
+list.empty: No reports found.
+list.previous: Previous
+list.next: Next
+
+incident.has_footage: Dashcam footage
+incident.footage: Dashcam footage
+incident.footage_status.pending: Dashcam footage was submitted and is being reviewed.
+incident.footage_status.approved: Dashcam footage available.
+incident.footage_status.rejected: Dashcam footage was submitted but will not be shown publicly.
+incident.location: Location
+incident.description: Driver's account
+incident.circumstances: Circumstances
+incident.vehicle: Vehicle
+incident.vehicle.source: As registered in the national vehicle register at the time of reporting
+incident.reported_at: "Reported on {date}"
+
+vehicle.make: Make
+vehicle.model: Model
+vehicle.first_admission: First registered
+vehicle.fuel: Fuel
+vehicle.hybrid: Hybrid class
+vehicle.category: EU vehicle category
+vehicle.type_approval: Type approval
+vehicle.variant: Variant
+vehicle.gsr2: Registered after AEB mandate (GSR2)
+vehicle.open_recall: Open recall
+
+enum.road_type.motorway: Motorway
+enum.road_type.expressway: Expressway
+enum.road_type.provincial: Provincial road
+enum.road_type.urban: Urban road
+enum.road_type.rural: Rural road
+enum.road_type.residential: Residential area or car park
+
+enum.road_situation.straight: Straight road
+enum.road_situation.curve: Curve
+enum.road_situation.tunnel_entrance: Tunnel entrance
+enum.road_situation.tunnel_inside: Inside a tunnel
+enum.road_situation.tunnel_exit: Tunnel exit
+enum.road_situation.under_viaduct: Under a viaduct
+enum.road_situation.bridge: On a bridge
+enum.road_situation.sign_gantry: Under a sign gantry
+enum.road_situation.on_ramp: On-ramp or merge lane
+enum.road_situation.off_ramp: Off-ramp or exit lane
+enum.road_situation.lane_merge: Lane reduction / merge
+enum.road_situation.roadworks: Roadworks
+enum.road_situation.intersection: Intersection
+enum.road_situation.roundabout: Roundabout
+enum.road_situation.railway_crossing: Railway crossing
+enum.road_situation.hill: Hill or slope
+
+enum.trigger.nothing_visible: Nothing visible
+enum.trigger.shadow: Shadow on the road
+enum.trigger.viaduct_gantry: Viaduct, bridge or gantry
+enum.trigger.oncoming: Oncoming traffic
+enum.trigger.truck_adjacent: Truck in adjacent lane
+enum.trigger.vehicle_adjacent: Car in adjacent lane
+enum.trigger.merging: Merging vehicle
+enum.trigger.turning_ahead: Car turning off ahead
+enum.trigger.parked: Parked car at the roadside
+enum.trigger.road_sign: Road sign or matrix sign
+enum.trigger.guardrail: Guardrail
+enum.trigger.road_marking: Road marking or patch
+enum.trigger.low_sun: Low sun or reflection
+enum.trigger.rain_spray: Rain or spray
+enum.trigger.other: Other
+
+enum.severity.warning_only: Warning only
+enum.severity.light: Light braking
+enum.severity.strong: Hard braking
+enum.severity.emergency: Full emergency stop
+
+enum.weather.dry: Dry
+enum.weather.rain: Rain
+enum.weather.heavy_rain: Heavy rain
+enum.weather.fog: Fog
+enum.weather.snow: Snow or ice
+
+enum.light.daylight: Daylight
+enum.light.low_sun: Low sun
+enum.light.twilight: Twilight
+enum.light.dark_lit: Dark, lit road
+enum.light.dark_unlit: Dark, unlit road
+
+enum.assist.none: None (driving myself)
+enum.assist.cruise: Regular cruise control
+enum.assist.acc: Adaptive cruise control (ACC)
+enum.assist.acc_lane: ACC with lane centering
+enum.assist.tesla_tad: Tesla Assisted Driving (TAD, formerly FSD)
+enum.assist.unknown: Don't know
+
+enum.consequence.none: None
+enum.consequence.startled: I was startled, nothing else
+enum.consequence.follower_braked: Car behind had to brake hard
+enum.consequence.near_rear_end: Near miss
+enum.consequence.rear_end: Rear-end collision
+enum.consequence.injury: Collision with injuries
+
+enum.recurrence.first: First time
+enum.recurrence.few: 2 to 5 times
+enum.recurrence.regular: 6 to 20 times
+enum.recurrence.frequent: More than 20 times
+
+enum.dealer.not_contacted: Not reported yet
+enum.dealer.pending: Reported, awaiting response
+enum.dealer.acknowledged: Acknowledged, investigating
+enum.dealer.software_update: Got a software update
+enum.dealer.recalibrated: Camera/radar recalibrated
+enum.dealer.no_fault_found: No fault found
+enum.dealer.blamed_driver: Blamed me
+enum.dealer.refused: Refused to act
+
+enum.moderation_status.pending: Under review
+enum.moderation_status.approved: Approved
+enum.moderation_status.rejected: Rejected
+
+home.eyebrow.country: "Phantom braking in {country}"
+home.eyebrow.all: Phantom braking in Europe
+home.empty_filtered.title: No reports match this selection.
+
+filter.label: Filter reports
+filter.country: Country
+filter.all_countries: All countries
+filter.make: Make
+filter.all_makes: All makes
+filter.model: Model
+filter.all_models: All models
+filter.pick_make_first: Choose a make first
+filter.road_type: Road type
+filter.all_roads: All roads
+filter.period: Period
+filter.period.all: All time
+filter.period.30d: Last 30 days
+filter.period.90d: Last 90 days
+filter.period.12m: Last 12 months
+filter.period.ytd: This year
+filter.period.custom: Custom…
+filter.from: From
+filter.to: Up to and including
+filter.apply: Apply
+filter.reset: Clear filters
+filter.to_list: View these reports
+filter.to_stats: Statistics for this selection
+
+report.country.unsupported: We can't look up plates for this country yet.
+lookup.unsupported_country: We can't look up plates for this country yet.
+
+legal.nav: Legal information
+legal.privacy: Privacy statement
+legal.cookies: Cookies
+legal.terms: Terms of use
+legal.last_updated: "Last updated: {date}"
+legal.operator_missing: "Note: the operator details have not been filled in yet (OPERATOR_NAME and OPERATOR_EMAIL)."
+
+report.section.media: Dashcam footage and photos
+report.section.media.sub: Optional. Footage is the strongest proof that there was no obstacle; photos show the consequences.
+report.photos: Photos of the aftermath
+report.photos.help: "For example damage or the situation on the road. Up to {max} photos (JPEG, PNG or WebP), 15 MB each."
+report.photos.too_many_client: "You can add up to {max} photos."
+report.photos.too_big: One of the photos is larger than 15 MB.
+report.photos.invalid: One of the photos could not be read. Try another photo or file format.
+report.media.privacy: "We remove all metadata from photos, such as the GPS location and the device. Footage and photos stay private until a moderator has reviewed them."
+
+incident.photos: Photos of the aftermath
+incident.photo_alt: "Aftermath photo {n}"
+incident.photos_hidden: "{count, plural, one {# photo was submitted that is not (yet) public.} other {# photos were submitted that are not (yet) public.}}"
+incident.has_photos: "{count, plural, one {# photo} other {# photos}}"
+report.footage.placeholder: Drag your video here or click to choose
+report.footage.rejected_type: That's not a video file.
+report.photos.placeholder: Drag photos here or click to choose
+report.photos.remove: Remove
+report.photos.rejected_type: Only photos (JPEG, PNG or WebP) are allowed.
+report.incident_country: Country where it happened
+report.incident_country.help: Driving abroad? Choose that country.
+filter.incident_country: Country of the incident
+report.map.help: Click where it happened. We'll then fill in country, road number, road type and speed limit from OpenStreetMap. Please check them.
+map.looking_up: Looking up the road…
+map.found: "Found:"
+map.nothing_found: No road found at this spot. Please fill in the details yourself.
+map.wheel_hint: Click the map or hold Ctrl/⌘ to zoom
+report.media.consent_notice: "By uploading files, you consent to them being published after review. You can withdraw this consent at any time on your report's page, using your plate."
+withdraw.title: Did you submit this report? Request deletion of the footage and photos
+withdraw.intro: "Enter the car's plate. If it matches this report, we send your request to a moderator, who deletes the footage and photos. We don't store the plate."
+withdraw.plate: License plate
+withdraw.plate.help: The same plate as in your report.
+withdraw.submit: Request deletion
+withdraw.mismatch: This plate doesn't belong to this report.
+withdraw.invalid: Please enter a plate.
+withdraw.rate_limited: Too many attempts. Please try again in 15 minutes.
+incident.footage_status.withdrawn: The reporter took the dashcam footage offline.
+enum.moderation_status.withdrawn: Withdrawn
+
+admin.title: Admin
+admin.to_site: To the site
+admin.logout: Log out
+admin.public_page: Public page
+admin.approve: Approve
+admin.reject: Reject
+admin.media_count: "{footage, plural, =0 {} other {# video · }}{photos, plural, =0 {no photos} one {# photo} other {# photos}}"
+admin.login.title: "Admin login"
+admin.login.intro: "Log in with your passkey: Face ID, your fingerprint, your device PIN or a security key. No e-mail address or password needed."
+admin.login.submit: "Log in with a passkey"
+admin.login.no_passkey: "No passkey yet, or lost it? Ask an admin with server access for a one-time login link."
+admin.login_link.title: "One-time login link"
+admin.login_link.intro: "This link works once and only briefly. After logging in, add a passkey so you can log in without a link from then on."
+admin.login_link.submit: "Log in and add a passkey"
+admin.passkey.unsupported: "This browser doesn’t support passkeys. Use a recent version of Chrome, Edge, Firefox or Safari."
+admin.passkey.cancelled: "Cancelled or timed out. Please try again."
+admin.passkey.failed: "That didn’t work. Try again or use another passkey."
+admin.passkeys.title: "Passkeys"
+admin.passkeys.intro: "These let you log in to the admin. Add at least two, for example on your phone and your laptop, so losing one device doesn’t lock you out."
+admin.passkeys.none: "You don’t have a passkey yet. Add one now: without one, after logging out you can only get back in with a new link from the server."
+admin.passkeys.added: "Added on {date}"
+admin.passkeys.synced: "Synced"
+admin.passkeys.last_used: "Last used on {date}"
+admin.passkeys.never_used: "Not used to log in yet"
+admin.passkeys.remove: "Remove"
+admin.passkeys.confirm_remove: "Remove this passkey? You won’t be able to log in with it any more."
+admin.passkeys.removed: "Passkey removed."
+admin.passkeys.last: "You can’t remove your last passkey; add another one first."
+admin.passkeys.add: "Add a passkey"
+admin.passkeys.add_help: "Your browser asks where to save the passkey: on this device, on your phone (via the QR code) or on a security key."
+admin.deletions.title: Deletion requests
+admin.deletions.intro: "The reporter confirmed with the plate that it's their report. Approving permanently deletes all footage and photos of the report; the report itself stays."
+admin.deletions.requested_at: "Requested on {date}"
+admin.deletions.approve: Delete
+admin.deletions.deny: Deny
+admin.deletions.confirm: "Permanently delete all footage and photos of this report?"
+admin.deletions.empty: No open deletion requests.
+admin.pending.title: To review
+admin.pending.intro: Reports with footage or photos that haven't been reviewed yet.
+admin.pending.empty: Nothing to review.
+admin.review.deletion_pending: The reporter has requested deletion for this report (see the overview).
+admin.review.footage_rule: "Only approve footage if no plate is readable. Videos can't be masked; if a plate is readable, reject it (the footage stays private)."
+admin.review.photo: "Photo {n}"
+admin.review.mask_help: "Drag a box over every readable plate (other cars too) and save. Only the masked copy is ever published; the original stays private."
+admin.review.save_masks: Save masks
+admin.review.clear_masks: Clear all boxes
+admin.review.view_public: View public version
+admin.review.no_media: This report has no footage or photos (anymore).
+admin.flash.footage_approved: Footage approved.
+admin.flash.footage_rejected: Footage rejected.
+admin.flash.photo_approved: Photo approved.
+admin.flash.photo_rejected: Photo rejected.
+admin.flash.masks_saved: Masks saved; the public copy was updated.
+admin.flash.masks_invalid: The masks could not be read.
+admin.flash.deletion_approved: All footage and photos of the report were deleted.
+admin.flash.deletion_denied: Deletion request denied.
+report.photos.mask_hint: "Are there plates on your photos? Drag a box over them to black them out. A moderator checks this too."
+report.photos.mask_remove: Remove box
+withdraw.requested: "We've received your request. A moderator will delete the footage and photos as soon as possible."
+incident.media_deleted: "The footage and photos of this report were deleted at the reporter's request."
+admin.storage.title: Storage
+admin.storage.objects: "{count, plural, one {# file} other {# files}}"
+admin.storage.total: Total
+admin.storage.per_month: per month
+admin.storage.pricing_note: "Indication based on the current size: Sliplane charges nothing for the first GB, then €5 per started 250 GB, on the monthly average."
+admin.storage.measured_at: "Measured {date}"
+admin.storage.refresh: Measure again
+enum.media_kind.photo: Photos
+enum.media_kind.video: Videos

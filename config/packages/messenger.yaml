@@ -1,0 +1,36 @@
+framework:
+    messenger:
+        failure_transport: failed
+        default_bus: command.bus
+        buses:
+            command.bus:
+                middleware:
+                    - validation
+                    - doctrine_transaction
+            event.bus:
+                default_middleware:
+                    enabled: true
+                    allow_no_handlers: true
+                middleware:
+                    - validation
+                    - doctrine_close_connection
+
+        transports:
+            failed: 'doctrine://default?queue_name=failed'
+            async:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    table_name: __message_bus_queue
+                retry_strategy:
+                    max_retries: 5
+                    delay: 1000
+                    multiplier: 2
+
+        routing:
+            'App\SharedKernel\Domain\Messenger\Transport\AsyncEvent': async
+
+when@test:
+    framework:
+        messenger:
+            transports:
+                async: 'in-memory://'

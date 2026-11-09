@@ -1,0 +1,16 @@
+twig:
+    file_name_pattern: '*.twig'
+    form_themes: ['form/theme.html.twig']
+    globals:
+        operator:
+            name: '%env(OPERATOR_NAME)%'
+            email: '%env(OPERATOR_EMAIL)%'
+            address: '%env(OPERATOR_ADDRESS)%'
+        source_code_url: 'https://github.com/LauLamanApps/phantom-braking'
+        # From version.json on a deploy, from git in dev (SharedKernel\Infrastructure\Env\VersionEnvVarLoader).
+        release: '%env(APP_VERSION)%'
+        build: '%env(APP_BUILD)%'
+
+when@test:
+    twig:
+        strict_variables: true

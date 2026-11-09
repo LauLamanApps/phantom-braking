@@ -1,0 +1,54 @@
+{% extends 'legal/_layout.html.twig' %}
+
+{% block title %}Cookie-Hinweis{% endblock %}
+
+{% block content %}
+    <p>
+        Wir verwenden <strong>keine Tracking-, Analyse- oder Werbe-Cookies</strong>. Du kannst die Statistiken und Meldungen
+        ansehen, ohne dass ein einziges Cookie gesetzt wird. Deshalb gibt es auch kein Cookie-Banner.
+    </p>
+
+    <h2>Welche Cookies setzen wir?</h2>
+    <p>Nur wenn du eine Meldung absendest, setzen wir zwei funktionale Cookies, die das Formular zum Funktionieren braucht:</p>
+    <table>
+        <thead><tr><th>Name</th><th>Zweck</th><th>Speicherdauer</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><code>__Host-csrf-token_…</code></td>
+                <td>Sicherheit: verhindert, dass eine andere Website in deinem Namen eine Meldung absendet (CSRF-Schutz).</td>
+                <td>Bis du deinen Browser schließt</td>
+            </tr>
+            <tr>
+                <td><code>PHPSESSID</code></td>
+                <td>Sitzung: zeigt nach dem Absenden die Bestätigung „Danke für deine Meldung“ an.</td>
+                <td>Bis du deinen Browser schließt</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>
+        Diese Cookies sind für einen von dir angeforderten Dienst unbedingt erforderlich, daher ist keine Einwilligung nötig
+        (niederländisches Telekommunikationsgesetz, Telecommunicatiewet, Artikel 11.7a, zur Umsetzung der EU-ePrivacy-Richtlinie).
+        Sie enthalten kein Kennzeichen und keine anderen Meldungsdaten. Wir verwenden auch keinen <code>localStorage</code>
+        oder vergleichbaren Browserspeicher.
+    </p>
+
+    <p>
+        Moderatorinnen und Moderatoren, die sich im Verwaltungsbereich anmelden, erhalten ebenfalls ein Sitzungscookie
+        (<code>PHPSESSID</code>), um angemeldet zu bleiben. Besucherinnen, Besucher und meldende Personen erhalten es nur wie oben beschrieben.
+    </p>
+
+    <h2>Karten von OpenStreetMap</h2>
+    <p>
+        Dein Browser lädt die Karten von den Servern von OpenStreetMap, die dadurch deine IP-Adresse erhalten. Soweit uns
+        bekannt, setzt OpenStreetMap über diese Kartenkacheln keine Cookies. Siehe die
+        <a href="https://osmfoundation.org/wiki/Privacy_Policy" rel="noopener">Datenschutzrichtlinie der OSMF</a>.
+    </p>
+
+    <h2>Cookies löschen</h2>
+    <p>
+        Du kannst Cookies jederzeit in deinen Browsereinstellungen löschen oder blockieren. Wenn du die funktionalen Cookies
+        blockierst, kannst du keine Meldung absenden, das Ansehen der Seiten funktioniert aber weiterhin.
+    </p>
+
+    <p>Mehr darüber, wie wir mit Daten umgehen, liest du in unserer <a href="{{ path('legal', {page: 'privacy'}) }}">Datenschutzerklärung</a>.</p>
+{% endblock %}

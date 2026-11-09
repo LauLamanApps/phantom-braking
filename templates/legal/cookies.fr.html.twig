@@ -1,0 +1,55 @@
+{% extends 'legal/_layout.html.twig' %}
+
+{% block title %}Politique relative aux cookies{% endblock %}
+
+{% block content %}
+    <p>
+        Nous n’utilisons <strong>aucun cookie de suivi, de mesure d’audience ou publicitaire</strong>. Vous pouvez consulter les
+        statistiques et les signalements sans qu’un seul cookie soit déposé. C’est pourquoi il n’y a pas de bandeau cookies.
+    </p>
+
+    <h2>Quels cookies déposons-nous ?</h2>
+    <p>Uniquement lorsque vous envoyez un signalement, nous déposons deux cookies fonctionnels nécessaires au fonctionnement du formulaire :</p>
+    <table>
+        <thead><tr><th>Nom</th><th>Finalité</th><th>Durée de conservation</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><code>__Host-csrf-token_…</code></td>
+                <td>Sécurité : empêche un autre site web d’envoyer un signalement en votre nom (protection CSRF).</td>
+                <td>Jusqu’à la fermeture de votre navigateur</td>
+            </tr>
+            <tr>
+                <td><code>PHPSESSID</code></td>
+                <td>Session : affiche la confirmation « Merci pour votre signalement » après l’envoi.</td>
+                <td>Jusqu’à la fermeture de votre navigateur</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>
+        Ces cookies sont strictement nécessaires à un service que vous demandez ; aucun consentement n’est donc requis
+        (Telecommunicatiewet, article 11.7a, la loi néerlandaise sur les télécommunications qui transpose la directive
+        européenne ePrivacy). Ils ne contiennent ni plaque d’immatriculation ni autre donnée du signalement. Nous
+        n’utilisons pas non plus <code>localStorage</code> ni aucun stockage similaire dans le navigateur.
+    </p>
+
+    <p>
+        Les modérateurs qui se connectent à l’espace d’administration reçoivent également un cookie de session
+        (<code>PHPSESSID</code>) pour rester connectés. Les visiteurs et les auteurs de signalements ne le reçoivent que
+        dans le cas décrit ci-dessus.
+    </p>
+
+    <h2>Cartes OpenStreetMap</h2>
+    <p>
+        Votre navigateur charge les cartes depuis les serveurs d’OpenStreetMap, qui reçoivent donc votre adresse IP. À notre
+        connaissance, OpenStreetMap ne dépose aucun cookie via ces tuiles de carte. Consultez la
+        <a href="https://osmfoundation.org/wiki/Privacy_Policy" rel="noopener">politique de confidentialité de l’OSMF</a>.
+    </p>
+
+    <h2>Supprimer les cookies</h2>
+    <p>
+        Vous pouvez à tout moment supprimer ou bloquer les cookies dans les paramètres de votre navigateur. Si vous bloquez
+        les cookies fonctionnels, vous ne pourrez pas envoyer de signalement, mais la consultation du site reste possible.
+    </p>
+
+    <p>Pour en savoir plus sur notre traitement des données, consultez notre <a href="{{ path('legal', {page: 'privacy'}) }}">politique de confidentialité</a>.</p>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'list.title'|trans }}{% endblock %}
+
+{% block body %}
+    {% set q = filter_bar.query %}
+    <div class="mb-6">
+        <h1 class="text-3xl font-bold tracking-tight">{{ 'list.title'|trans }}</h1>
+        <p class="mt-1 text-stone-600 dark:text-stone-400">{{ 'list.count'|trans({count: total}) }}</p>
+    </div>
+
+    {{ include('partials/_filter_bar.html.twig', {bar: filter_bar, switch_route: 'home'}) }}
+
+    <div class="grid gap-3">
+        {% for incident in incidents %}
+            {{ include('incident/_summary.html.twig') }}
+        {% else %}
+            <p class="card text-stone-500">{{ 'list.empty'|trans }}</p>
+        {% endfor %}
+    </div>
+
+    {% if pages > 1 %}
+        <nav class="mt-6 flex items-center justify-center gap-2 text-sm" aria-label="pagination">
+            {% if page > 1 %}<a class="btn-secondary" href="{{ path('incident_list', q.toQuery|merge({page: page - 1})) }}">← {{ 'list.previous'|trans }}</a>{% endif %}
+            <span class="px-3 text-stone-500">{{ page }} / {{ pages }}</span>
+            {% if page < pages %}<a class="btn-secondary" href="{{ path('incident_list', q.toQuery|merge({page: page + 1})) }}">{{ 'list.next'|trans }} →</a>{% endif %}
+        </nav>
+    {% endif %}
+{% endblock %}

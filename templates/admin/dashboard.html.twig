@@ -1,0 +1,74 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block body %}
+    <section id="storage" class="card mb-12">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+            <h2 class="text-lg font-semibold">{{ 'admin.storage.title'|trans }}</h2>
+            <form method="post" action="{{ path('admin_refresh_storage') }}" class="flex items-center gap-3 text-sm text-stone-500">
+                <span>{{ 'admin.storage.measured_at'|trans({date: storage.measuredAt|format_datetime('short', 'short')}) }}</span>
+                <input type="hidden" name="_token" value="{{ csrf_token('admin') }}">
+                <button class="btn-secondary">{{ 'admin.storage.refresh'|trans }}</button>
+            </form>
+        </div>
+        <div class="mt-4 grid gap-4 sm:grid-cols-3">
+            {% for u in storage.usage %}
+                <div>
+                    <div class="stat-value">{{ u.bytes|bytes }}</div>
+                    <div class="stat-label">{{ u.kind.translationKey|trans }} · {{ 'admin.storage.objects'|trans({count: u.objects}) }}</div>
+                    <div class="mt-1 truncate font-mono text-xs text-stone-500" title="{{ u.location }}">{{ u.location }}</div>
+                </div>
+            {% endfor %}
+            <div>
+                <div class="stat-value">{{ storage.totalBytes|bytes }}</div>
+                <div class="stat-label">{{ 'admin.storage.total'|trans }} · ~€{{ storage.estimatedEurPerMonth }} {{ 'admin.storage.per_month'|trans }}</div>
+                <div class="mt-1 text-xs text-stone-500">{{ 'admin.storage.pricing_note'|trans }}</div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h1 class="text-2xl font-bold tracking-tight">{{ 'admin.deletions.title'|trans }} <span class="text-stone-400">({{ deletion_requests|length }})</span></h1>
+        <p class="mt-1 text-sm text-stone-500">{{ 'admin.deletions.intro'|trans }}</p>
+        <div class="mt-4 grid gap-3">
+            {% for incident in deletion_requests %}
+                <div class="card flex flex-wrap items-center gap-4">
+                    {{ include('admin/_incident_line.html.twig') }}
+                    <p class="text-sm text-stone-500">
+                        {{ 'admin.deletions.requested_at'|trans({date: incident.mediaDeletionRequestedAt|format_datetime('medium', 'short')}) }}
+                        · {{ 'admin.media_count'|trans({footage: incident.footage.exists ? 1 : 0, photos: incident.photos|length}) }}
+                    </p>
+                    <div class="ml-auto flex gap-2">
+                        <form method="post" action="{{ path('admin_handle_deletion', {id: incident.id, decision: 'deny'}) }}">
+                            <input type="hidden" name="_token" value="{{ csrf_token('admin') }}">
+                            <button class="btn-secondary">{{ 'admin.deletions.deny'|trans }}</button>
+                        </form>
+                        <form method="post" action="{{ path('admin_handle_deletion', {id: incident.id, decision: 'approve'}) }}"
+                              onsubmit="return confirm('{{ 'admin.deletions.confirm'|trans|e('js') }}')">
+                            <input type="hidden" name="_token" value="{{ csrf_token('admin') }}">
+                            <button class="btn-primary">{{ 'admin.deletions.approve'|trans }}</button>
+                        </form>
+                    </div>
+                </div>
+            {% else %}
+                <p class="card text-sm text-stone-500">{{ 'admin.deletions.empty'|trans }}</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="mt-12">
+        <h2 class="text-2xl font-bold tracking-tight">{{ 'admin.pending.title'|trans }} <span class="text-stone-400">({{ pending|length }})</span></h2>
+        <p class="mt-1 text-sm text-stone-500">{{ 'admin.pending.intro'|trans }}</p>
+        <div class="mt-4 grid gap-3">
+            {% for incident in pending %}
+                <a href="{{ path('admin_review', {id: incident.id}) }}" class="card flex flex-wrap items-center gap-4 transition hover:border-stone-400">
+                    {{ include('admin/_incident_line.html.twig', {linked: false}) }}
+                    <span class="ml-auto text-sm text-stone-500">
+                        {{ 'admin.media_count'|trans({footage: incident.footage.exists ? 1 : 0, photos: incident.photos|length}) }} →
+                    </span>
+                </a>
+            {% else %}
+                <p class="card text-sm text-stone-500">{{ 'admin.pending.empty'|trans }}</p>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

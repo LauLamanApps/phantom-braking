@@ -1,0 +1,4 @@
+# The WebAuthn bundle's passkey endpoints (options/result for login and for adding a passkey).
+# Normally added by its Flex recipe, which is skipped because it lives in recipes-contrib.
+webauthn_routes:
+    resource: '@WebauthnBundle/Resources/config/routing.php'

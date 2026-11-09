@@ -1,0 +1,24 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\Tests\Double\InMemoryVehicleRegistry: ~
+
+    App\Vehicle\Domain\Service\VehicleRegistryInterface:
+        alias: App\Tests\Double\InMemoryVehicleRegistry
+        public: true
+
+    App\Tests\Double\FakeRoadLocator: ~
+
+    App\Incident\Domain\Service\RoadLocatorInterface:
+        alias: App\Tests\Double\FakeRoadLocator
+        public: true
+
+    # Tests keep media on local disk: fast, offline, and inspectable.
+    App\Incident\Domain\Service\MediaStorageInterface:
+        alias: App\Incident\Infrastructure\Service\LocalMediaStorage
+        public: true
+
+    App\Incident\Presentation\Admin\StorageMonitor:
+        public: true

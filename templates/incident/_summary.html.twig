@@ -1,0 +1,18 @@
+<a href="{{ path('incident_show', {id: incident.id}) }}" class="card block transition hover:border-stone-400 dark:hover:border-stone-600">
+    <div class="flex flex-wrap items-baseline justify-between gap-2">
+        <p class="font-semibold">{{ incident.vehicle.make }} <span class="font-normal text-stone-600 dark:text-stone-300">{{ incident.vehicle.model }}</span>
+            {% if incident.vehicle.firstAdmissionYear %}<span class="text-sm text-stone-500">· {{ incident.vehicle.firstAdmissionYear }}</span>{% endif %}</p>
+        <time class="text-sm text-stone-500" datetime="{{ incident.occurredAt|date('c') }}">{{ incident.occurredAt|format_datetime('medium', 'short') }}</time>
+    </div>
+    <p class="mt-1 text-sm text-stone-600 dark:text-stone-300">
+        {{ incident.severity.translationKey|trans }} · {{ incident.speedBefore }}{% if incident.speedAfter is not null %} → {{ incident.speedAfter }}{% endif %} km/h
+        · {{ incident.location.situation.translationKey|trans }}{% if incident.location.roadNumber %} ({{ incident.location.roadNumber }}){% endif %}
+        · {{ incident.location.country.code|country_name }}
+    </p>
+    <div class="mt-2 flex flex-wrap gap-2 text-xs">
+        {% if incident.consequence.isCollision %}<span class="rounded-full bg-brand-600 px-2 py-0.5 font-semibold text-white">⚠ {{ incident.consequence.translationKey|trans }}</span>
+        {% elseif incident.consequence.endangeredFollower %}<span class="rounded-full bg-brand-50 px-2 py-0.5 font-semibold text-brand-700">{{ incident.consequence.translationKey|trans }}</span>{% endif %}
+        {% if incident.footage.exists %}<span class="rounded-full bg-stone-200 px-2 py-0.5 dark:bg-stone-800">🎥 {{ 'incident.has_footage'|trans }}</span>{% endif %}
+        {% if incident.photos|length > 0 %}<span class="rounded-full bg-stone-200 px-2 py-0.5 dark:bg-stone-800">📷 {{ 'incident.has_photos'|trans({count: incident.photos|length}) }}</span>{% endif %}
+    </div>
+</a>

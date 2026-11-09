@@ -1,0 +1,184 @@
+{% extends 'legal/_layout.html.twig' %}
+{% import 'legal/_layout.html.twig' as legal %}
+
+{% block title %}Privacy statement{% endblock %}
+
+{% block content %}
+    <p>
+        The Phantom Braking Report collects reports of <em>phantom braking</em>: a car braking unexpectedly with no
+        obstacle in front of it. We are careful with your data. This statement explains what we process, why, for how
+        long, and what your rights are.
+    </p>
+
+    <h2>In short</h2>
+    <ul>
+        <li>You need <strong>no account</strong>, and we don't ask for your name or e-mail address.</li>
+        <li>We <strong>don't store your license plate</strong>. We only use it to fetch make, model and year from the RDW, and then keep an irreversible fingerprint.</li>
+        <li>Reports are published <strong>without the plate</strong> and used for statistics.</li>
+        <li>Dashcam footage and photos stay private until we've reviewed them. By uploading them you consent to publishing them after that; you can withdraw this consent at any time.</li>
+        <li>We remove all metadata from photos, such as the GPS location and the device, and black out license plates on photos before they're published.</li>
+        <li>No tracking, no advertising, no analytics, no selling of data.</li>
+    </ul>
+
+    <h2>Who is responsible?</h2>
+    <p>
+        The data controller is {{ legal.operator_field(operator.name, 'operator name') }}{% if operator.address %}, {{ operator.address }}{% endif %}.
+        You can reach us at {% if operator.email %}<a href="mailto:{{ operator.email }}">{{ operator.email }}</a>{% else %}{{ legal.operator_field(null, 'e-mail address') }}{% endif %}.
+    </p>
+
+    <h2>What we process, why, and on which legal basis</h2>
+    <table>
+        <thead><tr><th>Data</th><th>Purpose</th><th>Legal basis (GDPR art. 6)</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><strong>License plate</strong></td>
+                <td>
+                    Fetching the vehicle details from the RDW, both while you type (to check the right vehicle was found)
+                    and when you submit. We don't store the plate: we only keep a fingerprint (HMAC-SHA256 with a secret key),
+                    so we can count distinct vehicles and repeat reports. The plate is never part of a URL, so it doesn't
+                    end up in web-server logs.
+                </td>
+                <td>Consent (when submitting); legitimate interest (the lookup while typing)</td>
+            </tr>
+            <tr>
+                <td><strong>Vehicle details</strong> from the RDW</td>
+                <td>Make, model, first registration date, fuel, type approval and similar, for the report and the statistics.</td>
+                <td>Consent</td>
+            </tr>
+            <tr>
+                <td><strong>Incident details</strong></td>
+                <td>
+                    Date and time, location (rounded to about 10 metres), road number, circumstances, speeds, consequences,
+                    dealer response, odometer, software version and your description. Together these make up the report and the statistics.
+                </td>
+                <td>Consent</td>
+            </tr>
+            <tr>
+                <td><strong>Dashcam footage</strong> (optional)</td>
+                <td>
+                    Evidence that there was no obstacle. Footage is stored privately, outside the public website.
+                    By uploading it you consent to it being published after a moderator has reviewed it. The upload field
+                    says so, and you can withdraw this consent at any time.
+                </td>
+                <td>Consent (publication); legitimate interest (keeping it privately for research into phantom braking)</td>
+            </tr>
+            <tr>
+                <td><strong>Photos of the aftermath</strong> (optional)</td>
+                <td>
+                    Showing the consequences, such as damage or the situation on the road. We immediately turn every photo
+                    into a new file without metadata. GPS location, device, timestamp and other EXIF data are removed in the
+                    process, and we don't keep the original file. Photos are stored privately and, like footage, only
+                    published after review; by uploading them you consent to that. You black out plates yourself when
+                    uploading; a moderator checks and completes this. Only that masked copy is published. Dashcam footage
+                    is only published if no plate is readable.
+                </td>
+                <td>Consent (publication); legitimate interest (keeping them privately for research into phantom braking)</td>
+            </tr>
+            <tr>
+                <td><strong>IP address</strong></td>
+                <td>Preventing abuse (a maximum number of lookups and reports per period) and securing the website (web-server logs).</td>
+                <td>Legitimate interest</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>
+        <strong>Careful with your description:</strong> don't include names, phone numbers or other personal data,
+        including other people's. Moderators may remove such information.
+    </p>
+    <p>
+        A report without a plate normally can't be traced back to you. In rare cases, the combination of date, time,
+        place and car model might mean something to someone who knows you. That's why we round the location and never
+        show the plate. If you want to be sure, enter the location less precisely.
+    </p>
+
+    <h2>What do we publish?</h2>
+    <p>
+        Each report gets a public page with the vehicle and incident details, without the plate. Dashcam footage and
+        photos only appear there after a moderator has approved them. The home page shows aggregated statistics and a
+        map with the rounded locations.
+    </p>
+
+    <h2>Who do we share data with?</h2>
+    <ul>
+        <li>
+            <strong>RDW</strong> (Dutch Vehicle Authority): our server looks up the public vehicle details by plate via
+            <a href="https://opendata.rdw.nl" rel="noopener">RDW Open Data</a>. The RDW sees our server's address, not yours.
+        </li>
+        <li>
+            <strong>OpenStreetMap</strong>: your browser loads the map tiles directly from the servers of the
+            OpenStreetMap Foundation, which therefore receives your IP address. See the
+            <a href="https://osmfoundation.org/wiki/Privacy_Policy" rel="noopener">OSMF privacy policy</a>.
+            The OSMF is based in the United Kingdom.
+        </li>
+        <li>
+            <strong>OpenStreetMap Nominatim</strong>: when you click the map, our server sends the coordinates of that
+            point to the OSMF's Nominatim service to look up the road (country, road number, road type, speed limit).
+            Nominatim only receives the point and our server's address, not your IP address. See the
+            <a href="https://osmfoundation.org/wiki/Privacy_Policy" rel="noopener">OSMF privacy policy</a>.
+        </li>
+        <li>
+            <strong>Hosting provider</strong>: the website and database run at a hosting provider that acts as our processor.
+        </li>
+        <li>
+            <strong>Error monitoring (Sentry)</strong>: when something goes wrong on the server, we send technical error
+            details to Sentry to fix it. They contain no IP addresses, cookies, license plates or submitted form data.
+        </li>
+        <li>
+            <strong>Storage provider</strong>: dashcam footage and photos are kept in private storage (not publicly
+            accessible) at a storage provider that acts as our processor.
+        </li>
+    </ul>
+    <p>We don't sell data or share it for marketing. What we publish is public and may be used by researchers, journalists and regulators.</p>
+
+    <h2>How long do we keep data?</h2>
+    <ul>
+        <li><strong>Reports, vehicle details and fingerprint</strong>: as long as the reporting point exists, because the statistics are most valuable over time. Unless you ask us to delete them sooner.</li>
+        <li><strong>Dashcam footage and photos</strong>: as long as the report exists. Rejected footage and photos are never published and stay private with the report. The original photo file, with its metadata, is deleted immediately after processing.</li>
+        <li><strong>RDW lookup results</strong>: at most 24 hours in a technical cache, without the plate.</li>
+        <li><strong>Road details for a map point</strong>: at most 30 days in a technical cache (rounded point and road details, not linked to a person or IP address).</li>
+        <li><strong>IP address for abuse prevention</strong>: at most 2 hours.</li>
+        <li><strong>Web-server logs</strong>: at most 14 days.</li>
+    </ul>
+
+    <h2>Security</h2>
+    <p>
+        The website only works over an encrypted connection (HTTPS). Dashcam footage and photos are stored outside the public part
+        of the website and are only reachable after approval. Plates are only kept as a fingerprint with a secret key.
+        Only administrators can access the systems.
+    </p>
+
+    <h2>Your rights</h2>
+    <p>
+        You have the right to access, correct, delete and restrict your data, and to object. Where you gave consent,
+        you can withdraw it at any time.
+    </p>
+    <p>
+        <strong>Having footage and photos deleted</strong>: request it on your report's page by entering the plate. If it
+        matches, your request goes to a moderator, who permanently deletes all footage and photos of that report. The
+        report itself (without plate) remains.
+    </p>
+    <p>
+        For other requests, e-mail us with the link to your report.
+    </p>
+    <p>
+        As there are no accounts, we can't simply tell which report is whose. We'll therefore ask for the plate: we
+        compute its fingerprint and compare it with the report, then forget the plate again. We respond within one month.
+    </p>
+    <p>
+        <strong>Are you visible in someone's dashcam footage or photos?</strong> Contact us. We'll take the footage offline or
+        make you unrecognisable.
+    </p>
+
+    <h2>Complaints</h2>
+    <p>
+        If you're not happy with how we handle your data, please tell us first. You can also file a complaint with your
+        data protection authority. In the Netherlands that's the
+        <a href="https://autoriteitpersoonsgegevens.nl" rel="noopener">Autoriteit Persoonsgegevens</a>.
+    </p>
+
+    <h2>No automated decisions</h2>
+    <p>We don't make decisions about people based on automated processing, and we don't build profiles.</p>
+
+    <h2>Changes</h2>
+    <p>We may update this statement. The date at the top shows when it last changed.</p>
+{% endblock %}

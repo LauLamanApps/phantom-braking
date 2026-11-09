@@ -1,0 +1,483 @@
+site.name: Spookremmen Meldpunt
+site.title: Centraal meldpunt voor phantom braking
+site.description: Meld onterecht ingrijpen van de noodremassistent (phantom braking). Samen maken we zichtbaar hoe vaak, waar en bij welke auto's het gebeurt.
+
+nav.statistics: Statistieken
+nav.reports: Meldingen
+nav.report: Melding doen
+nav.language: Taal
+
+about.mission: Onafhankelijk meldpunt. Fabrikanten hoeven phantom braking nergens te registreren; deze verzameling meldingen maakt het probleem meetbaar.
+about.privacy: Wij slaan je kenteken niet op. We bewaren alleen een onomkeerbare vingerafdruk om dubbele meldingen per voertuig te tellen. Dashcambeelden worden pas openbaar na controle en met jouw toestemming.
+about.sources: 'Voertuiggegevens: <a class="underline" href="https://opendata.rdw.nl" rel="noopener">RDW Open Data</a>. Kaart: <a class="underline" href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a>. Meld een gevaarlijk voertuig ook bij de <a class="underline" href="https://www.ilent.nl" rel="noopener">ILT</a>.'
+footer.source_code: Open source (MIT) op GitHub
+nav.faq: "FAQ"
+footer.nav: "Over het meldpunt en juridische informatie"
+about.title: "Over het meldpunt"
+about.mission.title: "Waarom dit meldpunt bestaat"
+about.privacy.title: "Je privacy"
+about.sources.title: "Bronnen"
+about.open_source.title: "Open source"
+about.open_source: "De broncode van dit meldpunt is open source (MIT-licentie) en staat op <a href=\"{github}\" rel=\"noopener\">GitHub</a>. Iedereen kan meekijken hoe meldingen worden verwerkt, fouten melden of verbeteringen voorstellen."
+faq.title: "Veelgestelde vragen"
+faq.intro: "Antwoorden op de meest gestelde vragen over phantom braking, melden en wat we met je gegevens doen."
+faq.more: "Staat je vraag er niet bij? Neem contact op via de gegevens in de <a href=\"{privacy}\">privacyverklaring</a>."
+faq.group.general: "Over phantom braking en het meldpunt"
+faq.group.reporting: "Melden"
+faq.group.privacy: "Privacy en beelden"
+faq.group.data: "Gebruik van de gegevens"
+faq.what.q: "Wat is phantom braking?"
+faq.what.a: "Phantom braking (spookremmen) is wanneer de noodremassistent of adaptieve cruise control van een auto plotseling remt terwijl er niets is om voor te remmen. Vaak gebeurt dat bij viaducten, schaduwen, matrixborden of een vrachtwagen op de rijstrook ernaast. Sinds juli 2024 is een automatische noodrem (AEB) verplicht in elke nieuwe auto in de EU, dus steeds meer bestuurders krijgen ermee te maken."
+faq.who.q: "Wie zit er achter dit meldpunt?"
+faq.who.a: "Een onafhankelijk initiatief. We zijn niet verbonden aan autofabrikanten, importeurs, dealers, verzekeraars of overheden. Wie het meldpunt beheert en hoe je contact opneemt, staat in de <a href=\"{privacy}\">privacyverklaring</a>."
+faq.why.q: "Waarom een apart meldpunt?"
+faq.why.a: "Fabrikanten hoeven onterechte remingrepen nergens te registreren en delen hun voertuigdata niet. Officiële meldingen zijn er nauwelijks. Door meldingen met merk, model, locatie en omstandigheden te bundelen, worden patronen zichtbaar: welke auto’s, welke plekken, welke situaties."
+faq.official.q: "Is dit een officiële melding?"
+faq.official.a: "Nee. Meld een gevaarlijk voertuig ook bij de <a href=\"https://www.ilent.nl\" rel=\"noopener\">ILT</a> en bij je dealer, zodat het officieel bekend is. Bij een ongeval met gewonden bel je altijd 112."
+faq.representative.q: "Zeggen de statistieken iets over hoe veilig een merk is?"
+faq.representative.a: "Niet direct. Meldingen zijn ervaringen van bestuurders; we controleren ze niet technisch. Een model dat veel verkocht is, of een betrokken groep eigenaren heeft, krijgt vanzelf meer meldingen. Gebruik de cijfers om patronen te zien, niet als bewijs dat een voertuig een gebrek heeft."
+faq.account.q: "Heb ik een account nodig?"
+faq.account.a: "Nee. Je hebt geen account nodig en we vragen niet om je naam of e-mailadres. <a href=\"{report}\">Een melding doen</a> duurt ongeveer drie minuten."
+faq.countries.q: "Welke auto’s kan ik melden?"
+faq.countries.a: "Voorlopig auto’s met een Nederlands kenteken, omdat we de voertuiggegevens automatisch bij de RDW ophalen. Voor andere landen is er (nog) geen openbaar kentekenregister dat we kunnen gebruiken."
+faq.abroad.q: "Het gebeurde in het buitenland. Kan ik het melden?"
+faq.abroad.a: "Ja. Het land van het kenteken en het land waar het gebeurde zijn los van elkaar. Klik de plek aan op de kaart; we vullen het land en de weg dan zelf in."
+faq.passenger.q: "Ik zat niet zelf achter het stuur. Mag ik het melden?"
+faq.passenger.a: "Ja, als je het zelf hebt meegemaakt als inzittende van de auto. Meld het incident maar één keer per auto. Vul de melding nooit in tijdens het rijden."
+faq.unsure.q: "Ik weet niet precies wat de oorzaak was. Wat vul ik in?"
+faq.unsure.a: "Kies wat het beste past, of “Niets te zien” of “Anders”, en beschrijf het in de toelichting. Ook een onvolledige melding helpt: de plek, de auto en de omstandigheden zijn vaak al genoeg om een patroon te zien."
+faq.plate.q: "Slaan jullie mijn kenteken op?"
+faq.plate.a: "Nee. We gebruiken het kenteken alleen om de voertuiggegevens bij de RDW op te halen. Daarna bewaren we alleen een onomkeerbare vingerafdruk (met een geheime sleutel), zodat we herhaalde meldingen van dezelfde auto kunnen tellen. Het kenteken zelf wordt nergens opgeslagen of getoond."
+faq.plate_needed.q: "Waarom moet ik dan een kenteken invullen?"
+faq.plate_needed.a: "Zo krijgen we het exacte merk, model, bouwjaar en typegoedkeuring van de RDW, zonder tikfouten. Juist die details maken het mogelijk om te zien of een probleem bij een bepaald model of softwareversie hoort."
+faq.footage.q: "Wat gebeurt er met mijn dashcambeelden en foto’s?"
+faq.footage.a: "Ze blijven privé tot een beheerder ze heeft gecontroleerd. We verwijderen metagegevens zoals de GPS-locatie. Kentekens op foto’s maak je zelf zwart bij het uploaden, en de beheerder controleert dat. Dashcambeelden met een leesbaar kenteken publiceren we niet."
+faq.withdraw.q: "Hoe trek ik mijn toestemming voor beelden en foto’s in?"
+faq.withdraw.a: "Open je melding via <a href=\"{reports}\">Meldingen</a> en vraag daar verwijdering van de beelden en foto’s aan door het kenteken in te vullen. Klopt het, dan verwijdert een beheerder ze."
+faq.delete_report.q: "Kan ik mijn hele melding laten verwijderen?"
+faq.delete_report.a: "Ja. Neem contact op via de gegevens in de <a href=\"{privacy}\">privacyverklaring</a>. De melding verdwijnt dan ook uit de statistieken."
+faq.reuse.q: "Wat gebeurt er met de meldingen?"
+faq.reuse.a: "Meldingen worden zonder kenteken gepubliceerd en verwerkt in de statistieken op deze site. Wat we publiceren mag door anderen, zoals onderzoekers, journalisten en toezichthouders, worden gebruikt met bronvermelding. Zie de <a href=\"{terms}\">gebruiksvoorwaarden</a>."
+faq.open_source.q: "Is de code openbaar?"
+faq.open_source.a: "Ja. De broncode is open source (MIT-licentie) en staat op <a href=\"{github}\" rel=\"noopener\">GitHub</a>. Je kunt er zelf nalezen hoe we met kentekens en beelden omgaan."
+
+form.choose: '— kies —'
+form.yes: Ja
+form.no: Nee
+form.unknown: Weet ik niet
+
+country.nl: Nederland
+country.de: Duitsland
+country.fr: Frankrijk
+
+home.title: Statistieken
+home.headline: Je auto remt keihard. Voor niets.
+home.intro: "Sinds juli 2024 is de automatische noodrem (AEB) verplicht in elke nieuwe auto. Steeds meer bestuurders melden dat hun auto op volle snelheid remt zonder dat er aanleiding voor is. Officieel wordt het nauwelijks geregistreerd."
+home.cta: Meld een incident
+home.browse: Bekijk meldingen
+home.why.title: Waarom dit meldpunt?
+home.why.1: "Kassa schat minstens honderden incidenten per jaar; de ILT ontving er in vier jaar maar twintig meldingen."
+home.why.2: Fabrikanten delen geen voertuigdata en hoeven valse remingrepen niet te rapporteren.
+home.why.3: Met kenteken, locatie en omstandigheden ontstaat een patroon dat fabrikanten, RDW en politiek niet kunnen negeren.
+home.empty.title: Nog geen meldingen
+home.empty.text: Wees de eerste. Elke melding helpt het patroon zichtbaar te maken.
+home.kpis: Kerncijfers
+
+kpi.reports: meldingen
+kpi.reports.hint: "{vehicles, plural, one {# voertuig} other {# voertuigen}} van {makes, plural, one {# merk} other {# merken}}"
+kpi.endangered: bracht achterligger in gevaar
+kpi.endangered.hint: "{collisions, plural, =0 {nog geen aanrijdingen} one {# aanrijding} other {# aanrijdingen}}"
+kpi.speed: gemiddelde snelheid bij ingrijpen
+kpi.speed.hint: "gemiddeld {drop} km/h snelheidsverlies"
+kpi.motorway: op snelweg of autoweg
+kpi.motorway.hint: "{pct} bij tunnel, viaduct, brug of portaal"
+kpi.recurring: auto deed het al eerder
+kpi.recurring.hint: "{repeat, plural, =0 {geen voertuigen} one {# voertuig} other {# voertuigen}} hier vaker gemeld"
+kpi.emergency: volledige noodstop
+kpi.dismissed: afgewimpeld door dealer
+kpi.dismissed.hint: "van {contacted, plural, one {# melding} other {# meldingen}} bij de dealer"
+kpi.authority: ook gemeld bij de toezichthouder
+kpi.authority.hint: Het officiële meldpunt mist dus het grootste deel.
+
+section.where: Waar gebeurt het?
+section.where.sub: Radar en camera's laten zich vooral misleiden door infrastructuur boven en naast de weg.
+section.vehicles: Welke auto's?
+section.vehicles.sub: Merk en model komen uit het nationale kentekenregister (in Nederland de RDW), niet uit wat de melder intypt.
+section.circumstances: Onder welke omstandigheden?
+section.circumstances.sub: Licht, weer, tijdstip en wat de bestuurder vermoedt dat de rem activeerde.
+section.impact: Hoe ernstig?
+section.impact.sub: Een onverwachte noodstop op de snelweg is vooral gevaarlijk voor wie erachter rijdt.
+
+chart.trend: Meldingen per maand
+chart.trend.sub: Op datum van het incident, in de gekozen periode (standaard de laatste 12 maanden)
+chart.map: Kaart van incidenten
+chart.situation: Wegsituatie op de plek
+chart.situation.sub: Tunnels, viaducten en portalen zijn bekende triggers
+chart.road_type: Type weg
+chart.roads: Meest gemelde wegen
+chart.make: Merken met de meeste meldingen
+chart.models: Modellen
+chart.year: Jaar van eerste toelating
+chart.year.sub: Vanaf 7 juli 2024 is AEB verplicht (EU GSR2)
+chart.assist: Actief rijhulpsysteem
+chart.assist.sub: '"Geen" = de altijd actieve noodremassistent'
+chart.trigger: Vermoedelijke aanleiding
+chart.trigger.sub: Volgens de bestuurder
+chart.light: Lichtomstandigheden
+chart.weather: Weer
+chart.hour: Tijdstip van de dag
+chart.speed: Snelheid op het moment van remmen
+chart.speed.sub: Snelheid vlak voor het ingrijpen
+chart.severity: Hoe hard remde de auto?
+chart.consequence: Gevolg
+chart.dealer: Reactie dealer of importeur
+chart.dealer.sub: Veel bestuurders krijgen te horen dat er niets aan de hand is
+
+stats.reports: Meldingen
+stats.no_data: Nog onvoldoende gegevens.
+stats.show_table: Toon als tabel
+
+table.vehicle: Voertuig
+table.reports: Meldingen
+table.vehicles: Voertuigen
+
+map.legend.incident: Melding
+map.legend.collision: Aanrijding
+map.open: Bekijk melding
+map.set: 'Locatie gezet:'
+map.empty: Klik op de kaart om de plek aan te geven (optioneel).
+map.locating: Locatie bepalen…
+map.denied: Locatie kon niet worden bepaald. Klik op de kaart.
+map.unsupported: Je browser ondersteunt geen locatiebepaling.
+map.use_location: Gebruik mijn locatie
+map.clear: Wissen
+
+method.title: Over deze cijfers
+method.text: "Dit zijn meldingen van bestuurders, geen gecontroleerde ongevalsdata. Merk, model en bouwjaar komen via het kenteken uit het nationale register; we accepteren alleen meldingen uit landen waarvan we dat register kunnen raadplegen. Hogere aantallen bij een merk kunnen ook komen doordat dat merk veel rijdt; vergelijk daarom met het wagenpark. Meerdere meldingen van hetzelfde voertuig tellen als aparte incidenten, maar 'voertuigen' telt elk kenteken één keer."
+
+report.title: Meld een phantom-braking-incident
+report.intro: Duurt ongeveer 3 minuten. Je kenteken gebruiken we alleen om merk, model en bouwjaar op te halen bij de RDW; het wordt niet opgeslagen.
+report.section.vehicle: Het voertuig
+report.section.vehicle.sub: We halen de gegevens op bij de RDW.
+report.section.where: Wanneer en waar
+report.section.where.sub: De plek is cruciaal om hotspots te vinden, zoals een specifiek viaduct.
+report.section.what: Wat gebeurde er?
+report.section.history: Voorgeschiedenis en opvolging
+report.section.history.sub: Optioneel, maar waardevol voor onderzoek.
+report.country: Land van registratie (kenteken)
+report.license_plate: Kenteken
+report.license_plate.help: Wordt niet opgeslagen.
+report.occurred_at: Datum en tijd
+report.road_type: Type weg
+report.road_situation: Wegsituatie op die plek
+report.road_situation.help: Waar was je precies op het moment dat de auto remde?
+report.road_number: Wegnummer
+report.direction: Rijrichting
+report.direction.placeholder: bijv. richting Arnhem, hmp 142,3
+report.speed_limit: Maximumsnelheid (km/h)
+report.map: Plek op de kaart
+report.severity: Hoe hard remde de auto?
+report.speed_before: Snelheid vóór het remmen (km/h)
+report.speed_after: Laagste snelheid tijdens het remmen (km/h)
+report.speed_after.help: Schatting is prima. Leeg laten als je het niet weet.
+report.trigger: Wat denk je dat de rem activeerde?
+report.assist: Welk systeem stond aan?
+report.assist.help: Kies "Geen" als je gewoon zelf reed.
+report.assist.not_available: Dit systeem bestaat alleen op een Tesla. Kies een ander systeem of controleer het kenteken.
+report.warning_shown: Kreeg je een waarschuwing op het dashboard?
+report.consequence: Wat was het gevolg?
+report.weather: Weer
+report.light: Licht
+report.recurrence: Hoe vaak deed deze auto dit al?
+report.dealer: Reactie van dealer of importeur
+report.reported_to_authority: Ik heb dit ook gemeld bij de Inspectie Leefomgeving en Transport (ILT)
+report.windscreen: Is de voorruit recent vervangen?
+report.windscreen.help: Na vervanging moet de camera opnieuw worden gekalibreerd.
+report.odometer: Kilometerstand
+report.software_version: Softwareversie
+report.software_version.help: Te vinden in het infotainmentmenu, als je die weet.
+report.description: Toelichting
+report.description.placeholder: Beschrijf wat je zag en wat de auto deed.
+report.footage: Videobestand
+report.footage.help: MP4, MOV, WebM, AVI of MKV, max. 300 MB. Knip het bij tot ongeveer een minuut rond het incident.
+report.footage.too_big: "Bestand is groter dan 300 MB. Knip de video bij tot ongeveer een minuut rond het incident."
+report.footage.processing: Uploaden klaar, melding verwerken…
+report.footage.failed: Upload mislukt. Controleer je verbinding en probeer het opnieuw.
+report.privacy_consent: 'Ik heb de <a class="underline" href="{privacy}" target="_blank">privacyverklaring</a> gelezen en ga akkoord met de <a class="underline" href="{terms}" target="_blank">gebruiksvoorwaarden</a> en met publicatie van deze melding zonder kenteken.'
+report.submit: Melding versturen
+report.thanks: Bedankt voor je melding! Hieronder zie je hoe die op het meldpunt verschijnt.
+report.plate.not_found: Dit kenteken staat niet in het RDW-register.
+report.registry_unavailable: Het RDW-register is nu niet bereikbaar. Probeer het over een paar minuten opnieuw.
+report.rate_limited: Je hebt het afgelopen uur al veel meldingen gedaan. Probeer het later opnieuw.
+
+lookup.loading: Gegevens ophalen bij de RDW…
+lookup.not_found: Dit kenteken staat niet in het RDW-register.
+lookup.invalid: Dit lijkt geen geldig kenteken.
+lookup.unavailable: RDW is nu niet bereikbaar. Je kunt de melding later versturen.
+lookup.rate_limited: Te veel opzoekingen. Wacht even.
+lookup.error: Opzoeken mislukt.
+lookup.year: Bouwjaar
+
+list.title: Meldingen
+list.count: "{count, plural, =0 {Geen meldingen} one {# melding} other {# meldingen}}"
+list.empty: Geen meldingen gevonden.
+list.previous: Vorige
+list.next: Volgende
+
+incident.has_footage: Dashcambeelden
+incident.footage: Dashcambeelden
+incident.footage_status.pending: Er zijn dashcambeelden aangeleverd. Die worden gecontroleerd.
+incident.footage_status.approved: Dashcambeelden beschikbaar.
+incident.footage_status.rejected: Er zijn dashcambeelden aangeleverd, maar die worden niet openbaar getoond.
+incident.location: Locatie
+incident.description: Toelichting van de bestuurder
+incident.circumstances: Omstandigheden
+incident.vehicle: Voertuig
+incident.vehicle.source: Volgens het nationale kentekenregister op het moment van melden
+incident.reported_at: "Gemeld op {date}"
+
+vehicle.make: Merk
+vehicle.model: Model
+vehicle.first_admission: Eerste toelating
+vehicle.fuel: Brandstof
+vehicle.hybrid: Hybride klasse
+vehicle.category: EU-voertuigcategorie
+vehicle.type_approval: Typegoedkeuring
+vehicle.variant: Variant
+vehicle.gsr2: Toegelaten na AEB-plicht (GSR2)
+vehicle.open_recall: Openstaande terugroepactie
+
+enum.road_type.motorway: Snelweg (A-weg)
+enum.road_type.expressway: Autoweg
+enum.road_type.provincial: Provinciale weg (N-weg)
+enum.road_type.urban: Weg binnen de bebouwde kom
+enum.road_type.rural: Weg buiten de bebouwde kom
+enum.road_type.residential: Woonwijk of parkeerterrein
+
+enum.road_situation.straight: Rechte weg
+enum.road_situation.curve: Bocht
+enum.road_situation.tunnel_entrance: Tunnelingang
+enum.road_situation.tunnel_inside: In een tunnel
+enum.road_situation.tunnel_exit: Tunneluitgang
+enum.road_situation.under_viaduct: Onder een viaduct
+enum.road_situation.bridge: Op een brug
+enum.road_situation.sign_gantry: Onder een portaal / matrixbord
+enum.road_situation.on_ramp: Oprit of invoegstrook
+enum.road_situation.off_ramp: Afrit of uitvoegstrook
+enum.road_situation.lane_merge: Rijstrookversmalling / samenvoeging
+enum.road_situation.roadworks: Wegwerkzaamheden
+enum.road_situation.intersection: Kruispunt
+enum.road_situation.roundabout: Rotonde
+enum.road_situation.railway_crossing: Spoorwegovergang
+enum.road_situation.hill: Heuvel of helling
+
+enum.trigger.nothing_visible: Niets te zien
+enum.trigger.shadow: Schaduw op de weg
+enum.trigger.viaduct_gantry: Viaduct, brug of portaal
+enum.trigger.oncoming: Tegenligger
+enum.trigger.truck_adjacent: Vrachtwagen op andere rijstrook
+enum.trigger.vehicle_adjacent: Auto op andere rijstrook
+enum.trigger.merging: Invoegend voertuig
+enum.trigger.turning_ahead: Afslaande auto vóór mij
+enum.trigger.parked: Geparkeerde auto langs de weg
+enum.trigger.road_sign: Verkeersbord of matrixbord
+enum.trigger.guardrail: Vangrail of geleiderail
+enum.trigger.road_marking: Wegmarkering of -reparatie
+enum.trigger.low_sun: Laagstaande zon of reflectie
+enum.trigger.rain_spray: Regen of opspattend water
+enum.trigger.other: Anders
+
+enum.severity.warning_only: Alleen waarschuwing
+enum.severity.light: Lichte rem
+enum.severity.strong: Flink geremd
+enum.severity.emergency: Volledige noodstop
+
+enum.weather.dry: Droog
+enum.weather.rain: Regen
+enum.weather.heavy_rain: Zware regen
+enum.weather.fog: Mist
+enum.weather.snow: Sneeuw of ijzel
+
+enum.light.daylight: Daglicht
+enum.light.low_sun: Laagstaande zon
+enum.light.twilight: Schemer
+enum.light.dark_lit: Donker, met verlichting
+enum.light.dark_unlit: Donker, onverlicht
+
+enum.assist.none: Geen (zelf gereden)
+enum.assist.cruise: Gewone cruise control
+enum.assist.acc: Adaptieve cruise control (ACC)
+enum.assist.acc_lane: ACC met rijstrookassistent
+enum.assist.tesla_tad: Tesla Assisted Driving (TAD, voorheen FSD)
+enum.assist.unknown: Weet ik niet
+
+enum.consequence.none: Geen
+enum.consequence.startled: Ik schrok, verder niets
+enum.consequence.follower_braked: Achterligger moest hard remmen
+enum.consequence.near_rear_end: Bijna-aanrijding
+enum.consequence.rear_end: Kop-staartbotsing
+enum.consequence.injury: Aanrijding met letsel
+
+enum.recurrence.first: Eerste keer
+enum.recurrence.few: 2 tot 5 keer
+enum.recurrence.regular: 6 tot 20 keer
+enum.recurrence.frequent: Meer dan 20 keer
+
+enum.dealer.not_contacted: Nog niet gemeld
+enum.dealer.pending: Gemeld, wacht op reactie
+enum.dealer.acknowledged: Erkend, wordt onderzocht
+enum.dealer.software_update: Software-update gekregen
+enum.dealer.recalibrated: Camera/radar opnieuw gekalibreerd
+enum.dealer.no_fault_found: Geen fout gevonden
+enum.dealer.blamed_driver: Schuld bij mij gelegd
+enum.dealer.refused: Wilde niets doen
+
+enum.moderation_status.pending: In controle
+enum.moderation_status.approved: Goedgekeurd
+enum.moderation_status.rejected: Afgewezen
+
+home.eyebrow.country: "Phantom braking in {country}"
+home.eyebrow.all: Phantom braking in Europa
+home.empty_filtered.title: Geen meldingen voor deze selectie.
+
+filter.label: Meldingen filteren
+filter.country: Land
+filter.all_countries: Alle landen
+filter.make: Merk
+filter.all_makes: Alle merken
+filter.model: Model
+filter.all_models: Alle modellen
+filter.pick_make_first: Kies eerst een merk
+filter.road_type: Type weg
+filter.all_roads: Alle wegen
+filter.period: Periode
+filter.period.all: Altijd
+filter.period.30d: Laatste 30 dagen
+filter.period.90d: Laatste 90 dagen
+filter.period.12m: Laatste 12 maanden
+filter.period.ytd: Dit jaar
+filter.period.custom: Aangepast…
+filter.from: Van
+filter.to: Tot en met
+filter.apply: Toepassen
+filter.reset: Filters wissen
+filter.to_list: Bekijk deze meldingen
+filter.to_stats: Statistieken voor deze selectie
+
+report.country.unsupported: Voor dit land kunnen we nog geen kentekens opzoeken.
+lookup.unsupported_country: Voor dit land kunnen we nog geen kentekens opzoeken.
+
+legal.nav: Juridische informatie
+legal.privacy: Privacyverklaring
+legal.cookies: Cookies
+legal.terms: Gebruiksvoorwaarden
+legal.last_updated: "Laatst bijgewerkt: {date}"
+legal.operator_missing: "Let op: de gegevens van de beheerder zijn nog niet ingevuld (OPERATOR_NAME en OPERATOR_EMAIL)."
+
+report.section.media: Dashcambeelden en foto's
+report.section.media.sub: Optioneel. Beelden zijn het sterkste bewijs dat er geen obstakel was; foto's laten de gevolgen zien.
+report.photos: Foto's van de nasleep
+report.photos.help: "Bijvoorbeeld schade of de situatie op de weg. Maximaal {max} foto's (JPEG, PNG of WebP), elk maximaal 15 MB."
+report.photos.too_many_client: "Je kunt maximaal {max} foto's toevoegen."
+report.photos.too_big: Een van de foto's is groter dan 15 MB.
+report.photos.invalid: Een van de foto's kon niet worden gelezen. Probeer een andere foto of een ander bestandsformaat.
+report.media.privacy: "We verwijderen alle metagegevens uit foto's, zoals de GPS-locatie en het toestel. Tot een beheerder ze heeft gecontroleerd blijven beelden en foto's privé."
+
+incident.photos: Foto's van de nasleep
+incident.photo_alt: "Foto {n} van de nasleep"
+incident.photos_hidden: "{count, plural, one {Er is # foto aangeleverd die (nog) niet openbaar is.} other {Er zijn # foto's aangeleverd die (nog) niet openbaar zijn.}}"
+incident.has_photos: "{count, plural, one {# foto} other {# foto's}}"
+report.footage.placeholder: Sleep je video hierheen of klik om te kiezen
+report.footage.rejected_type: Dat is geen videobestand.
+report.photos.placeholder: "Sleep foto's hierheen of klik om te kiezen"
+report.photos.remove: Verwijder
+report.photos.rejected_type: "Alleen foto's (JPEG, PNG of WebP) zijn toegestaan."
+report.incident_country: Land waar het gebeurde
+report.incident_country.help: Reed je in het buitenland? Kies dan dat land.
+filter.incident_country: Land van het incident
+report.map.help: Klik op de plek waar het gebeurde. We vullen land, wegnummer, type weg en maximumsnelheid dan voor je in op basis van OpenStreetMap. Controleer ze even.
+map.looking_up: Weg opzoeken…
+map.found: "Gevonden:"
+map.nothing_found: Geen weg gevonden op deze plek. Vul de gegevens zelf in.
+map.wheel_hint: Klik in de kaart of houd Ctrl/⌘ ingedrukt om te zoomen
+report.media.consent_notice: "Door bestanden te uploaden geef je toestemming om ze na controle openbaar te maken. Je kunt die toestemming altijd intrekken op de pagina van je melding, met je kenteken."
+withdraw.title: Heb jij deze melding gedaan? Vraag verwijdering van de beelden en foto's aan
+withdraw.intro: "Vul het kenteken van de auto in. Klopt het met deze melding, dan sturen we je verzoek naar een beheerder, die de beelden en foto's verwijdert. We slaan het kenteken niet op."
+withdraw.plate: Kenteken
+withdraw.plate.help: Hetzelfde kenteken als bij je melding.
+withdraw.submit: Verwijdering aanvragen
+withdraw.mismatch: Dit kenteken hoort niet bij deze melding.
+withdraw.invalid: Vul een kenteken in.
+withdraw.rate_limited: Te veel pogingen. Probeer het over een kwartier opnieuw.
+incident.footage_status.withdrawn: De melder heeft de dashcambeelden offline gehaald.
+enum.moderation_status.withdrawn: Ingetrokken
+
+admin.title: Beheer
+admin.to_site: Naar de site
+admin.logout: Uitloggen
+admin.public_page: Openbare pagina
+admin.approve: Goedkeuren
+admin.reject: Afkeuren
+admin.media_count: "{footage, plural, =0 {} other {# video · }}{photos, plural, =0 {geen foto's} one {# foto} other {# foto's}}"
+admin.login.title: "Inloggen beheer"
+admin.login.intro: "Log in met je passkey: Face ID, je vingerafdruk, de pincode van je apparaat of een beveiligingssleutel. Je hoeft geen e-mailadres of wachtwoord in te vullen."
+admin.login.submit: "Inloggen met passkey"
+admin.login.no_passkey: "Nog geen passkey, of kwijt? Vraag een beheerder met servertoegang om een eenmalige inloglink."
+admin.login_link.title: "Eenmalige inloglink"
+admin.login_link.intro: "Deze link werkt één keer en kort. Na het inloggen voeg je een passkey toe, zodat je daarna zonder link kunt inloggen."
+admin.login_link.submit: "Inloggen en passkey toevoegen"
+admin.passkey.unsupported: "Deze browser ondersteunt geen passkeys. Gebruik een recente versie van Chrome, Edge, Firefox of Safari."
+admin.passkey.cancelled: "Geannuleerd of verlopen. Probeer het opnieuw."
+admin.passkey.failed: "Dat lukte niet. Probeer het opnieuw of gebruik een andere passkey."
+admin.passkeys.title: "Passkeys"
+admin.passkeys.intro: "Hiermee log je in op het beheer. Voeg er minstens twee toe, bijvoorbeeld op je telefoon en je laptop, zodat je er niet uit raakt als je een apparaat kwijtraakt."
+admin.passkeys.none: "Je hebt nog geen passkey. Voeg er nu een toe: zonder passkey kun je na het uitloggen alleen weer inloggen met een nieuwe link van de server."
+admin.passkeys.added: "Toegevoegd op {date}"
+admin.passkeys.synced: "Gesynchroniseerd"
+admin.passkeys.last_used: "Laatst gebruikt op {date}"
+admin.passkeys.never_used: "Nog niet gebruikt om in te loggen"
+admin.passkeys.remove: "Verwijderen"
+admin.passkeys.confirm_remove: "Deze passkey verwijderen? Je kunt er daarna niet meer mee inloggen."
+admin.passkeys.removed: "Passkey verwijderd."
+admin.passkeys.last: "Je laatste passkey kun je niet verwijderen; voeg eerst een andere toe."
+admin.passkeys.add: "Passkey toevoegen"
+admin.passkeys.add_help: "Je browser vraagt waar je de passkey wilt bewaren: op dit apparaat, op je telefoon (via de QR-code) of op een beveiligingssleutel."
+admin.deletions.title: Verwijderverzoeken
+admin.deletions.intro: "De melder heeft met het kenteken bevestigd dat het om zijn of haar melding gaat. Goedkeuren verwijdert alle beelden en foto's van de melding definitief; de melding zelf blijft staan."
+admin.deletions.requested_at: "Aangevraagd op {date}"
+admin.deletions.approve: Verwijderen
+admin.deletions.deny: Afwijzen
+admin.deletions.confirm: "Alle beelden en foto's van deze melding definitief verwijderen?"
+admin.deletions.empty: Geen openstaande verwijderverzoeken.
+admin.pending.title: Te beoordelen
+admin.pending.intro: Meldingen met beelden of foto's die nog niet zijn beoordeeld.
+admin.pending.empty: Niets te beoordelen.
+admin.review.deletion_pending: Voor deze melding loopt een verwijderverzoek van de melder (zie het overzicht).
+admin.review.footage_rule: "Keur beelden alleen goed als er geen kenteken leesbaar is. Video's kunnen niet worden gemaskeerd; is er een kenteken leesbaar, keur dan af (de beelden blijven privé)."
+admin.review.photo: "Foto {n}"
+admin.review.mask_help: "Sleep een vak over elk leesbaar kenteken (ook van andere auto's) en sla op. Alleen de gemaskeerde kopie wordt ooit gepubliceerd; het origineel blijft privé."
+admin.review.save_masks: Maskering opslaan
+admin.review.clear_masks: Alle vakken wissen
+admin.review.view_public: Bekijk openbare versie
+admin.review.no_media: Deze melding heeft geen beelden of foto's (meer).
+admin.flash.footage_approved: Beelden goedgekeurd.
+admin.flash.footage_rejected: Beelden afgekeurd.
+admin.flash.photo_approved: Foto goedgekeurd.
+admin.flash.photo_rejected: Foto afgekeurd.
+admin.flash.masks_saved: Maskering opgeslagen; de openbare kopie is bijgewerkt.
+admin.flash.masks_invalid: De maskering kon niet worden gelezen.
+admin.flash.deletion_approved: "Alle beelden en foto's van de melding zijn verwijderd."
+admin.flash.deletion_denied: Verwijderverzoek afgewezen.
+report.photos.mask_hint: "Staan er kentekens op je foto's? Sleep er een vak overheen om ze zwart te maken. Een beheerder controleert dit nog."
+report.photos.mask_remove: Vak verwijderen
+withdraw.requested: "Je verzoek is ontvangen. Een beheerder verwijdert de beelden en foto's zo snel mogelijk."
+incident.media_deleted: "De beelden en foto's van deze melding zijn op verzoek van de melder verwijderd."
+admin.storage.title: Opslag
+admin.storage.objects: "{count, plural, one {# bestand} other {# bestanden}}"
+admin.storage.total: Totaal
+admin.storage.per_month: per maand
+admin.storage.pricing_note: "Indicatie op basis van de huidige omvang: Sliplane rekent de eerste GB gratis en daarna €5 per begonnen 250 GB, over het maandgemiddelde."
+admin.storage.measured_at: "Gemeten {date}"
+admin.storage.refresh: Opnieuw meten
+enum.media_kind.photo: Foto's
+enum.media_kind.video: Video's

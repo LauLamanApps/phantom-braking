@@ -1,0 +1,11 @@
+{# Pass linked: false when the whole card is already a link: nested <a> elements break the layout. #}
+<div class="min-w-0">
+    {% if linked ?? true %}
+        <a href="{{ path('admin_review', {id: incident.id}) }}" class="font-semibold hover:underline">{{ incident.vehicle.make }} {{ incident.vehicle.model }}</a>
+    {% else %}
+        <span class="font-semibold">{{ incident.vehicle.make }} {{ incident.vehicle.model }}</span>
+    {% endif %}
+    <p class="text-sm text-stone-500">
+        {{ incident.occurredAt|format_datetime('medium', 'short') }} · {{ incident.location.country.code|country_name }}{% if incident.location.roadNumber %} · {{ incident.location.roadNumber }}{% endif %}
+    </p>
+</div>
