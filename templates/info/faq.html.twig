@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}{{ 'faq.title'|trans }}{% endblock %}
+{% block description %}{{ 'faq.intro'|trans }}{% endblock %}
 
 {% set links = {
     privacy: path('legal', {page: 'privacy'}),
@@ -10,7 +11,7 @@
     github: source_code_url,
 } %}
 
-{% block stylesheets %}
+{% block structured_data %}
     {# FAQPage structured data, so search engines can show the answers directly. #}
     <script type="application/ld+json">
         {{ {

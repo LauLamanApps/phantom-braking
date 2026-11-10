@@ -13,6 +13,8 @@ services:
     volumes:
       - ../:/app
       - ../.docker/php/php-ini-overrides.ini:/usr/local/etc/php/conf.d/99-overrides.ini
+      # Same pool size as production: media streams hold a worker each (.deploy/php/zz-phantom-braking-pool.conf)
+      - ../.deploy/php/zz-phantom-braking-pool.conf:/usr/local/etc/php-fpm.d/zz-phantom-braking-pool.conf:ro
       - ~/.ssh:/home/user/.ssh:ro
       - ~/.composer:/home/user/.composer:rw
       - ~/.composer:/root/.composer:rw

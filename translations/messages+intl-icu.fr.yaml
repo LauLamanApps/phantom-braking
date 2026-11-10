@@ -6,12 +6,14 @@ nav.statistics: Statistiques
 nav.reports: Signalements
 nav.report: Signaler un incident
 nav.language: Langue
+nav.menu: Menu
 
 about.mission: Point de signalement indépendant. Les constructeurs n’ont aucune obligation d’enregistrer les freinages fantômes. Ces signalements rendent le problème mesurable.
 about.privacy: Nous ne conservons jamais votre plaque d’immatriculation, seulement une empreinte irréversible qui nous permet de compter les signalements répétés par véhicule. Les vidéos de dashcam ne sont publiées qu’après vérification et avec votre consentement.
 about.sources: 'Données des véhicules : <a class="underline" href="https://opendata.rdw.nl" rel="noopener">RDW Open Data</a>. Carte : <a class="underline" href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a>. Signalez aussi un véhicule dangereux à l’inspection néerlandaise des transports (<a class="underline" href="https://www.ilent.nl" rel="noopener">ILT</a>).'
 footer.source_code: Open source (MIT) sur GitHub
 nav.faq: "FAQ"
+nav.about: "À propos"
 footer.nav: "À propos et informations légales"
 about.title: "À propos"
 about.mission.title: "Pourquoi ce point de signalement existe"
@@ -481,3 +483,15 @@ admin.storage.measured_at: "Mesuré le {date}"
 admin.storage.refresh: Mesurer à nouveau
 enum.media_kind.photo: Photos
 enum.media_kind.video: Vidéos
+# Search engines and link previews
+seo.home.title: "Freinages fantômes : signalements et statistiques"
+seo.home.description: "Votre voiture freine brusquement sans raison ? Signalez le freinage fantôme de l’assistant de freinage d’urgence et voyez sa fréquence par marque, modèle et pays."
+seo.list.description: "Tous les signalements de freinage fantôme : vitesse, situation routière, lieu et météo par voiture. Filtrez par marque, modèle, pays et période."
+seo.report.description: "Signalez un freinage d’urgence injustifié en 3 minutes. Votre plaque sert uniquement à retrouver la marque et le modèle ; nous ne la conservons pas."
+seo.about.description: "Un point de signalement indépendant et open source qui rend le freinage fantôme mesurable pour les constructeurs, les autorités et les politiques."
+seo.incident.title: "Freinage fantôme {vehicle}, {date}"
+seo.incident.description: "Freinage fantôme signalé pour {vehicle} le {date} : {severity} à {speed} km/h · {road} · {situation} · {country}."
+changelog.title: Journal des modifications
+changelog.intro: "Ce qui a changé dans chaque version du point de signalement. La liste est en anglais, comme le code source sur GitHub."
+changelog.current: "Ce site utilise la {version}."
+footer.changelog: Modifications de cette version

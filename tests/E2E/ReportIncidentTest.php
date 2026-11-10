@@ -99,9 +99,17 @@ final class ReportIncidentTest extends WebTestCase
         $this->client->request('GET', '/photos/'.$photos[1]->getId());
         self::assertResponseStatusCodeSame(404);
 
-        $this->client->request('GET', '/en/reports/'.$incident->getId());
+        $page = $this->client->request('GET', '/en/reports/'.$incident->getId());
         self::assertSelectorCount(1, 'img[src^="/photos/"]');
         self::assertSelectorTextContains('main', '1 photo was submitted that is not (yet) public.');
+
+        // Link previews use the approved, plate-masked photo; the sitemap lists the report in every language.
+        self::assertSame('article', $page->filter('meta[property="og:type"]')->attr('content'));
+        self::assertSame('http://localhost/photos/'.$photos[0]->getId(), $page->filter('meta[property="og:image"]')->attr('content'));
+        self::assertStringStartsWith('Phantom braking in a TESLA', (string) $page->filter('meta[name="description"]')->attr('content'));
+        self::assertStringNotContainsStringIgnoringCase('te-123-s', (string) $this->client->getResponse()->getContent());
+        $this->client->request('GET', '/sitemap.xml');
+        self::assertSame(4, substr_count((string) $this->client->getResponse()->getContent(), '/reports/'.$incident->getId().'</loc>'));
 
         // Footage is hidden until approved.
         $this->client->request('GET', '/footage/'.$incident->getId());

@@ -6,12 +6,14 @@ nav.statistics: Statistiken
 nav.reports: Meldungen
 nav.report: Vorfall melden
 nav.language: Sprache
+nav.menu: Menü
 
 about.mission: Unabhängige Meldestelle. Hersteller müssen Phantombremsungen nirgends registrieren. Diese Meldungen machen das Problem messbar.
 about.privacy: Wir speichern dein Kennzeichen nie. Wir behalten nur einen nicht umkehrbaren Fingerabdruck, um wiederholte Meldungen pro Fahrzeug zählen zu können. Dashcam-Aufnahmen werden erst nach Prüfung und mit deiner Einwilligung veröffentlicht.
 about.sources: 'Fahrzeugdaten: <a class="underline" href="https://opendata.rdw.nl" rel="noopener">RDW Open Data</a>. Karte: <a class="underline" href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a>. Melde ein gefährliches Fahrzeug bitte auch der niederländischen <a class="underline" href="https://www.ilent.nl" rel="noopener">ILT</a>.'
 footer.source_code: Open Source (MIT) auf GitHub
 nav.faq: "FAQ"
+nav.about: "Über uns"
 footer.nav: "Über uns und rechtliche Hinweise"
 about.title: "Über uns"
 about.mission.title: "Warum es diese Meldestelle gibt"
@@ -481,3 +483,15 @@ admin.storage.measured_at: "Gemessen {date}"
 admin.storage.refresh: Erneut messen
 enum.media_kind.photo: Fotos
 enum.media_kind.video: Videos
+# Search engines and link previews
+seo.home.title: Phantombremsungen melden und Statistiken
+seo.home.description: "Bremst dein Auto ohne Grund stark ab? Melde Phantombremsungen des Notbremsassistenten und sieh, wie oft das pro Marke, Modell und Land passiert."
+seo.list.description: "Alle gemeldeten Phantombremsungen: Geschwindigkeit, Verkehrssituation, Ort und Wetter pro Auto. Filtere nach Marke, Modell, Land und Zeitraum."
+seo.report.description: "Melde eine grundlose Notbremsung in 3 Minuten. Dein Kennzeichen nutzen wir nur, um Marke und Modell abzurufen; wir speichern es nicht."
+seo.about.description: "Eine unabhängige Open-Source-Meldestelle, die Phantombremsungen für Hersteller, Behörden und Politik messbar macht."
+seo.incident.title: "Phantombremsung {vehicle}, {date}"
+seo.incident.description: "Phantombremsung bei einem {vehicle} am {date}: {severity} bei {speed} km/h · {road} · {situation} · {country}."
+changelog.title: Änderungsprotokoll
+changelog.intro: "Was sich in jeder Version der Meldestelle geändert hat. Die Liste ist auf Englisch, wie der Quellcode auf GitHub."
+changelog.current: "Diese Website läuft mit {version}."
+footer.changelog: Änderungen in dieser Version

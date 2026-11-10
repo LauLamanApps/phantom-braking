@@ -37,6 +37,7 @@ fi
 
 echo "==> PHP settings"
 for sapi in fpm cli; do install -m 644 "$DIR/php/99-phantom-braking.ini" "/etc/php/$PHP/$sapi/conf.d/99-phantom-braking.ini"; done
+install -m 644 "$DIR/php/zz-phantom-braking-pool.conf" "/etc/php/$PHP/fpm/pool.d/zz-phantom-braking-pool.conf"
 systemctl restart php$PHP-fpm
 
 echo "==> Deploy user"

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+{% for page in pages %}
+{% for locale in locales %}
+    <url>
+        <loc>{{ url(page.route, page.params|merge({_locale: locale})) }}</loc>
+{% if page.lastmod %}
+        <lastmod>{{ page.lastmod|date('Y-m-d') }}</lastmod>
+{% endif %}
+{% for alternate in locales %}
+        <xhtml:link rel="alternate" hreflang="{{ alternate }}" href="{{ url(page.route, page.params|merge({_locale: alternate})) }}"/>
+{% endfor %}
+        <xhtml:link rel="alternate" hreflang="x-default" href="{{ page.route == 'home' ? url('root') : url(page.route, page.params|merge({_locale: 'en'})) }}"/>
+    </url>
+{% endfor %}
+{% endfor %}
+</urlset>

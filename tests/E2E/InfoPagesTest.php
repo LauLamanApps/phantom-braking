@@ -41,14 +41,31 @@ final class InfoPagesTest extends WebTestCase
         self::assertStringNotContainsString('<a', $data['mainEntity'][0]['acceptedAnswer']['text']);
     }
 
-    public function testFooterLinksToAboutFaqLegalAndSource(): void
+    public function testMenuHoldsFaqAndAboutAndTheFooterTheLegalPagesChangelogAndSource(): void
     {
         $client = self::createClient();
         $client->request('GET', '/en');
 
-        foreach (['/en/about', '/en/faq', '/en/privacy', '/en/cookies', '/en/terms', 'https://github.com/LauLamanApps/phantom-braking'] as $href) {
+        foreach (['/en/changelog', '/en/privacy', '/en/cookies', '/en/terms', 'https://github.com/LauLamanApps/phantom-braking'] as $href) {
             self::assertSelectorExists(sprintf('footer a[href="%s"]', $href));
         }
-        self::assertSelectorExists('header a[href="/en/faq"]');
+        foreach (['/en/faq', '/en/about'] as $href) {
+            self::assertSelectorExists(sprintf('header a[href="%s"]', $href));
+            self::assertSelectorNotExists(sprintf('footer a[href="%s"]', $href));
+        }
+    }
+
+    public function testChangelogShowsTheReleasesFromChangelogMd(): void
+    {
+        $client = self::createClient();
+        $client->request('GET', '/nl/changelog');
+
+        self::assertResponseIsSuccessful();
+        self::assertSelectorTextContains('h1', 'Wijzigingen');
+        self::assertSelectorExists('article h2:contains("1.0.0")');
+        self::assertSelectorExists('article h3:contains("Added")');
+        // The file's own title and an empty "Unreleased" section are not repeated on the page.
+        self::assertSelectorNotExists('article h1:contains("Changelog")');
+        self::assertSelectorNotExists('article h2:contains("Unreleased")');
     }
 }

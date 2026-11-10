@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'changelog.title'|trans }}{% endblock %}
+{% block description %}{{ 'changelog.intro'|trans }}{% endblock %}
+
+{% block body %}
+    <article class="legal mx-auto max-w-3xl">
+        <h1>{{ 'changelog.title'|trans }}</h1>
+        <p class="text-lg">{{ 'changelog.intro'|trans }}</p>
+        {% if release and release != build and not (release starts with 'dev-') %}
+            <p class="text-sm text-stone-500">{{ 'changelog.current'|trans({version: 'v' ~ release}) }}</p>
+        {% endif %}
+        <div lang="en">{{ changelog|markdown_to_html }}</div>
+    </article>
+{% endblock %}

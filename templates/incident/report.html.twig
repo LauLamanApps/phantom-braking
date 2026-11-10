@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}{{ 'report.title'|trans }}{% endblock %}
+{% block description %}{{ 'seo.report.description'|trans }}{% endblock %}
 
 {% macro section(number, title, sub = null) %}
     <div class="mb-5 flex items-start gap-3">
@@ -43,7 +44,7 @@
                           year: 'lookup.year'|trans,
                       }|json_encode }}">
                 {{ m.section(1, 'report.section.vehicle'|trans, 'report.section.vehicle.sub'|trans) }}
-                <div class="grid gap-4 sm:grid-cols-3">
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
                     {{ form_row(form.country, {attr: {'data-vehicle-lookup-target': 'country', 'data-action': 'vehicle-lookup#schedule'}}) }}
                     {{ form_row(form.licensePlate, {row_attr: {class: 'sm:col-span-2'}, attr: {'data-vehicle-lookup-target': 'input', 'data-action': 'input->vehicle-lookup#schedule'}}) }}
                 </div>
@@ -66,7 +67,7 @@
                           unsupported: 'map.unsupported'|trans,
                       }|json_encode }}">
                 {{ m.section(2, 'report.section.where'|trans, 'report.section.where.sub'|trans) }}
-                <div class="grid gap-4 sm:grid-cols-2">
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     {{ form_row(form.occurredAt) }}
                 </div>
                 <div class="mt-4">
@@ -82,7 +83,7 @@
                     {{ form_row(form.longitude) }}
                     {{ form_errors(form.latitude) }}
                 </div>
-                <div class="mt-4 grid gap-4 sm:grid-cols-2">
+                <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
                     {{ form_row(form.incidentCountry, {attr: {'data-location-picker-target': 'country', 'data-autofilled': '1'}}) }}
                     {{ form_row(form.roadType, {attr: {'data-location-picker-target': 'roadType'}}) }}
                     {{ form_row(form.roadSituation, {row_attr: {class: 'sm:col-span-2'}, attr: {'data-location-picker-target': 'roadSituation'}}) }}
@@ -94,7 +95,7 @@
 
             <fieldset class="card">
                 {{ m.section(3, 'report.section.what'|trans) }}
-                <div class="grid gap-4 sm:grid-cols-2">
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     {{ form_row(form.severity, {row_attr: {class: 'sm:col-span-2'}}) }}
                     {{ form_row(form.speedBefore) }}
                     {{ form_row(form.speedAfter) }}
@@ -109,7 +110,7 @@
 
             <fieldset class="card">
                 {{ m.section(4, 'report.section.history'|trans, 'report.section.history.sub'|trans) }}
-                <div class="grid gap-4 sm:grid-cols-2">
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     {{ form_row(form.recurrence) }}
                     {{ form_row(form.dealerResponse) }}
                     {{ form_row(form.windscreenReplacedRecently) }}
@@ -123,7 +124,7 @@
             <fieldset class="card">
                 {{ m.section(5, 'report.section.media'|trans, 'report.section.media.sub'|trans) }}
                 {% set max_photos = constant('App\\Incident\\Domain\\Model\\Incident::MAX_PHOTOS') %}
-                <div class="grid gap-6 sm:grid-cols-2">
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
                     <div class="min-w-0" data-controller="dropzone-feedback"
                          data-dropzone-feedback-max-bytes-value="{{ 300 * 1024 * 1024 }}"
                          data-dropzone-feedback-messages-value="{{ {type: 'report.footage.rejected_type'|trans, tooBig: 'report.footage.too_big'|trans}|json_encode }}">

@@ -6,12 +6,14 @@ nav.statistics: Statistieken
 nav.reports: Meldingen
 nav.report: Melding doen
 nav.language: Taal
+nav.menu: Menu
 
 about.mission: Onafhankelijk meldpunt. Fabrikanten hoeven phantom braking nergens te registreren; deze verzameling meldingen maakt het probleem meetbaar.
 about.privacy: Wij slaan je kenteken niet op. We bewaren alleen een onomkeerbare vingerafdruk om dubbele meldingen per voertuig te tellen. Dashcambeelden worden pas openbaar na controle en met jouw toestemming.
 about.sources: 'Voertuiggegevens: <a class="underline" href="https://opendata.rdw.nl" rel="noopener">RDW Open Data</a>. Kaart: <a class="underline" href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a>. Meld een gevaarlijk voertuig ook bij de <a class="underline" href="https://www.ilent.nl" rel="noopener">ILT</a>.'
 footer.source_code: Open source (MIT) op GitHub
 nav.faq: "FAQ"
+nav.about: "Over ons"
 footer.nav: "Over het meldpunt en juridische informatie"
 about.title: "Over het meldpunt"
 about.mission.title: "Waarom dit meldpunt bestaat"
@@ -481,3 +483,15 @@ admin.storage.measured_at: "Gemeten {date}"
 admin.storage.refresh: Opnieuw meten
 enum.media_kind.photo: Foto's
 enum.media_kind.video: Video's
+# Search engines and link previews
+seo.home.title: Phantom braking melden en statistieken
+seo.home.description: "Remt je auto zomaar hard af? Meld phantom braking (spookremmen) van de noodremassistent en bekijk per merk, model en land hoe vaak het gebeurt."
+seo.list.description: "Alle meldingen van phantom braking: per auto de snelheid, de wegsituatie, de plek en het weer. Filter op merk, model, land en periode."
+seo.report.description: "Meld in 3 minuten een onterechte noodstop van je auto. Je kenteken gebruiken we alleen om merk en model op te zoeken; we slaan het niet op."
+seo.about.description: "Het Spookremmen Meldpunt is een onafhankelijk, open-source meldpunt dat phantom braking meetbaar maakt voor fabrikanten, toezichthouders en politiek."
+seo.incident.title: "Phantom braking {vehicle}, {date}"
+seo.incident.description: "Phantom braking bij een {vehicle} op {date}: {severity} bij {speed} km/h · {road} · {situation} · {country}."
+changelog.title: Wijzigingen
+changelog.intro: "Wat er per versie van het meldpunt is veranderd. De lijst is in het Engels, net als de broncode op GitHub."
+changelog.current: "Deze site draait op {version}."
+footer.changelog: Wijzigingen in deze versie

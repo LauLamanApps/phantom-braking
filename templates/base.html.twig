@@ -4,16 +4,43 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}{{ 'site.title'|trans }}{% endblock %} · {{ 'site.name'|trans }}</title>
-        <meta name="description" content="{{ 'site.description'|trans }}">
+        <meta name="description" content="{% block description %}{{ 'site.description'|trans }}{% endblock %}">
+        <meta name="robots" content="{% block robots %}index, follow, max-image-preview:large{% endblock %}">
         <link rel="icon" href="{{ asset('images/icon.svg') }}" type="image/svg+xml">
         <link rel="apple-touch-icon" href="{{ asset('images/apple-touch-icon.png') }}">
         <meta name="theme-color" content="#141110">
-        {% set alternate_route = app.request.attributes.get('_route') %}
-        {% if alternate_route %}
+        {% set head_route = app.request.attributes.get('_route') %}
+        {% set head_params = app.request.attributes.get('_route_params')|default({}) %}
+        {% set og_locales = {nl: 'nl_NL', en: 'en_GB', de: 'de_DE', fr: 'fr_FR'} %}
+        {% if head_route %}
+            {# Filters are left out of the canonical URL (one page per view, not one per filter combination); paging stays. #}
+            {% set canonical = url(head_route, head_params|merge(app.request.query.getInt('page') > 1 ? {page: app.request.query.getInt('page')} : {})) %}
+            <link rel="canonical" href="{{ canonical }}">
             {% for locale in app.enabled_locales %}
-                <link rel="alternate" hreflang="{{ locale }}" href="{{ url(alternate_route, app.request.attributes.get('_route_params')|default({})|merge({_locale: locale})) }}">
+                <link rel="alternate" hreflang="{{ locale }}" href="{{ url(head_route, head_params|merge({_locale: locale})) }}">
             {% endfor %}
+            {# Without a language preference, / picks one from the browser (RedirectToLocaleController). #}
+            <link rel="alternate" hreflang="x-default" href="{{ head_route == 'home' ? url('root') : url(head_route, head_params|merge({_locale: 'en'})) }}">
+            <meta property="og:url" content="{{ canonical }}">
         {% endif %}
+        {# Link previews (WhatsApp, Signal, LinkedIn, Mastodon, X, Facebook, …). #}
+        <meta property="og:site_name" content="{{ 'site.name'|trans }}">
+        <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+        <meta property="og:title" content="{{ block('title')|trim }}">
+        <meta property="og:description" content="{{ block('description')|trim }}">
+        <meta property="og:locale" content="{{ og_locales[app.request.locale] ?? app.request.locale }}">
+        {% for locale in app.enabled_locales|filter(l => l != app.request.locale) %}
+            <meta property="og:locale:alternate" content="{{ og_locales[locale] ?? locale }}">
+        {% endfor %}
+        {% block og_image %}
+            <meta property="og:image" content="{{ absolute_url(asset('images/og/' ~ app.request.locale ~ '.png')) }}">
+            <meta property="og:image:type" content="image/png">
+            <meta property="og:image:width" content="1200">
+            <meta property="og:image:height" content="630">
+            <meta property="og:image:alt" content="{{ 'site.name'|trans }}: {{ 'home.headline'|trans }}">
+        {% endblock %}
+        <meta name="twitter:card" content="summary_large_image">
+        {% block structured_data %}{% endblock %}
         {% block stylesheets %}{% endblock %}
         {% block javascripts %}
             {% block importmap %}{{ importmap('app') }}{% endblock %}
@@ -23,20 +50,27 @@
         {% set route = app.request.attributes.get('_route') %}
         {% set route_params = app.request.attributes.get('_route_params')|default({}) %}
         <header class="border-b border-stone-200 bg-white/80 backdrop-blur dark:border-stone-800 dark:bg-stone-900/80">
-            <nav class="mx-auto flex max-w-6xl flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3">
-                <a href="{{ path('home') }}" class="flex items-center gap-2 font-bold tracking-tight">
+            {% set nav_items = [
+                {route: 'home', label: 'nav.statistics', active: route == 'home'},
+                {route: 'incident_list', label: 'nav.reports', active: route starts with 'incident_list' or route == 'incident_show'},
+                {route: 'faq', label: 'nav.faq', active: route == 'faq'},
+                {route: 'about', label: 'nav.about', active: route == 'about'},
+            ] %}
+            {# Phones: logo, language, report button and a menu, on one row. From lg: the links inline, with the site name. #}
+            <nav class="mx-auto flex max-w-6xl items-center gap-x-6 px-4 py-3">
+                <a href="{{ path('home') }}" class="flex min-w-0 items-center gap-2 font-bold leading-tight tracking-tight" aria-label="{{ 'site.name'|trans }}">
                     {{ include('partials/_logo.html.twig') }}
-                    {{ 'site.name'|trans }}
+                    <span class="hidden sm:inline">{{ 'site.name'|trans }}</span>
                 </a>
-                <div class="flex flex-1 items-center gap-4 text-sm">
-                    <a href="{{ path('home') }}" class="{{ route == 'home' ? 'font-semibold' : 'text-stone-600 hover:text-stone-900 dark:text-stone-400 dark:hover:text-white' }}">{{ 'nav.statistics'|trans }}</a>
-                    <a href="{{ path('incident_list') }}" class="{{ route starts with 'incident_list' or route == 'incident_show' ? 'font-semibold' : 'text-stone-600 hover:text-stone-900 dark:text-stone-400 dark:hover:text-white' }}">{{ 'nav.reports'|trans }}</a>
-                    <a href="{{ path('faq') }}" class="{{ route == 'faq' ? 'font-semibold' : 'text-stone-600 hover:text-stone-900 dark:text-stone-400 dark:hover:text-white' }}">{{ 'nav.faq'|trans }}</a>
+                <div class="hidden flex-1 items-center gap-4 text-sm lg:flex">
+                    {% for item in nav_items %}
+                        <a href="{{ path(item.route) }}" class="{{ item.active ? 'font-semibold' : 'text-stone-600 hover:text-stone-900 dark:text-stone-400 dark:hover:text-white' }}"{% if item.active %} aria-current="page"{% endif %}>{{ item.label|trans }}</a>
+                    {% endfor %}
                 </div>
-                <div class="flex items-center gap-3 text-sm">
+                <div class="ml-auto flex shrink-0 items-center gap-2 text-sm sm:gap-3">
                     {% if route %}
                         {% set current = app.request.locale %}
-                        <details class="language-switcher" data-controller="disclosure" data-action="click@window->disclosure#closeOutside keydown.esc@window->disclosure#close">
+                        <details class="dropdown" data-controller="disclosure" data-action="click@window->disclosure#closeOutside keydown.esc@window->disclosure#close">
                             <summary aria-label="{{ 'nav.language'|trans }}: {{ current|language_name(current)|capitalize }}">
                                 <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.75 5.7 3.75 9S14.5 18.3 12 21c-2.5-2.7-3.75-5.7-3.75-9S9.5 5.7 12 3z"/></svg>
                                 <span class="uppercase">{{ current }}</span>
@@ -54,7 +88,17 @@
                             </ul>
                         </details>
                     {% endif %}
-                    <a href="{{ path('incident_report') }}" class="btn-primary">{{ 'nav.report'|trans }}</a>
+                    <a href="{{ path('incident_report') }}" class="btn-primary max-sm:px-3.5">{{ 'nav.report'|trans }}</a>
+                    <details class="dropdown lg:hidden" data-controller="disclosure" data-action="click@window->disclosure#closeOutside keydown.esc@window->disclosure#close">
+                        <summary aria-label="{{ 'nav.menu'|trans }}">
+                            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+                        </summary>
+                        <ul>
+                            {% for item in nav_items %}
+                                <li><a href="{{ path(item.route) }}"{% if item.active %} aria-current="page"{% endif %}>{{ item.label|trans }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </details>
                 </div>
             </nav>
         </header>
@@ -72,8 +116,7 @@
 
         <footer class="border-t border-stone-200 py-8 text-sm text-stone-500 dark:border-stone-800 dark:text-stone-400">
             <nav class="mx-auto flex max-w-6xl flex-wrap gap-x-5 gap-y-2 px-4" aria-label="{{ 'footer.nav'|trans }}">
-                <a href="{{ path('about') }}" class="underline hover:text-stone-800 dark:hover:text-stone-200">{{ 'about.title'|trans }}</a>
-                <a href="{{ path('faq') }}" class="underline hover:text-stone-800 dark:hover:text-stone-200">{{ 'faq.title'|trans }}</a>
+                <a href="{{ path('changelog') }}" class="underline hover:text-stone-800 dark:hover:text-stone-200">{{ 'changelog.title'|trans }}</a>
                 {% for p in ['privacy', 'cookies', 'terms'] %}
                     <a href="{{ path('legal', {page: p}) }}" class="underline hover:text-stone-800 dark:hover:text-stone-200">{{ ('legal.' ~ p)|trans }}</a>
                 {% endfor %}
@@ -82,7 +125,13 @@
                     {{ 'footer.source_code'|trans }}
                 </a>
                 {% if release %}
-                    <a href="{{ source_code_url }}/commit/{{ build }}" rel="noopener" class="font-mono text-xs hover:text-stone-800 dark:hover:text-stone-200" title="{{ build }}">{{ release starts with 'dev-' ? release : 'v' ~ release }}</a>
+                    {# The release (v1.0.0) leads to the changelog, the build (commit) to the code on GitHub. Before the first tag the release is the build itself. #}
+                    <span class="font-mono text-xs">
+                        {% if release != build %}
+                            <a href="{{ path('changelog') }}" class="hover:text-stone-800 dark:hover:text-stone-200" title="{{ 'footer.changelog'|trans }}">{{ release starts with 'dev-' ? release : 'v' ~ release }}</a> ·
+                        {% endif %}
+                        <a href="{{ source_code_url }}/commit/{{ build }}" rel="noopener" class="hover:text-stone-800 dark:hover:text-stone-200">{{ build }}</a>
+                    </span>
                 {% endif %}
             </nav>
         </footer>

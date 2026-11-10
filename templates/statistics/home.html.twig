@@ -1,7 +1,35 @@
 {% extends 'base.html.twig' %}
 {% import 'partials/_stats.html.twig' as s %}
 
-{% block title %}{{ 'home.title'|trans }}{% endblock %}
+{% block title %}{{ 'seo.home.title'|trans }}{% endblock %}
+{% block description %}{{ 'seo.home.description'|trans }}{% endblock %}
+
+{% block structured_data %}
+    <script type="application/ld+json">
+        {{ {
+            '@context': 'https://schema.org',
+            '@graph': [
+                {
+                    '@type': 'Organization',
+                    '@id': url('root') ~ '#organization',
+                    name: 'site.name'|trans,
+                    url: url('root'),
+                    logo: absolute_url(asset('images/apple-touch-icon.png')),
+                    sameAs: [source_code_url],
+                },
+                {
+                    '@type': 'WebSite',
+                    '@id': url('root') ~ '#website',
+                    name: 'site.name'|trans,
+                    description: 'site.description'|trans,
+                    url: url('home'),
+                    inLanguage: app.request.locale,
+                    publisher: {'@id': url('root') ~ '#organization'},
+                },
+            ],
+        }|json_encode(constant('JSON_UNESCAPED_UNICODE') b-or constant('JSON_UNESCAPED_SLASHES') b-or constant('JSON_HEX_TAG'))|raw }}
+    </script>
+{% endblock %}
 
 {% block body %}
     <section class="mb-10 grid items-center gap-8 md:grid-cols-5">
@@ -59,7 +87,7 @@
 
         <h2 class="mt-12 text-2xl font-bold tracking-tight">{{ 'section.where'|trans }}</h2>
         <p class="mt-1 text-stone-600 dark:text-stone-400">{{ 'section.where.sub'|trans }}</p>
-        <div class="mt-4 grid gap-4 lg:grid-cols-2">
+        <div class="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
             <section class="card lg:row-span-2">
                 <h3 class="font-semibold">{{ 'chart.map'|trans }}</h3>
                 <div class="mt-4 h-[28rem] overflow-hidden rounded-xl"
@@ -96,7 +124,7 @@
 
         <h2 class="mt-12 text-2xl font-bold tracking-tight">{{ 'section.vehicles'|trans }}</h2>
         <p class="mt-1 text-stone-600 dark:text-stone-400">{{ 'section.vehicles.sub'|trans }}</p>
-        <div class="mt-4 grid gap-4 lg:grid-cols-2">
+        <div class="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
             {{ s.chart_card('chart.make'|trans, charts.make, stats.byMake, null, null, true) }}
             <section class="card overflow-x-auto">
                 <h3 class="font-semibold">{{ 'chart.models'|trans }}</h3>
@@ -121,7 +149,7 @@
 
         <h2 class="mt-12 text-2xl font-bold tracking-tight">{{ 'section.circumstances'|trans }}</h2>
         <p class="mt-1 text-stone-600 dark:text-stone-400">{{ 'section.circumstances.sub'|trans }}</p>
-        <div class="mt-4 grid gap-4 lg:grid-cols-2">
+        <div class="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
             {{ s.chart_card('chart.trigger'|trans, charts.trigger, stats.dimension('trigger'), 'enum.trigger.', 'chart.trigger.sub'|trans, true) }}
             {{ s.chart_card('chart.light'|trans, charts.light, stats.dimension('light'), 'enum.light.') }}
             {{ s.chart_card('chart.weather'|trans, charts.weather, stats.dimension('weather'), 'enum.weather.') }}
@@ -131,7 +159,7 @@
 
         <h2 class="mt-12 text-2xl font-bold tracking-tight">{{ 'section.impact'|trans }}</h2>
         <p class="mt-1 text-stone-600 dark:text-stone-400">{{ 'section.impact.sub'|trans }}</p>
-        <div class="mt-4 grid gap-4 lg:grid-cols-2">
+        <div class="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
             {{ s.chart_card('chart.severity'|trans, charts.severity, stats.dimension('severity'), 'enum.severity.') }}
             {{ s.chart_card('chart.consequence'|trans, charts.consequence, stats.dimension('consequence'), 'enum.consequence.') }}
             {{ s.chart_card('chart.dealer'|trans, charts.dealer, stats.dimension('dealer'), 'enum.dealer.', 'chart.dealer.sub'|trans) }}

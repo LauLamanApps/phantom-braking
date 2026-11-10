@@ -40,12 +40,14 @@ host('phantombraking.eu')
 
 // Tasks
 
-// version.json: the release version (git tag, or the commit for a branch deploy) and build (short commit hash).
-// Read by VersionEnvVarLoader as APP_VERSION/APP_BUILD for the Sentry release and the footer.
+// version.json: the release version and build (short commit hash), read by VersionEnvVarLoader as APP_VERSION/APP_BUILD
+// for the Sentry release and the footer. The version is the deployed tag (v1.2.0 → 1.2.0); a branch deploy gets the
+// latest tag it contains, or the commit before the first tag. Releases are listed in CHANGELOG.md.
 task('deploy:set_app_version', function () {
     $tag = input()->getOption('tag') ?: null;
     $build = trim(runLocally('git rev-parse --short HEAD'));
-    $version = $tag ? ltrim($tag, 'v') : $build;
+    $latestTag = trim(runLocally('git describe --tags --abbrev=0 --match "v[0-9]*" 2>/dev/null || true'));
+    $version = ltrim($tag ?: ($latestTag ?: $build), 'v');
     $json = json_encode(['version' => $version, 'build' => $build], \JSON_PRETTY_PRINT | \JSON_UNESCAPED_SLASHES);
 
     writeln("<info>Writing version.json: version={$version}, build={$build}</info>");

@@ -10,7 +10,7 @@
                 <button class="btn-secondary">{{ 'admin.storage.refresh'|trans }}</button>
             </form>
         </div>
-        <div class="mt-4 grid gap-4 sm:grid-cols-3">
+        <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
             {% for u in storage.usage %}
                 <div>
                     <div class="stat-value">{{ u.bytes|bytes }}</div>

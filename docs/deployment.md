@@ -113,9 +113,34 @@ proxy_send_timeout 300s;
 Also check how long NPM keeps its access logs (`/data/logs` in the NPM container): the privacy statement promises
 **at most 14 days**, for the proxy as well as the container.
 
-## 4. DNS
+## 4. DNS (Cloudflare, DNS only)
 
-`A`/`AAAA` records for all four host names to the public IP of the reverse proxy.
+Both domains use Cloudflare as DNS host, with every record **DNS only (grey cloud)**, not proxied:
+
+- Cloudflare's proxy (Free plan) accepts at most **100 MB per request**; a report can carry a 300 MB video.
+- Proxied, every visitor's IP and request would pass through Cloudflare, which the privacy statement doesn't cover.
+- The reverse proxy then gets its Let's Encrypt certificates the normal way (HTTP-01).
+
+| Zone | Type | Name | Content | Proxy |
+|---|---|---|---|---|
+| `phantombraking.eu` | A | `@` | `<PUBLIC_IP>` | DNS only |
+| | CNAME | `www` | `phantombraking.eu` | DNS only |
+| | CAA | `@` | `0 issue "letsencrypt.org"` | |
+| `spook-remmen.nl` | A | `@` | `<PUBLIC_IP>` | DNS only |
+| | CNAME | `www` | `spook-remmen.nl` | DNS only |
+| | CAA | `@` | `0 issue "letsencrypt.org"` | |
+
+If a domain doesn't send e-mail, also publish that, so nobody can send mail in its name:
+
+| Type | Name | Content |
+|---|---|---|
+| MX | `@` | `.` (priority 0, "null MX") |
+| TXT | `@` | `v=spf1 -all` |
+| TXT | `_dmarc` | `v=DMARC1; p=reject; adkim=s; aspf=s` |
+
+Then switch the nameservers at the registrar to the two that Cloudflare assigns, and once Cloudflare shows the zone as
+active, enable **DNSSEC** in Cloudflare and add its DS record at the registrar. Ports 80 and 443 on `<PUBLIC_IP>`
+must be forwarded to the reverse proxy.
 
 ## 5. First deploy
 

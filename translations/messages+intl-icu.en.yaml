@@ -6,12 +6,14 @@ nav.statistics: Statistics
 nav.reports: Reports
 nav.report: Report incident
 nav.language: Language
+nav.menu: Menu
 
 about.mission: Independent reporting point. Manufacturers don't have to register phantom braking anywhere. These reports make the problem measurable.
 about.privacy: We never store your license plate. We keep only an irreversible fingerprint so we can count repeat reports per vehicle. Dashcam footage is only published after review and with your consent.
 about.sources: 'Vehicle data: <a class="underline" href="https://opendata.rdw.nl" rel="noopener">RDW Open Data</a>. Map: <a class="underline" href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a>. Please also report a dangerous vehicle to the Dutch <a class="underline" href="https://www.ilent.nl" rel="noopener">ILT</a>.'
 footer.source_code: Open source (MIT) on GitHub
 nav.faq: "FAQ"
+nav.about: "About"
 footer.nav: "About and legal information"
 about.title: "About"
 about.mission.title: "Why this reporting point exists"
@@ -481,3 +483,15 @@ admin.storage.measured_at: "Measured {date}"
 admin.storage.refresh: Measure again
 enum.media_kind.photo: Photos
 enum.media_kind.video: Videos
+# Search engines and link previews
+seo.home.title: Phantom braking reports and statistics
+seo.home.description: "Does your car brake hard for no reason? Report phantom braking by the emergency brake assist and see how often it happens per make, model and country."
+seo.list.description: "Every phantom braking report: the speed, road situation, location and weather per car. Filter by make, model, country and period."
+seo.report.description: "Report a false emergency stop in 3 minutes. We only use your plate to look up the make and model; we never store it."
+seo.about.description: "An independent, open-source reporting point that makes phantom braking measurable for manufacturers, regulators and politicians."
+seo.incident.title: "Phantom braking {vehicle}, {date}"
+seo.incident.description: "Phantom braking in a {vehicle} on {date}: {severity} at {speed} km/h · {road} · {situation} · {country}."
+changelog.title: Changelog
+changelog.intro: "What changed in each version of the reporting point."
+changelog.current: "This site runs {version}."
+footer.changelog: What changed in this version

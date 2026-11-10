@@ -162,7 +162,6 @@ final readonly class S3MediaStorage implements MediaStorageInterface
         return $created;
     }
 
-
     private function bucket(MediaKind $kind): string
     {
         return MediaKind::Video === $kind ? $this->videoBucket : $this->photoBucket;

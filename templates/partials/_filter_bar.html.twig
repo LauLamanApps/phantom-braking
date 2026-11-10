@@ -9,7 +9,7 @@
       data-controller="filter"
       data-action="change->filter#apply submit->filter#clean"
       role="search" aria-label="{{ 'filter.label'|trans }}">
-    <div class="grid gap-3 sm:grid-cols-2 {{ bar.countries|length > 1 ? 'lg:grid-cols-6' : 'lg:grid-cols-5' }}">
+    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 {{ bar.countries|length > 1 ? 'lg:grid-cols-6' : 'lg:grid-cols-5' }}">
         {% if bar.countries|length > 1 %}
             <label class="space-y-1 text-sm">
                 <span class="font-medium">{{ 'filter.incident_country'|trans }}</span>
