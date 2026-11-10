@@ -5,6 +5,34 @@ based on [Keep a Changelog](https://keepachangelog.com).
 
 ## [Unreleased]
 
+## [1.0.2] - 2026-11-10
+
+### Added
+
+- A fullscreen button on every map.
+- Reports close together on the statistics map are grouped into a cluster with their count, so the map stays fast;
+  zoom in or click a cluster to see the individual reports.
+- Automated checks on every change (tests, static analysis, coding standard and security advisories via GitHub
+  Actions) and weekly dependency updates via Dependabot.
+
+### Changed
+
+- New names that put the reporting point first: "Meldpunt spook-remmen" (was "Spookremmen Meldpunt"), "Phantom
+  Braking Reporting Point" (was "Phantom Braking Report") and "Meldestelle Phantombremsungen" (was
+  "Phantombremsungen-Meldestelle"). The French name already did.
+- New headline on the home page and the share images: "Onterecht remmen? Meld het." (English: "Braking for no
+  reason? Report it.").
+- "Maximumsnelheid" now reads "Toegestane maximumsnelheid" (German: "Zulässige Höchstgeschwindigkeit").
+- A report page now opens with the driver's description, then the video, photos and circumstances; the map, vehicle
+  and removal request are in the side column.
+- The removal request on a report page has a short title ("Verwijderverzoek"); the explanation says who it is for.
+
+### Fixed
+
+- A dashcam video or photo could fail to load when the connection to the storage stalled: such requests are now retried
+  after 10 seconds, instead of failing after a minute. If the storage stays unreachable, the page gets a temporary
+  error (503) rather than a server error.
+
 ## [1.0.1] - 2026-11-10
 
 ### Added
@@ -48,6 +76,7 @@ The first public version.
 - About page, FAQ, privacy statement, cookie notice and terms of use.
 - Moderation for administrators, who sign in with a passkey (no passwords).
 
-[Unreleased]: https://github.com/LauLamanApps/phantom-braking/compare/v1.0.1...HEAD
+[Unreleased]: https://github.com/LauLamanApps/phantom-braking/compare/v1.0.2...HEAD
+[1.0.2]: https://github.com/LauLamanApps/phantom-braking/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/LauLamanApps/phantom-braking/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/LauLamanApps/phantom-braking/releases/tag/v1.0.0

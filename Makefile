@@ -24,7 +24,7 @@ TRAEFIK_KEY  := ~/.traefik/certs/$(PROJECT_URL)-key.pem
         admin-link deploy deploy-rollback deploy-unlock
 
 help: ## Show this help
-	@awk 'BEGIN {FS = ":.*?## "; printf "\n  ⚠  Spookremmen Meldpunt\n     Phantom braking reporting point\n\nUsage: make <target>\n\nTargets:\n"} \
+	@awk 'BEGIN {FS = ":.*?## "; printf "\n  ⚠  Meldpunt spook-remmen\n     Phantom braking reporting point\n\nUsage: make <target>\n\nTargets:\n"} \
 		/^[a-zA-Z_-]+:.*?## / {printf "  \033[36m%-22s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
 # ---------- traefik ----------

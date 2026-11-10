@@ -1,4 +1,4 @@
-site.name: Phantom Braking Report
+site.name: Phantom Braking Reporting Point
 site.title: Central reporting point for phantom braking
 site.description: Report your car's emergency brake activating for no reason (phantom braking). Together we show how often, where and in which cars it happens.
 
@@ -73,7 +73,7 @@ country.de: Germany
 country.fr: France
 
 home.title: Statistics
-home.headline: Your car slams on the brakes. For nothing.
+home.headline: "Braking for no reason? Report it."
 home.intro: "Since July 2024, automatic emergency braking (AEB) has been mandatory in every new car in the EU. More and more drivers report their car braking hard at full speed for no reason. Hardly anyone records this officially."
 home.cta: Report an incident
 home.browse: Browse reports
@@ -145,6 +145,7 @@ table.vehicles: Vehicles
 
 map.legend.incident: Report
 map.legend.collision: Collision
+map.legend.cluster: "Group of reports; red ring: includes a collision"
 map.open: Open report
 map.set: 'Location set:'
 map.empty: Click the map to mark the spot (optional).
@@ -402,9 +403,11 @@ map.looking_up: Looking up the road…
 map.found: "Found:"
 map.nothing_found: No road found at this spot. Please fill in the details yourself.
 map.wheel_hint: Click the map or hold Ctrl/⌘ to zoom
+map.fullscreen: "Fullscreen"
+map.exit_fullscreen: "Exit fullscreen"
 report.media.consent_notice: "By uploading files, you consent to them being published after review. You can withdraw this consent at any time on your report's page, using your plate."
-withdraw.title: Did you submit this report? Request deletion of the footage and photos
-withdraw.intro: "Enter the car's plate. If it matches this report, we send your request to a moderator, who deletes the footage and photos. We don't store the plate."
+withdraw.title: Removal request
+withdraw.intro: "Did you submit this report and want the footage and photos removed? Enter the car's plate. If it matches this report, we send your request to a moderator, who deletes the footage and photos. We don't store the plate."
 withdraw.plate: License plate
 withdraw.plate.help: The same plate as in your report.
 withdraw.submit: Request deletion

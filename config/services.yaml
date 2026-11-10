@@ -35,6 +35,12 @@ services:
         autoconfigure: false
         tags: [{ name: controller.argument_value_resolver, priority: 150 }]
 
+    # Retries and a 10 s idle timeout for the S3 clients (see the factory).
+    app.media_s3_http_client:
+        class: Symfony\Contracts\HttpClient\HttpClientInterface
+        factory: ['App\Incident\Infrastructure\Service\S3HttpClientFactory', 'create']
+        arguments: ['@http_client']
+
     # Media storage: a private S3-compatible bucket (Sliplane in production, RustFS in dev).
     # One S3 client per bucket: Sliplane issues credentials per bucket; the endpoint is shared.
     app.media_s3_photo_client:
@@ -46,7 +52,7 @@ services:
                 accessKeyId: '%env(MEDIA_S3_PHOTO_ACCESS_KEY)%'
                 accessKeySecret: '%env(MEDIA_S3_PHOTO_SECRET_KEY)%'
                 pathStyleEndpoint: '%env(MEDIA_S3_PATH_STYLE)%'
-            $httpClient: '@http_client'
+            $httpClient: '@app.media_s3_http_client'
 
     app.media_s3_video_client:
         class: AsyncAws\S3\S3Client
@@ -57,6 +63,6 @@ services:
                 accessKeyId: '%env(MEDIA_S3_VIDEO_ACCESS_KEY)%'
                 accessKeySecret: '%env(MEDIA_S3_VIDEO_SECRET_KEY)%'
                 pathStyleEndpoint: '%env(MEDIA_S3_PATH_STYLE)%'
-            $httpClient: '@http_client'
+            $httpClient: '@app.media_s3_http_client'
 
     App\Incident\Domain\Service\MediaStorageInterface: '@App\Incident\Infrastructure\Service\S3MediaStorage'

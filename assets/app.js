@@ -1,5 +1,6 @@
 import './stimulus_bootstrap.js';
 import 'leaflet/dist/leaflet.min.css';
+import 'leaflet.markercluster/dist/MarkerCluster.css';
 import './styles/app.css';
 
 /*

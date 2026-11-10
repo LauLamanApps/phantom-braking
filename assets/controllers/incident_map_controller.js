@@ -1,11 +1,17 @@
 import { Controller } from '@hotwired/stimulus';
 import L from 'leaflet';
+import 'leaflet.markercluster'; // adds L.markerClusterGroup (needs the global L that Leaflet sets)
 import { enableWheelZoom } from '../lib/map_wheel_zoom.js';
+import { enableFullscreen } from '../lib/map_fullscreen.js';
 
 /*
  * Plots reports on a map. Either fetches points from `url` (home page) or
  * takes them inline via `points` (detail page). Collisions use the reserved
  * status colour and are explained in the legend next to the map.
+ *
+ * Nearby points are grouped into a cluster showing how many reports it holds
+ * (a red ring when one of them was a collision), so hundreds of points stay
+ * fast and readable; zooming in or clicking a cluster splits it up.
  */
 export default class extends Controller {
     static values = {
@@ -24,6 +30,7 @@ export default class extends Controller {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
         }).addTo(this.map);
         enableWheelZoom(this.map, this.messagesValue.wheel_hint ?? '');
+        enableFullscreen(this.map, { enter: this.messagesValue.fullscreen, exit: this.messagesValue.exit_fullscreen });
 
         let points = this.pointsValue;
         if (this.hasUrlValue && this.urlValue) {
@@ -46,6 +53,7 @@ export default class extends Controller {
 
         const markers = points.map((p) => {
             const marker = L.circleMarker([p.latitude, p.longitude], {
+                collision: p.collision, // read by clusterIcon()
                 radius: p.collision ? 8 : 6,
                 weight: 2,
                 color: token('--surface-1'),
@@ -65,13 +73,34 @@ export default class extends Controller {
                 marker.bindPopup(popup);
             }
 
-            return marker.addTo(this.map);
+            return marker;
         });
+
+        const clusters = L.markerClusterGroup({
+            chunkedLoading: true, // adds markers in batches, so the page stays responsive
+            showCoverageOnHover: false,
+            disableClusteringAtZoom: 15, // street level: every report on its own
+            iconCreateFunction: (cluster) => this.clusterIcon(cluster),
+        });
+        clusters.addLayers(markers);
+        this.map.addLayer(clusters);
 
         if (markers.length === 1) {
             this.map.setView(markers[0].getLatLng(), 14);
         } else if (markers.length > 1) {
-            this.map.fitBounds(L.featureGroup(markers).getBounds().pad(0.1), { maxZoom: 12 });
+            this.map.fitBounds(clusters.getBounds().pad(0.1), { maxZoom: 12 });
         }
+    }
+
+    clusterIcon(cluster) {
+        const count = cluster.getChildCount();
+        const size = count < 10 ? 32 : count < 100 ? 40 : 48;
+        const collision = cluster.getAllChildMarkers().some((marker) => marker.options.collision);
+
+        return L.divIcon({
+            html: `<span>${count}</span>`,
+            className: collision ? 'map-cluster map-cluster-collision' : 'map-cluster',
+            iconSize: [size, size],
+        });
     }
 }

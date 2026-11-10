@@ -1,6 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 import L from 'leaflet';
 import { enableWheelZoom } from '../lib/map_wheel_zoom.js';
+import { enableFullscreen } from '../lib/map_fullscreen.js';
 
 /*
  * Click the map (or use GPS) to mark where the car braked. The road at that
@@ -25,6 +26,7 @@ export default class extends Controller {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
         }).addTo(this.map);
         enableWheelZoom(this.map, this.messagesValue.wheel_hint ?? '');
+        enableFullscreen(this.map, { enter: this.messagesValue.fullscreen, exit: this.messagesValue.exit_fullscreen });
 
         this.map.on('click', (e) => this.place(e.latlng.lat, e.latlng.lng));
         if (hasPoint) {

@@ -8,7 +8,7 @@ webauthn:
     creation_profiles:
         default:
             rp:
-                name: 'Spookremmen Meldpunt beheer'
+                name: 'Meldpunt spook-remmen beheer'
                 id: '%env(string:key:host:url:DEFAULT_URI)%'
             authenticator_selection_criteria:
                 resident_key: required # a discoverable passkey: log in without typing an e-mail address

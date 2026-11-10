@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Incident\Domain\Service;
 
 use App\Incident\Domain\Exception\MediaNotFoundException;
+use App\Incident\Domain\Exception\MediaUnavailableException;
 use App\Incident\Domain\Exception\RangeNotSatisfiableException;
 use App\Incident\Domain\ValueObject\ByteRange;
 use App\Incident\Domain\ValueObject\IncidentId;
@@ -25,6 +26,7 @@ interface MediaStorageInterface
     /**
      * @throws MediaNotFoundException
      * @throws RangeNotSatisfiableException
+     * @throws MediaUnavailableException
      */
     public function open(string $key, ?ByteRange $range = null): MediaObject;
 

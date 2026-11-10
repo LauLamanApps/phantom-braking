@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <title>Spookremmen Meldpunt</title>
+  <title>Meldpunt spook-remmen</title>
   <!-- inspired by the dashboard brake warning light, with PHANTOM instead of BRAKE -->
   <rect x=".75" y=".75" width="62.5" height="62.5" rx="13.25" fill="#141110" stroke="#3b3431" stroke-width="1.5"/><text x="32" y="17" text-anchor="middle" fill="#ef4430" font-family="Arial Black, Helvetica Neue, Arial, sans-serif" font-weight="900" font-size="9.4" textLength="46" lengthAdjust="spacingAndGlyphs">PHANTOM</text><g fill="none" stroke="#ef4430" stroke-width="3.8" stroke-linecap="round"><path d="M16.5 25.5a18 18 0 0 0 0 25M47.5 25.5a18 18 0 0 1 0 25"/><circle cx="32" cy="38" r="10"/><path d="M32 32.5v6"/></g><circle cx="32" cy="43.3" r="2.1" fill="#ef4430"/>
 </svg>

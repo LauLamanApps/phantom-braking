@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Incident\Presentation\Http;
 
 use App\Incident\Domain\Exception\MediaNotFoundException;
+use App\Incident\Domain\Exception\MediaUnavailableException;
 use App\Incident\Domain\Exception\RangeNotSatisfiableException;
 use App\Incident\Domain\Service\MediaStorageInterface;
 use App\Incident\Domain\ValueObject\ByteRange;
@@ -13,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 
 /**
  * Streams a stored file to the browser, with byte-range support (206) for video seeking.
@@ -35,6 +37,9 @@ final readonly class MediaResponder
             throw new NotFoundHttpException(previous: $e);
         } catch (RangeNotSatisfiableException $e) {
             return new Response('', Response::HTTP_REQUESTED_RANGE_NOT_SATISFIABLE, ['Content-Range' => 'bytes */'.$e->totalSize]);
+        } catch (MediaUnavailableException $e) {
+            // Temporary: a 503 lets the browser (and Sentry) tell it apart from a bug.
+            throw new ServiceUnavailableHttpException(5, previous: $e);
         }
 
         $response = new StreamedResponse(static function () use ($object): void {

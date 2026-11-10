@@ -1,4 +1,6 @@
-# Spookremmen Meldpunt: phantom braking reporting point
+# Meldpunt spook-remmen: phantom braking reporting point
+
+[![CI](https://github.com/LauLamanApps/phantom-braking/actions/workflows/ci.yml/badge.svg)](https://github.com/LauLamanApps/phantom-braking/actions/workflows/ci.yml)
 
 A central place to report **phantom braking**, where a car's automatic emergency brake (AEB) or adaptive cruise
 control brakes hard for no reason. It starts with the Netherlands. The vehicle is identified via the
@@ -65,8 +67,9 @@ A report has **two** countries:
 
 We only accept reports from countries whose national registry we can query, so make, model and year always come
 from an authoritative source. Today that's the Netherlands. Germany and France are *known* countries (their data can
-be filtered) but not reportable: neither has an open plate register. Research on DE, BE and FR, including commercial
-options and the EU registration-certificate alternative, is in [docs/country-registries.md](docs/country-registries.md).
+be filtered) but not reportable: neither has an open plate register. Research on other European countries
+(Norway and the UK are the most promising), commercial options and the EU registration-certificate alternative is in
+[docs/country-registries.md](docs/country-registries.md).
 
 To add a country:
 

@@ -5,20 +5,26 @@ declare(strict_types=1);
 namespace App\Tests\Unit;
 
 use App\Incident\Domain\Exception\MediaNotFoundException;
+use App\Incident\Domain\Exception\MediaUnavailableException;
 use App\Incident\Domain\Exception\RangeNotSatisfiableException;
+use App\Incident\Domain\Service\MediaStorageInterface;
 use App\Incident\Domain\ValueObject\ByteRange;
 use App\Incident\Domain\ValueObject\IncidentId;
 use App\Incident\Domain\ValueObject\MediaKind;
 use App\Incident\Infrastructure\Service\LocalMediaStorage;
 use App\Incident\Infrastructure\Service\MediaKey;
+use App\Incident\Infrastructure\Service\S3HttpClientFactory;
 use App\Incident\Infrastructure\Service\S3MediaStorage;
 use App\Incident\Presentation\Admin\StorageMonitor;
+use App\Incident\Presentation\Http\MediaResponder;
 use AsyncAws\S3\S3Client;
 use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 
 final class MediaStorageTest extends TestCase
 {
@@ -104,6 +110,46 @@ final class MediaStorageTest extends TestCase
 
         $this->expectException(MediaNotFoundException::class);
         $storage->open($key);
+    }
+
+    public function testS3RetriesAStalledConnectionAndReportsStorageThatStaysUnreachable(): void
+    {
+        $stalled = static fn (): MockResponse => new MockResponse('', ['error' => 'Idle timeout reached for "http://s3.test/videos/x".']);
+        $responses = [$stalled(), new MockResponse('video', ['http_code' => 200, 'response_headers' => ['Content-Length' => '5']])];
+        $attempts = new \ArrayObject(); // counted here: withOptions() clones the mock client, and with it its own counter
+        $http = new MockHttpClient(static function () use (&$responses, $stalled, $attempts): MockResponse {
+            $attempts->append(true);
+            $response = array_shift($responses);
+
+            return $response instanceof MockResponse ? $response : $stalled(); // then: unreachable for good
+        });
+        $client = new S3Client(['endpoint' => 'http://s3.test', 'region' => 'eu-central-1', 'accessKeyId' => 'k', 'accessKeySecret' => 's', 'pathStyleEndpoint' => 'true'], null, S3HttpClientFactory::create($http, retryDelayMs: 0));
+        $storage = new S3MediaStorage($client, $client, 'photos', 'videos');
+        $key = MediaKey::for(IncidentId::generate(), 'footage.mp4');
+
+        self::assertSame('video', implode('', iterator_to_array($storage->open($key)->chunks)));
+        self::assertCount(2, $attempts, 'the stalled request was retried once');
+
+        try {
+            $storage->open($key);
+            self::fail('Expected the storage to be reported unavailable');
+        } catch (MediaUnavailableException) {
+            self::assertCount(2 + 1 + S3HttpClientFactory::MAX_RETRIES, $attempts, 'given up after the retries');
+        }
+    }
+
+    public function testUnreachableStorageIsATemporary503(): void
+    {
+        $storage = self::createStub(MediaStorageInterface::class);
+        $storage->method('open')->willThrowException(new MediaUnavailableException());
+
+        try {
+            (new MediaResponder($storage))->respond(new Request(), 'videos/x.mp4', 'video/mp4', 'x.mp4', public: true);
+            self::fail('Expected a 503');
+        } catch (ServiceUnavailableHttpException $e) {
+            self::assertSame(503, $e->getStatusCode());
+            self::assertSame('5', (string) $e->getHeaders()['Retry-After']);
+        }
     }
 
     public function testS3PhotosGoToThePhotoBucketAndUsageIsSummedPerBucket(): void

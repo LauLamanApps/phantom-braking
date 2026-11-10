@@ -1,4 +1,4 @@
-site.name: Spookremmen Meldpunt
+site.name: Meldpunt spook-remmen
 site.title: Centraal meldpunt voor phantom braking
 site.description: Meld onterecht ingrijpen van de noodremassistent (phantom braking). Samen maken we zichtbaar hoe vaak, waar en bij welke auto's het gebeurt.
 
@@ -73,7 +73,7 @@ country.de: Duitsland
 country.fr: Frankrijk
 
 home.title: Statistieken
-home.headline: Je auto remt keihard. Voor niets.
+home.headline: "Onterecht remmen? Meld het."
 home.intro: "Sinds juli 2024 is de automatische noodrem (AEB) verplicht in elke nieuwe auto. Steeds meer bestuurders melden dat hun auto op volle snelheid remt zonder dat er aanleiding voor is. Officieel wordt het nauwelijks geregistreerd."
 home.cta: Meld een incident
 home.browse: Bekijk meldingen
@@ -145,6 +145,7 @@ table.vehicles: Voertuigen
 
 map.legend.incident: Melding
 map.legend.collision: Aanrijding
+map.legend.cluster: "Groep meldingen; rode rand: met aanrijding"
 map.open: Bekijk melding
 map.set: 'Locatie gezet:'
 map.empty: Klik op de kaart om de plek aan te geven (optioneel).
@@ -176,7 +177,7 @@ report.road_situation.help: Waar was je precies op het moment dat de auto remde?
 report.road_number: Wegnummer
 report.direction: Rijrichting
 report.direction.placeholder: bijv. richting Arnhem, hmp 142,3
-report.speed_limit: Maximumsnelheid (km/h)
+report.speed_limit: Toegestane maximumsnelheid (km/h)
 report.map: Plek op de kaart
 report.severity: Hoe hard remde de auto?
 report.speed_before: Snelheid vóór het remmen (km/h)
@@ -402,9 +403,11 @@ map.looking_up: Weg opzoeken…
 map.found: "Gevonden:"
 map.nothing_found: Geen weg gevonden op deze plek. Vul de gegevens zelf in.
 map.wheel_hint: Klik in de kaart of houd Ctrl/⌘ ingedrukt om te zoomen
+map.fullscreen: "Volledig scherm"
+map.exit_fullscreen: "Volledig scherm sluiten"
 report.media.consent_notice: "Door bestanden te uploaden geef je toestemming om ze na controle openbaar te maken. Je kunt die toestemming altijd intrekken op de pagina van je melding, met je kenteken."
-withdraw.title: Heb jij deze melding gedaan? Vraag verwijdering van de beelden en foto's aan
-withdraw.intro: "Vul het kenteken van de auto in. Klopt het met deze melding, dan sturen we je verzoek naar een beheerder, die de beelden en foto's verwijdert. We slaan het kenteken niet op."
+withdraw.title: Verwijderverzoek
+withdraw.intro: "Heb je deze melding zelf gedaan en wil je de beelden en foto's laten verwijderen? Vul het kenteken van de auto in. Klopt het met deze melding, dan sturen we je verzoek naar een beheerder, die de beelden en foto's verwijdert. We slaan het kenteken niet op."
 withdraw.plate: Kenteken
 withdraw.plate.help: Hetzelfde kenteken als bij je melding.
 withdraw.submit: Verwijdering aanvragen
@@ -488,7 +491,7 @@ seo.home.title: Phantom braking melden en statistieken
 seo.home.description: "Remt je auto zomaar hard af? Meld phantom braking (spookremmen) van de noodremassistent en bekijk per merk, model en land hoe vaak het gebeurt."
 seo.list.description: "Alle meldingen van phantom braking: per auto de snelheid, de wegsituatie, de plek en het weer. Filter op merk, model, land en periode."
 seo.report.description: "Meld in 3 minuten een onterechte noodstop van je auto. Je kenteken gebruiken we alleen om merk en model op te zoeken; we slaan het niet op."
-seo.about.description: "Het Spookremmen Meldpunt is een onafhankelijk, open-source meldpunt dat phantom braking meetbaar maakt voor fabrikanten, toezichthouders en politiek."
+seo.about.description: "Het Meldpunt spook-remmen is een onafhankelijk, open-source meldpunt dat phantom braking meetbaar maakt voor fabrikanten, toezichthouders en politiek."
 seo.incident.title: "Phantom braking {vehicle}, {date}"
 seo.incident.description: "Phantom braking bij een {vehicle} op {date}: {severity} bij {speed} km/h · {road} · {situation} · {country}."
 changelog.title: Wijzigingen

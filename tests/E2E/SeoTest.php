@@ -54,7 +54,7 @@ final class SeoTest extends WebTestCase
         self::assertCount(5, $xpath('//s:url[s:loc="http://localhost/nl/about"]/x:link'));
     }
 
-    #[TestWith(['nl', 'nl_NL', 'Phantom braking melden en statistieken · Spookremmen Meldpunt'])]
+    #[TestWith(['nl', 'nl_NL', 'Phantom braking melden en statistieken · Meldpunt spook-remmen'])]
     #[TestWith(['fr', 'fr_FR', 'Freinages fantômes : signalements et statistiques · Point de signalement des freinages fantômes'])]
     public function testHomePageHasSearchAndShareMetadata(string $locale, string $ogLocale, string $title): void
     {

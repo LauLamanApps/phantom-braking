@@ -73,7 +73,7 @@ country.de: Allemagne
 country.fr: France
 
 home.title: Statistiques
-home.headline: Votre voiture pile. Pour rien.
+home.headline: "Freinage injustifié ? Signalez-le."
 home.intro: "Depuis juillet 2024, le freinage d’urgence automatique (AEB) est obligatoire sur toute voiture neuve dans l’UE. De plus en plus de conducteurs signalent que leur voiture freine brutalement en pleine vitesse sans aucune raison. Presque personne ne l’enregistre officiellement."
 home.cta: Signaler un incident
 home.browse: Parcourir les signalements
@@ -145,6 +145,7 @@ table.vehicles: Véhicules
 
 map.legend.incident: Signalement
 map.legend.collision: Collision
+map.legend.cluster: "Groupe de signalements ; anneau rouge : avec collision"
 map.open: Voir le signalement
 map.set: 'Position définie :'
 map.empty: Cliquez sur la carte pour indiquer l’endroit (facultatif).
@@ -402,9 +403,11 @@ map.looking_up: Recherche de la route…
 map.found: "Trouvé :"
 map.nothing_found: Aucune route trouvée à cet endroit. Veuillez remplir les informations vous-même.
 map.wheel_hint: Cliquez sur la carte ou maintenez Ctrl/⌘ pour zoomer
+map.fullscreen: "Plein écran"
+map.exit_fullscreen: "Quitter le plein écran"
 report.media.consent_notice: "En envoyant des fichiers, vous acceptez leur publication après vérification. Vous pouvez retirer ce consentement à tout moment sur la page de votre signalement, à l’aide de votre plaque."
-withdraw.title: Vous êtes l’auteur de ce signalement ? Demandez la suppression de la vidéo et des photos
-withdraw.intro: "Saisissez la plaque de la voiture. Si elle correspond à ce signalement, nous transmettons votre demande à un modérateur, qui supprime la vidéo et les photos. Nous ne conservons pas la plaque."
+withdraw.title: Demande de suppression
+withdraw.intro: "Vous êtes l’auteur de ce signalement et souhaitez faire supprimer la vidéo et les photos ? Saisissez la plaque de la voiture. Si elle correspond à ce signalement, nous transmettons votre demande à un modérateur, qui supprime la vidéo et les photos. Nous ne conservons pas la plaque."
 withdraw.plate: Plaque d’immatriculation
 withdraw.plate.help: La même plaque que dans votre signalement.
 withdraw.submit: Demander la suppression

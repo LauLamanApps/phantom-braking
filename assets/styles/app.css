@@ -207,6 +207,33 @@
     font: inherit;
 }
 
+/* Map clusters (incident_map_controller): a count of nearby reports. A red ring: at least one was a collision. */
+.map-cluster {
+    @apply flex items-center justify-center rounded-full text-xs font-semibold text-white;
+    background: var(--series-1);
+    border: 2px solid var(--surface-1);
+    box-shadow: 0 0 0 1px var(--series-1);
+}
+.map-cluster-collision {
+    box-shadow: 0 0 0 3px var(--status-critical);
+}
+
+.map-fullscreen-control a {
+    @apply flex items-center justify-center;
+}
+.map-fullscreen-control svg {
+    @apply h-4 w-4;
+}
+/* Fullscreen: the browser's own (Fullscreen API), or laid over the page where that isn't available (iPhone). */
+.leaflet-container.map-is-fullscreen {
+    @apply rounded-none;
+}
+/* !important: Leaflet sets position: relative inline on the container. */
+.leaflet-container.map-fullscreen {
+    @apply inset-0 z-[1200] m-0 h-auto;
+    position: fixed !important;
+}
+
 .dropdown {
     @apply relative;
 }

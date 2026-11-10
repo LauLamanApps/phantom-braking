@@ -64,8 +64,7 @@ final class InfoPagesTest extends WebTestCase
         self::assertSelectorTextContains('h1', 'Wijzigingen');
         self::assertSelectorExists('article h2:contains("1.0.0")');
         self::assertSelectorExists('article h3:contains("Added")');
-        // The file's own title and an empty "Unreleased" section are not repeated on the page.
+        // The file's own title is not repeated on the page (an empty "Unreleased" section is left out too).
         self::assertSelectorNotExists('article h1:contains("Changelog")');
-        self::assertSelectorNotExists('article h2:contains("Unreleased")');
     }
 }

@@ -1,4 +1,4 @@
-site.name: Phantombremsungen-Meldestelle
+site.name: Meldestelle Phantombremsungen
 site.title: Zentrale Meldestelle für Phantombremsungen
 site.description: Melde, wenn der Notbremsassistent deines Autos ohne Grund eingreift (Phantombremsung). Gemeinsam zeigen wir, wie oft, wo und bei welchen Autos das passiert.
 
@@ -73,7 +73,7 @@ country.de: Deutschland
 country.fr: Frankreich
 
 home.title: Statistiken
-home.headline: Dein Auto macht eine Vollbremsung. Für nichts.
+home.headline: "Grundlos gebremst? Melde es."
 home.intro: "Seit Juli 2024 ist der automatische Notbremsassistent (AEB) in jedem Neuwagen in der EU Pflicht. Immer mehr Fahrerinnen und Fahrer berichten, dass ihr Auto bei voller Fahrt stark bremst, ohne dass es einen Anlass dafür gibt. Offiziell erfasst wird das kaum."
 home.cta: Vorfall melden
 home.browse: Meldungen ansehen
@@ -145,6 +145,7 @@ table.vehicles: Fahrzeuge
 
 map.legend.incident: Meldung
 map.legend.collision: Unfall
+map.legend.cluster: "Gruppe von Meldungen; roter Rand: mit Unfall"
 map.open: Meldung öffnen
 map.set: 'Ort gesetzt:'
 map.empty: Klicke auf die Karte, um die Stelle zu markieren (optional).
@@ -176,7 +177,7 @@ report.road_situation.help: Wo genau warst du, als das Auto gebremst hat?
 report.road_number: Straßennummer
 report.direction: Fahrtrichtung
 report.direction.placeholder: z. B. Richtung Arnheim, Kilometer 142,3
-report.speed_limit: Höchstgeschwindigkeit (km/h)
+report.speed_limit: Zulässige Höchstgeschwindigkeit (km/h)
 report.map: Stelle auf der Karte
 report.severity: Wie stark hat das Auto gebremst?
 report.speed_before: Geschwindigkeit vor dem Bremsen (km/h)
@@ -402,9 +403,11 @@ map.looking_up: Straße wird gesucht…
 map.found: "Gefunden:"
 map.nothing_found: An dieser Stelle wurde keine Straße gefunden. Bitte trage die Angaben selbst ein.
 map.wheel_hint: Klicke auf die Karte oder halte Strg/⌘ gedrückt, um zu zoomen
+map.fullscreen: "Vollbild"
+map.exit_fullscreen: "Vollbild beenden"
 report.media.consent_notice: "Mit dem Hochladen von Dateien willigst du ein, dass sie nach Prüfung veröffentlicht werden. Du kannst diese Einwilligung jederzeit auf der Seite deiner Meldung mit deinem Kennzeichen widerrufen."
-withdraw.title: Hast du diese Meldung eingereicht? Lösche die Aufnahmen und Fotos
-withdraw.intro: "Gib das Kennzeichen des Autos ein. Passt es zu dieser Meldung, leiten wir deine Anfrage an eine Moderatorin oder einen Moderator weiter, die bzw. der die Aufnahmen und Fotos löscht. Wir speichern das Kennzeichen nicht."
+withdraw.title: Löschanfrage
+withdraw.intro: "Hast du diese Meldung eingereicht und möchtest die Aufnahmen und Fotos löschen lassen? Gib das Kennzeichen des Autos ein. Passt es zu dieser Meldung, leiten wir deine Anfrage an eine Moderatorin oder einen Moderator weiter, die bzw. der die Aufnahmen und Fotos löscht. Wir speichern das Kennzeichen nicht."
 withdraw.plate: Kennzeichen
 withdraw.plate.help: Dasselbe Kennzeichen wie in deiner Meldung.
 withdraw.submit: Löschung beantragen

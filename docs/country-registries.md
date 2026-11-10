@@ -12,6 +12,27 @@ Status as of November 2026. Re-check before building anything: access rules chan
 | 🇩🇪 Germany | No | ⏸ Not reportable. Known as a country, so existing data can be filtered |
 | 🇧🇪 Belgium | No | ⏸ Not started |
 | 🇫🇷 France | No | ⏸ Not reportable. Known as a country, so existing data can be filtered |
+| 🇳🇴 Norway (EEA) | **Yes**: Statens vegvesen API, free key | 🔜 Best candidate, but the key needs a Norwegian eID |
+| 🇬🇧 United Kingdom (not EU) | **Yes**: DVSA MOT History API, free key on approval | 🔜 Feasible; cars without an MOT yet may be missing |
+| 🇫🇮 Finland | Web service only; open data has no plates | ❌ No API |
+| 🇸🇪 Sweden | Web lookup only; data sold on application | ❌ No open API |
+| 🇩🇰 Denmark | Website only (Motorregister) | ❌ No API; existing tools scrape |
+| 🇵🇱 Poland | Needs plate **and** VIN **and** first registration date | ❌ Reporters don't know their VIN |
+| 🇭🇺 Hungary | Free per person, after a government login | ❌ No API |
+| 🇪🇪 Estonia | By contract; plates are not public data by law | ❌ |
+| 🇪🇸 Spain | Web service for public administrations only | ❌ |
+| 🇨🇿 Czechia | Statistics only; vehicle data for the owner | ❌ |
+
+## Where to go next
+
+1. **Norway** fits the existing design directly: one more `CountryVehicleRegistryInterface` next to
+   `RdwVehicleRegistry`, with an authoritative lookup by plate. The blocker is the key: ask Statens vegvesen whether a
+   foreign organisation can get one without a Norwegian eID.
+2. **United Kingdom**: the MOT History API gives make and model by plate. It is outside the EU, and very new cars
+   (no MOT yet) may not be returned. Check that before relying on it.
+3. **Everywhere else**, including Germany and France, there is no official open lookup, and that is unlikely to
+   change. The options are the EU registration certificate (below), manual entry marked as unverified, or a commercial
+   provider (not recommended: unknown sources, cost, and plates sent to a third party).
 
 ## 🇳🇱 Netherlands: RDW Open Data
 
@@ -60,6 +81,98 @@ Status as of November 2026. Re-check before building anything: access rules chan
   [forum thread](https://forum.data.gouv.fr/t/information-des-vehicules-immatricules/358)
 - **Commercial:** plate APIs such as api-plaque-immatriculation.com and CarsXE. These are not official and not
   verified.
+
+## 🇳🇴 Norway (EEA, not EU)
+
+- **API for tekniske kjøretøyopplysninger** (Statens vegvesen, Autosys): look up by registration number or chassis
+  number. Returns technical data (dimensions, weight, engine and power, brakes, axles, tyres), the date of first
+  registration in Norway and EU inspection dates. No owner data and no mileage. Updated daily.
+- **Access:** free API key, "open to all private persons and businesses with a Norwegian electronic ID" (BankID,
+  Buypass or Commfides); organisations need the Altinn service *Kjøretøyoppslag*. Requests are approved
+  automatically. Whether a foreign organisation can get a key is **not stated**: ask.
+- The page doesn't list make and model explicitly; the API's response is expected to include them (`merke`,
+  `handelsbetegnelse`), but the documentation portal didn't load during this research. **Verify.**
+- A separate, **paid** API with owner data exists (from NOK 2,640/month); we don't need it.
+- Statens vegvesen explicitly prohibits scraping its web pages.
+  [API page](https://www.vegvesen.no/kjoretoy/kjop-og-salg/kjoretoyopplysninger/api-er-for-tekniske-kjoretoyopplysninger/api-for-tekniske-kjoretoyopplysninger/) ·
+  [paid API with owner data](https://www.vegvesen.no/fag/teknologi/apne-data/et-utvalg-apne-data/api-for-tekniske-kjoretoyopplysninger-med-eierinformasjon/)
+
+## 🇬🇧 United Kingdom (not EU)
+
+- **DVSA MOT History API**: look up by registration; returns `make`, `model`, `firstUsedDate`, `fuelType`,
+  `primaryColour`, and (when known) `registrationDate`, `manufactureDate`, `engineSize`.
+- **Access:** register as an individual or organisation; DVSA reviews the request and sends a key within about 5
+  working days. Quotas are per key (the old API's guidance: under 150,000 requests a day for single lookups). Cost
+  isn't stated. The old API was deprecated on 1 Sep 2025; register for the new one.
+- **Caveat:** it is an MOT database. Cars under 3 years old have no MOT yet; the old docs suggest they are still
+  returned (with `motTestDueDate`), but this is **not confirmed**. Many phantom-braking cars are new, so test it.
+- **DVLA Vehicle Enquiry Service** is the other option, but it returns `make` without `model`, and DVLA is "currently
+  not accepting new VES API registrations".
+  [MOT API registration](https://documentation.history.mot.api.gov.uk/mot-history-api/register) ·
+  [MOT API docs (old version)](https://dvsa.github.io/mot-history-api-documentation) ·
+  [DVLA VES](https://developer-portal.driver-vehicle-licensing.api.gov.uk/apis/vehicle-enquiry-service/vehicle-enquiry-service-description.html)
+
+## 🇫🇮 Finland
+
+- Traficom's **open vehicle data** is a bulk CSV of all vehicles in traffic, but without registration numbers or full
+  chassis numbers: Traficom treats both as personal data, which open data may not contain.
+- A **per-vehicle web service** on Suomi.fi shows technical data for free (with a limit on the number of queries); there
+  is no API for it. Restricted, paid data products do include the plate.
+  [open data](https://avoindata.suomi.fi/data/en/dataset/ajoneuvojen-avoin-data/resource/00041d67-966e-48cf-a720-255faf09d55c) ·
+  [open data FAQ (PDF)](https://tieto.traficom.fi/files/media/file/Avoin%20Data%20Usein%20Kysytyimm%C3%A4t%20Kysymykset.pdf) ·
+  [Suomi.fi service](https://www.suomi.fi/services/public-vehicle-data-and-tax-payment-the-finnish-transport-and-communications-agency-traficom/1c5871b0-5a24-4fca-abf4-24c3ea4063a3)
+
+## 🇸🇪 Sweden
+
+- Transportstyrelsen's **Fordonsuppgifter** web lookup by plate is free and needs no login, but it is a web page, not
+  an API.
+- Data from the road traffic register (*vägtrafikregistret*) is **sold** under conditions, on application with a stated
+  purpose. A plate counts as personal data when the owner is a private person.
+  [Fordonsuppgifter](https://www.transportstyrelsen.se/sv/vagtrafik/Fordon/Fordonsuppgifter/) ·
+  [conditional data](https://www.transportstyrelsen.se/sv/om-oss/statistik-och-analys/oppna-data/villkorad-data-utifran-trafikslag/)
+
+## 🇩🇰 Denmark
+
+- No official API for the **Motorregister** (DMR). Skat delivers it in bulk to Danmarks Statistik, not to the public.
+- Community tools (e.g. `dmr.py`) scrape motorregister.skat.dk; not an option for us.
+  [dmr.py](https://github.com/j4asper/dmr.py) · [Danmarks Statistik on DMR](https://www.dst.dk/da/Statistik/dokumentation/Times/bilregister-dmr)
+
+## 🇵🇱 Poland
+
+- **Historia Pojazdu** (historiapojazdu.gov.pl) shows make, model, year and first registration, but needs the
+  registration number, **VIN** and **date of first registration** together. Reporters won't have the VIN at hand.
+- The CEPiK API requires an access certificate, on application.
+  [gov.pl: SI CEPiK](https://www.gov.pl/web/cyfryzacja/system-informatyczny-centralnej-ewidencji-pojazdow-i-kierowcow-si-cepik-) ·
+  [mubi.pl guide](https://mubi.pl/poradniki/cepik-co-mozna-tam-sprawdzic/)
+
+## 🇭🇺 Hungary
+
+- **JSZP** (Jármű Szolgáltatási Platform) shows a vehicle's history for free by plate, including technical data and
+  odometer readings, but each user logs in with the government gateway (Ügyfélkapu). No API. Sources are from
+  2019–2023.
+  [Pénzcentrum](https://www.penzcentrum.hu/auto/20210904/auto-lekerdezes-ingyen-rendszam-alapjan-mi-mindent-tudhatunk-meg-egy-autorol-1117430)
+
+## 🇪🇪 Estonia
+
+- Under the Traffic Act, register data is public **except** personal data, the registration certificate number, the
+  **registration plate** and the VIN. Single lookups by plate (make, commercial name, technical data) exist for
+  organisations with a data-exchange contract with Transpordiamet.
+  [Liiklusseadus (Riigi Teataja)](https://www.riigiteataja.ee/akt/111082023003.pdf)
+
+## 🇪🇸 Spain
+
+- The DGT has a web service returning make, model, first registration and more by plate, but only through its data
+  platform for **public administrations**. A datos.gob.es answer confirms there is no public REST API. Individuals can
+  get a free reduced report on the DGT website.
+  [DGT data platform](https://sede.dgt.gob.es/en/otros-tramites/tramites-para-administraciones/plataforma-de-intermediacion-de-datos/) ·
+  [datos.gob.es request](https://datos.gob.es/en/solicitud-de-datos/api-rest-para-la-obtener-los-datos-de-la-ficha-tecnica-nive-de-un-vehiculo)
+
+## 🇨🇿 Czechia
+
+- **Datová kostka** (dataovozidlech.cz) offers statistics from the vehicle register, not per-vehicle lookups.
+  Individual vehicle data is available on request, for the owner.
+  [kurzy.cz](https://zpravy.kurzy.cz/626964-ministerstvo-dopravy-zpristupnuje-data-z-registru-vozidel-i-udaje-o-technickych-prohlidkach/) ·
+  [portal.gov.cz request](https://portal.gov.cz/sluzby-vs/zadost-o-data-zregistru-silnicnich-vozidel-S7198)
 
 ## Option: the EU registration certificate (all EU countries)
 

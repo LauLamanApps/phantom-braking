@@ -1,0 +1,61 @@
+name: CI
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+
+permissions:
+    contents: read
+
+concurrency:
+    group: ci-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    tests:
+        name: Tests and static analysis
+        runs-on: ubuntu-latest
+        timeout-minutes: 15
+        steps:
+            - uses: actions/checkout@v5
+
+            - uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '8.5'
+                  # gd for photo sanitising and plate masking; tests run on SQLite.
+                  extensions: ctype, iconv, intl, gd, mbstring, pdo_sqlite, zip
+                  coverage: none
+                  tools: composer:v2
+
+            - uses: ramsey/composer-install@v3
+
+            - name: Validate composer.json and lock file
+              run: composer validate --strict --no-check-publish
+
+            - name: Security advisories (Composer and importmap)
+              run: |
+                  composer audit
+                  bin/console importmap:audit
+
+            - name: Lint config, translations, templates and container
+              run: |
+                  bin/console lint:yaml config translations --parse-tags
+                  bin/console lint:twig templates
+                  bin/console lint:container
+
+            - name: Coding standard
+              run: vendor/bin/php-cs-fixer check --diff
+
+            # PHPStan reads the dev container (phpstan.dist.neon).
+            - name: PHPStan
+              run: |
+                  bin/console cache:warmup --env=dev
+                  vendor/bin/phpstan analyse --no-progress --memory-limit=1G
+
+            # The test pages are rendered with the built Tailwind CSS.
+            - name: Build CSS
+              run: bin/console tailwind:build --env=test
+
+            - name: PHPUnit
+              run: vendor/bin/phpunit

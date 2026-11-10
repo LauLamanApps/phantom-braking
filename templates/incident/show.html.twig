@@ -55,6 +55,12 @@
 
     <div class="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
         <div class="space-y-4 lg:col-span-2">
+            {% if incident.description %}
+                <section class="card">
+                    <h2 class="font-semibold">{{ 'incident.description'|trans }}</h2>
+                    <p class="mt-2 whitespace-pre-line text-stone-700 dark:text-stone-300">{{ incident.description }}</p>
+                </section>
+            {% endif %}
             {% if incident.footage.public %}
                 <section class="card">
                     <h2 class="font-semibold">{{ 'incident.footage'|trans }}</h2>
@@ -63,7 +69,6 @@
             {% elseif incident.footage.exists %}
                 <p class="card text-sm text-stone-500">🎥 {{ ('incident.footage_status.' ~ incident.footage.status.value)|trans }}</p>
             {% endif %}
-
             {% set public_photos = incident.publicPhotos %}
             {% if public_photos|length > 0 %}
                 <section class="card">
@@ -82,40 +87,6 @@
             {% if hidden_photos > 0 %}
                 <p class="card text-sm text-stone-500">📷 {{ 'incident.photos_hidden'|trans({count: hidden_photos}) }}</p>
             {% endif %}
-
-            {% if incident.mediaDeletedAt %}
-                <p class="card text-sm text-stone-500">{{ 'incident.media_deleted'|trans }}</p>
-            {% elseif incident.mediaDeletionRequestedAt %}
-                <p class="card text-sm text-stone-500">{{ 'withdraw.requested'|trans }}</p>
-            {% endif %}
-            {% if withdraw_form %}
-                <details id="withdraw" class="card text-sm">
-                    <summary class="cursor-pointer font-semibold">{{ 'withdraw.title'|trans }}</summary>
-                    <p class="mt-2 text-stone-600 dark:text-stone-300">{{ 'withdraw.intro'|trans }}</p>
-                    {{ form_start(withdraw_form, {attr: {class: 'mt-4 flex flex-wrap items-end gap-3'}}) }}
-                        {{ form_row(withdraw_form.licensePlate, {row_attr: {class: 'w-56'}}) }}
-                        <button type="submit" class="btn-secondary">{{ 'withdraw.submit'|trans }}</button>
-                    {{ form_end(withdraw_form) }}
-                </details>
-            {% endif %}
-
-            {% if loc.hasCoordinates %}
-                <section class="card">
-                    <h2 class="font-semibold">{{ 'incident.location'|trans }}</h2>
-                    <div class="mt-3 h-72 overflow-hidden rounded-xl"
-                         data-controller="incident-map"
-                         data-incident-map-messages-value="{{ {wheel_hint: 'map.wheel_hint'|trans}|json_encode }}"
-                         data-incident-map-points-value="{{ [{latitude: loc.latitude, longitude: loc.longitude, collision: incident.consequence.isCollision}]|json_encode }}"></div>
-                </section>
-            {% endif %}
-
-            {% if incident.description %}
-                <section class="card">
-                    <h2 class="font-semibold">{{ 'incident.description'|trans }}</h2>
-                    <p class="mt-2 whitespace-pre-line text-stone-700 dark:text-stone-300">{{ incident.description }}</p>
-                </section>
-            {% endif %}
-
             <section class="card">
                 <h2 class="font-semibold">{{ 'incident.circumstances'|trans }}</h2>
                 <dl class="mt-2">
@@ -136,6 +107,15 @@
         </div>
 
         <aside class="space-y-4">
+            {% if loc.hasCoordinates %}
+                <section class="card">
+                    <h2 class="font-semibold">{{ 'incident.location'|trans }}</h2>
+                    <div class="mt-3 h-72 overflow-hidden rounded-xl"
+                         data-controller="incident-map"
+                         data-incident-map-messages-value="{{ {wheel_hint: 'map.wheel_hint'|trans, fullscreen: 'map.fullscreen'|trans, exit_fullscreen: 'map.exit_fullscreen'|trans}|json_encode }}"
+                         data-incident-map-points-value="{{ [{latitude: loc.latitude, longitude: loc.longitude, collision: incident.consequence.isCollision}]|json_encode }}"></div>
+                </section>
+            {% endif %}
             <section class="card">
                 <h2 class="font-semibold">{{ 'incident.vehicle'|trans }}</h2>
                 <p class="mt-1 text-xs text-stone-500">{{ 'incident.vehicle.source'|trans }}</p>
@@ -155,6 +135,21 @@
                     {{ m.row('report.software_version'|trans, incident.softwareVersion) }}
                 </dl>
             </section>
+            {% if incident.mediaDeletedAt %}
+                <p class="card text-sm text-stone-500">{{ 'incident.media_deleted'|trans }}</p>
+            {% elseif incident.mediaDeletionRequestedAt %}
+                <p class="card text-sm text-stone-500">{{ 'withdraw.requested'|trans }}</p>
+            {% endif %}
+            {% if withdraw_form %}
+                <details id="withdraw" class="card text-sm">
+                    <summary class="cursor-pointer font-semibold">{{ 'withdraw.title'|trans }}</summary>
+                    <p class="mt-2 text-stone-600 dark:text-stone-300">{{ 'withdraw.intro'|trans }}</p>
+                    {{ form_start(withdraw_form, {attr: {class: 'mt-4 flex flex-wrap items-end gap-3'}}) }}
+                        {{ form_row(withdraw_form.licensePlate, {row_attr: {class: 'w-56'}}) }}
+                        <button type="submit" class="btn-secondary">{{ 'withdraw.submit'|trans }}</button>
+                    {{ form_end(withdraw_form) }}
+                </details>
+            {% endif %}
             <p class="px-1 text-xs text-stone-500">{{ 'incident.reported_at'|trans({date: incident.reportedAt|format_datetime('medium', 'short')}) }}</p>
         </aside>
     </div>

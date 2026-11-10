@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Incident\Infrastructure\Service;
 
 use App\Incident\Domain\Exception\MediaNotFoundException;
+use App\Incident\Domain\Exception\MediaUnavailableException;
 use App\Incident\Domain\Exception\RangeNotSatisfiableException;
 use App\Incident\Domain\Service\MediaObject;
 use App\Incident\Domain\Service\MediaStorageInterface;
@@ -13,6 +14,7 @@ use App\Incident\Domain\ValueObject\ByteRange;
 use App\Incident\Domain\ValueObject\IncidentId;
 use App\Incident\Domain\ValueObject\MediaKind;
 use AsyncAws\Core\Exception\Http\ClientException;
+use AsyncAws\Core\Exception\Http\NetworkException;
 use AsyncAws\S3\Exception\NoSuchKeyException;
 use AsyncAws\S3\S3Client;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -88,6 +90,9 @@ final readonly class S3MediaStorage implements MediaStorageInterface
                 throw new RangeNotSatisfiableException(0);
             }
             throw $e;
+        } catch (NetworkException $e) {
+            // Still unreachable after the retries (S3HttpClientFactory).
+            throw new MediaUnavailableException('Media storage unreachable.', previous: $e);
         }
 
         $length = (int) $object->getContentLength();
