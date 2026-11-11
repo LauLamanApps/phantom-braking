@@ -63,10 +63,10 @@ final readonly class DoctrineIncidentStatistics implements IncidentStatisticsInt
         );
     }
 
-    public function mapPoints(IncidentFilter $filter, int $limit = 2000): array
+    public function mapPoints(IncidentFilter $filter, int $limit = self::MAP_POINTS_LIMIT): array
     {
         $rows = $this->base($filter)
-            ->select('i.id AS id, i.location.latitude AS lat, i.location.longitude AS lng, i.vehicle.make AS make, i.vehicle.model AS model, i.location.situation AS situation, i.severity AS severity, i.consequence AS consequence')
+            ->select('i.id AS id, i.location.latitude AS lat, i.location.longitude AS lng, i.vehicle.make AS make, i.vehicle.model AS model, i.consequence AS consequence')
             ->andWhere('i.location.latitude IS NOT NULL')
             ->orderBy('i.occurredAt', 'DESC')
             ->setMaxResults($limit)
@@ -79,8 +79,6 @@ final readonly class DoctrineIncidentStatistics implements IncidentStatisticsInt
             longitude: (float) $r['lng'],
             make: $r['make'],
             model: $r['model'],
-            situation: $r['situation'] instanceof RoadSituation ? $r['situation']->value : (string) $r['situation'],
-            severity: $r['severity'] instanceof BrakeSeverity ? $r['severity']->value : (string) $r['severity'],
             collision: ($r['consequence'] instanceof Consequence ? $r['consequence'] : Consequence::from((string) $r['consequence']))->isCollision(),
         ), $rows));
     }

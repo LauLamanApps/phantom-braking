@@ -7,6 +7,10 @@ nav.reports: Meldingen
 nav.report: Melding doen
 nav.language: Taal
 nav.menu: Menu
+nav.theme: Weergave
+theme.system: Systeem
+theme.light: Licht
+theme.dark: Donker
 
 about.mission: Onafhankelijk meldpunt. Fabrikanten hoeven phantom braking nergens te registreren; deze verzameling meldingen maakt het probleem meetbaar.
 about.privacy: Wij slaan je kenteken niet op. We bewaren alleen een onomkeerbare vingerafdruk om dubbele meldingen per voertuig te tellen. Dashcambeelden worden pas openbaar na controle en met jouw toestemming.
@@ -14,6 +18,7 @@ about.sources: 'Voertuiggegevens: <a class="underline" href="https://opendata.rd
 footer.source_code: Open source (MIT) op GitHub
 nav.faq: "FAQ"
 nav.about: "Over ons"
+nav.glossary: "Begrippen"
 footer.nav: "Over het meldpunt en juridische informatie"
 about.title: "Over het meldpunt"
 about.mission.title: "Waarom dit meldpunt bestaat"
@@ -24,6 +29,49 @@ about.open_source: "De broncode van dit meldpunt is open source (MIT-licentie) e
 faq.title: "Veelgestelde vragen"
 faq.intro: "Antwoorden op de meest gestelde vragen over phantom braking, melden en wat we met je gegevens doen."
 faq.more: "Staat je vraag er niet bij? Neem contact op via de gegevens in de <a href=\"{privacy}\">privacyverklaring</a>."
+glossary.title: "Begrippenlijst"
+glossary.intro: "Wat betekenen AEB, ACC, GSR2 en de andere termen op deze site? Hier staan ze kort uitgelegd."
+glossary.more: "Meer over het meldpunt zelf lees je bij de <a href=\"{faq}\">veelgestelde vragen</a>."
+glossary.phantom_braking.term: "Spookremmen (phantom braking)"
+glossary.phantom_braking.definition: "Een auto die uit zichzelf remt terwijl er niets is om voor te remmen. Het rijhulpsysteem ziet ten onrechte een obstakel, bijvoorbeeld in een schaduw, een viaduct of een vrachtwagen op de rijstrook ernaast. Het varieert van een korte waarschuwing tot een volledige noodstop."
+glossary.false_positive.term: "Valse remingreep"
+glossary.false_positive.definition: "Een ingreep van de noodremassistent zonder echte aanleiding: het systeem meende een botsing te zien die er niet was. Fabrikanten hoeven deze niet te melden, daarom verzamelt dit meldpunt ze."
+glossary.aeb.term: "AEB (automatische noodrem)"
+glossary.aeb.definition: "Autonomous Emergency Braking: een systeem dat met een camera en/of radar de weg voor de auto in de gaten houdt en zelf remt als een botsing dreigt. Het staat bij elke rit standaard aan, ook zonder cruise control. Sinds juli 2024 verplicht in elke nieuw geregistreerde auto in de EU (zie GSR2)."
+glossary.fcw.term: "FCW (botsingswaarschuwing)"
+glossary.fcw.definition: "Forward Collision Warning: waarschuwt met een geluid of lampje voor een dreigende botsing, vaak vlak voordat de automatische noodrem ingrijpt. Een melding met alleen een waarschuwing telt hier als de lichtste vorm van spookremmen."
+glossary.adas.term: "ADAS (rijhulpsystemen)"
+glossary.adas.definition: "Advanced Driver Assistance Systems: de verzamelnaam voor systemen die de bestuurder helpen, zoals de automatische noodrem, adaptieve cruise control en de rijstrookassistent. De bestuurder blijft altijd verantwoordelijk."
+glossary.acc.term: "ACC (adaptieve cruise control)"
+glossary.acc.definition: "Cruise control die zelf afstand houdt tot de auto ervoor: hij remt af en trekt weer op. ACC gebruikt dezelfde camera en radar als de noodrem en kan dus ook onterecht remmen."
+glossary.lane_assist.term: "Rijstrookassistent"
+glossary.lane_assist.definition: "Houdt de auto met kleine stuurcorrecties in het midden van de rijstrook. Samen met ACC stuurt, remt en versnelt de auto op de snelweg grotendeels zelf, onder toezicht van de bestuurder."
+glossary.tad.term: "TAD (Tesla Assisted Driving)"
+glossary.tad.definition: "Het rijhulpsysteem van Tesla dat eerder FSD (Full Self-Driving) heette. Het stuurt, remt en versnelt onder toezicht van de bestuurder; de auto rijdt niet zelfstandig."
+glossary.sensors.term: "Camera en radar"
+glossary.sensors.definition: "De ogen van de rijhulpsystemen. Een camera herkent vormen, maar kan verblind raken door laagstaande zon of in de war raken door schaduwen. Een radar meet afstand en snelheid, maar ziet vaste objecten zoals viaducten en borden soms als obstakel. Veel auto's combineren beide (sensorfusie)."
+glossary.gsr2.term: "GSR2"
+glossary.gsr2.definition: "De tweede General Safety Regulation van de EU (Verordening (EU) 2019/2144). Die maakt onder meer de automatische noodrem verplicht: voor nieuwe typen auto's sinds juli 2022, voor elke nieuw geregistreerde auto sinds juli 2024. Bij een voertuig tonen we of het na die datum is toegelaten."
+glossary.rdw.term: "RDW"
+glossary.rdw.definition: "De Rijksdienst voor het Wegverkeer: laat voertuigen toe op de Nederlandse weg en houdt het kentekenregister bij. Uit de open data van de RDW halen we merk, model en bouwjaar bij een kenteken. Het kenteken zelf slaan we niet op."
+glossary.type_approval.term: "Typegoedkeuring"
+glossary.type_approval.definition: "De goedkeuring van een voertuigtype door een keuringsinstantie in de EU, voordat het verkocht mag worden. Het typegoedkeuringsnummer laat zien om welk type en welke uitvoering het precies gaat."
+glossary.eu_category.term: "EU-voertuigcategorie"
+glossary.eu_category.definition: "De Europese indeling van voertuigen: M1 is een personenauto, N1 een bestelauto tot 3.500 kg, enzovoort. De regels voor rijhulpsystemen verschillen per categorie."
+glossary.hybrid_class.term: "Hybride klasse"
+glossary.hybrid_class.definition: "Hoe een hybride auto laadt, zoals de RDW dat registreert: OVC-HEV is een plug-in hybride die aan de stekker laadt, NOVC-HEV een hybride die alleen onderweg laadt."
+glossary.recall.term: "Terugroepactie"
+glossary.recall.definition: "Een oproep van de fabrikant om een voertuig te laten repareren of bijwerken vanwege een veiligheidsprobleem. Een openstaande terugroepactie is nog niet uitgevoerd. Die kan over iets heel anders gaan dan spookremmen."
+glossary.software_version.term: "Softwareversie"
+glossary.software_version.definition: "Veel auto's krijgen software-updates via de dealer of draadloos (over-the-air). Een update kan het remgedrag van de rijhulpsystemen veranderen; daarom vragen we naar de versie als je die weet."
+glossary.ilt.term: "ILT"
+glossary.ilt.definition: "De Inspectie Leefomgeving en Transport, een Nederlandse toezichthouder. Meld een gevaarlijk voertuig daar ook, zodat het officieel bekend is. Een melding hier vervangt dat niet."
+glossary.sign_gantry.term: "Portaal / matrixbord"
+glossary.sign_gantry.definition: "Een constructie over de weg met verkeersborden of matrixborden (de schermen met snelheden en kruisen boven de rijstroken). Rijhulpsystemen zien zo'n portaal soms aan voor een obstakel op de weg."
+glossary.road_types.term: "A-weg, autoweg en N-weg"
+glossary.road_types.definition: "Een A-weg is een autosnelweg. Een autoweg is een weg alleen voor snelverkeer, met een lagere maximumsnelheid dan een snelweg. Een N-weg is een genummerde weg buiten de snelwegen, vaak beheerd door de provincie."
+glossary.rear_end.term: "Kop-staartbotsing"
+glossary.rear_end.definition: "Een aanrijding waarbij een auto achter op zijn voorganger rijdt. Het grootste gevaar van spookremmen: de achterligger verwacht niet dat de auto ervoor plotseling remt."
 faq.group.general: "Over phantom braking en het meldpunt"
 faq.group.reporting: "Melden"
 faq.group.privacy: "Privacy en beelden"

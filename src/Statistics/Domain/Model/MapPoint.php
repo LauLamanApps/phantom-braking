@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Statistics\Domain\Model;
 
+/** One report on the statistics map: only what the map and its popup need, as there can be thousands. */
 final readonly class MapPoint
 {
     public function __construct(
@@ -12,8 +13,6 @@ final readonly class MapPoint
         public float $longitude,
         public string $make,
         public string $model,
-        public string $situation,
-        public string $severity,
         public bool $collision,
     ) {
     }

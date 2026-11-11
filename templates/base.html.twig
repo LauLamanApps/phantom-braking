@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="{{ app.request.locale }}" class="h-full">
+{# light or dark when the visitor picked one in the header (theme_switch_controller.js); otherwise the device decides. #}
+{% set theme = app.request.cookies.get('theme') in ['light', 'dark'] ? app.request.cookies.get('theme') : null %}
+<html lang="{{ app.request.locale }}" class="h-full"{% if theme %} data-theme="{{ theme }}"{% endif %}>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,7 +10,10 @@
         <meta name="robots" content="{% block robots %}index, follow, max-image-preview:large{% endblock %}">
         <link rel="icon" href="{{ asset('images/icon.svg') }}" type="image/svg+xml">
         <link rel="apple-touch-icon" href="{{ asset('images/apple-touch-icon.png') }}">
-        <meta name="theme-color" content="#141110">
+        {% set bar_colours = {light: '#ffffff', dark: '#141110'} %}
+        {% for scheme in ['light', 'dark'] %}
+            <meta name="theme-color" media="(prefers-color-scheme: {{ scheme }})" content="{{ bar_colours[theme ?? scheme] }}">
+        {% endfor %}
         {% set head_route = app.request.attributes.get('_route') %}
         {% set head_params = app.request.attributes.get('_route_params')|default({}) %}
         {% set og_locales = {nl: 'nl_NL', en: 'en_GB', de: 'de_DE', fr: 'fr_FR'} %}
@@ -54,6 +59,7 @@
                 {route: 'home', label: 'nav.statistics', active: route == 'home'},
                 {route: 'incident_list', label: 'nav.reports', active: route starts with 'incident_list' or route == 'incident_show'},
                 {route: 'faq', label: 'nav.faq', active: route == 'faq'},
+                {route: 'glossary', label: 'nav.glossary', active: route == 'glossary'},
                 {route: 'about', label: 'nav.about', active: route == 'about'},
             ] %}
             {# Phones: logo, language, report button and a menu, on one row. From lg: the links inline, with the site name. #}
@@ -68,6 +74,23 @@
                     {% endfor %}
                 </div>
                 <div class="ml-auto flex shrink-0 items-center gap-2 text-sm sm:gap-3">
+                    {% set theme_choice = theme ?? 'system' %}
+                    <details class="dropdown" data-controller="disclosure theme-switch" data-action="click@window->disclosure#closeOutside keydown.esc@window->disclosure#close">
+                        <summary aria-label="{{ 'nav.theme'|trans }}: {{ ('theme.' ~ theme_choice)|trans }}" title="{{ 'nav.theme'|trans }}">
+                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg>
+                            <svg class="h-3 w-3 transition-transform" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5z"/></svg>
+                        </summary>
+                        <ul>
+                            {% for choice in ['system', 'light', 'dark'] %}
+                                <li>
+                                    <button type="button" data-action="theme-switch#choose" data-theme-switch-choice-param="{{ choice }}"{% if choice == theme_choice %} aria-current="true"{% endif %}>
+                                        {{ ('theme.' ~ choice)|trans }}
+                                        <span class="dropdown-check" aria-hidden="true">✓</span>
+                                    </button>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </details>
                     {% if route %}
                         {% set current = app.request.locale %}
                         <details class="dropdown" data-controller="disclosure" data-action="click@window->disclosure#closeOutside keydown.esc@window->disclosure#close">

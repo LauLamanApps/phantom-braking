@@ -173,7 +173,7 @@ translations: ## Show missing translations for nl + en (catalogs are hand-writte
 worker: ## Run the async messenger worker
 	$(PHP) sh -c "php -d memory_limit=-1 bin/console messenger:consume async --failure-limit=1 --memory-limit=128M --time-limit=300 -vv --profile"
 
-seed: ## DEV ONLY: insert random demo reports, e.g. make seed count=300 country=DE with_media=20  (NL|DE|FR)
+seed: ## DEV ONLY: insert random demo reports, e.g. make seed count=300 country=BE with_media=20  (any European country code)
 	$(PHP) sh -c "bin/console app:demo:seed --count=$(or $(count),150) --country=$(or $(country),NL) --with-media=$(or $(with_media),0)"
 
 s3-bucket: ## Create the private media bucket (idempotent)

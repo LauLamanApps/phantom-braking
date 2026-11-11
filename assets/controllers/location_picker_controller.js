@@ -29,6 +29,8 @@ export default class extends Controller {
         enableFullscreen(this.map, { enter: this.messagesValue.fullscreen, exit: this.messagesValue.exit_fullscreen });
 
         this.map.on('click', (e) => this.place(e.latlng.lat, e.latlng.lng));
+        this.repaint = () => this.marker?.setStyle(this.markerStyle());
+        window.addEventListener('theme:change', this.repaint);
         if (hasPoint) {
             this.place(lat, lng, false);
         }
@@ -43,6 +45,7 @@ export default class extends Controller {
     }
 
     disconnect() {
+        window.removeEventListener('theme:change', this.repaint);
         this.map?.remove();
         this.abort?.abort();
     }
@@ -74,16 +77,24 @@ export default class extends Controller {
         this.status(this.messagesValue.empty);
     }
 
-    place(lat, lng, lookup = true) {
+    /* Colours from the CSS tokens, so they follow the light/dark theme. */
+    markerStyle() {
         const style = getComputedStyle(document.documentElement);
+
+        return {
+            color: style.getPropertyValue('--surface-1').trim(),
+            fillColor: style.getPropertyValue('--status-critical').trim(),
+        };
+    }
+
+    place(lat, lng, lookup = true) {
         const latlng = [Number(lat.toFixed(5)), Number(lng.toFixed(5))];
 
         if (!this.marker) {
             this.marker = L.circleMarker(latlng, {
                 radius: 9,
                 weight: 2,
-                color: style.getPropertyValue('--surface-1').trim(),
-                fillColor: style.getPropertyValue('--status-critical').trim(),
+                ...this.markerStyle(),
                 fillOpacity: 1,
             }).addTo(this.map);
         } else {

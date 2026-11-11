@@ -4,6 +4,21 @@
 @source "../../src/**/Presentation";
 @source "../controllers";
 
+/*
+ * Dark follows the device, unless the visitor picked a theme in the header
+ * (data-theme on <html>, rendered from the theme cookie).
+ */
+@custom-variant dark {
+    &:where([data-theme="dark"], [data-theme="dark"] *) {
+        @slot;
+    }
+    @media (prefers-color-scheme: dark) {
+        &:where(:root:not([data-theme="light"]), :root:not([data-theme="light"]) *) {
+            @slot;
+        }
+    }
+}
+
 @theme {
     --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
     --color-brand-50: #fef3f2;
@@ -16,6 +31,7 @@
 
 /* Data-viz tokens (single-series blue, status red for collisions). Read by the chart/map JS. */
 :root {
+    color-scheme: light dark;
     --surface-1: #ffffff;
     --text-primary: #0b0b0b;
     --text-secondary: #52514e;
@@ -23,6 +39,10 @@
     --series-1: #2a78d6;
     --series-1-soft: rgb(42 120 214 / 0.12);
     --status-critical: #e34948;
+}
+
+:root[data-theme="light"] {
+    color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -38,6 +58,7 @@
 }
 
 :root[data-theme="dark"] {
+    color-scheme: dark;
     --surface-1: #1a1a19;
     --text-primary: #f0efec;
     --text-secondary: #c3c2b7;
@@ -256,11 +277,15 @@
         @apply fixed top-[4.25rem] right-4 mt-0;
     }
 }
-.dropdown a {
-    @apply flex items-center justify-between gap-4 rounded-lg px-3 py-2 text-stone-700 hover:bg-stone-100 dark:text-stone-300 dark:hover:bg-stone-800;
+.dropdown :is(a, button) {
+    @apply flex w-full cursor-pointer items-center justify-between gap-4 rounded-lg px-3 py-2 text-stone-700 hover:bg-stone-100 dark:text-stone-300 dark:hover:bg-stone-800;
 }
-.dropdown a[aria-current] {
+.dropdown :is(a, button)[aria-current] {
     @apply font-semibold text-stone-900 dark:text-white;
+}
+/* The theme menu marks its choice client-side, so every option carries a check that only shows when current. */
+.dropdown button:not([aria-current]) .dropdown-check {
+    @apply invisible;
 }
 
 .faq-item > summary {

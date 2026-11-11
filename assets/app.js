@@ -5,13 +5,12 @@ import './styles/app.css';
 
 /*
  * Apply the CSS data-viz tokens to every Symfony UX Chart.js chart before it
- * renders, so light/dark mode lives in app.css only.
+ * renders, so light/dark mode lives in app.css only. On a theme switch (or the
+ * device changing it while no theme is picked) the charts are repainted.
  */
-document.addEventListener('chartjs:pre-connect', (event) => {
+function applyTokens(config, kind) {
     const css = getComputedStyle(document.documentElement);
     const token = (name) => css.getPropertyValue(name).trim();
-    const { config } = event.detail;
-    const kind = event.target.dataset.chartTheme;
 
     config.data.datasets.forEach((dataset) => {
         dataset.backgroundColor = kind === 'line' ? token('--series-1-soft') : token('--series-1');
@@ -26,7 +25,7 @@ document.addEventListener('chartjs:pre-connect', (event) => {
     options.color = token('--text-secondary');
     Object.values(options.scales ?? {}).forEach((scale) => {
         scale.ticks = { ...(scale.ticks ?? {}), color: token('--text-secondary') };
-        scale.grid = { color: token('--grid'), ...(scale.grid ?? {}) };
+        scale.grid = { ...(scale.grid ?? {}), color: token('--grid') };
         scale.border = { display: false };
     });
     options.plugins = options.plugins ?? {};
@@ -39,4 +38,24 @@ document.addEventListener('chartjs:pre-connect', (event) => {
         padding: 10,
         displayColors: false,
     };
+}
+
+const charts = new Map();
+
+document.addEventListener('chartjs:pre-connect', (event) => {
+    applyTokens(event.detail.config, event.target.dataset.chartTheme);
+});
+document.addEventListener('chartjs:connect', (event) => charts.set(event.detail.chart, event.target.dataset.chartTheme));
+document.addEventListener('chartjs:disconnect', (event) => charts.delete(event.detail.chart));
+
+window.addEventListener('theme:change', () => {
+    charts.forEach((kind, chart) => {
+        applyTokens(chart.config, kind);
+        chart.update(); // not 'none': that keeps the cached point colours
+    });
+});
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    if (!document.documentElement.dataset.theme) {
+        window.dispatchEvent(new CustomEvent('theme:change'));
+    }
 });

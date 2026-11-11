@@ -184,6 +184,13 @@ final class ReportIncidentTest extends WebTestCase
         self::assertCount(1, $points);
         self::assertSame('ID.3', $points[0]['model']);
 
+        // The dashboard versions the (cached) map URL with the report count, so a new report busts the cache.
+        $mapUrl = $this->client->request('GET', '/en?make=VOLKSWAGEN')
+            ->filter('[data-controller="incident-map"]')->attr('data-incident-map-url-value');
+        self::assertSame('/api/incidents/map?make=VOLKSWAGEN&v=1', $mapUrl);
+        $this->client->request('GET', (string) $mapUrl);
+        self::assertCount(1, json_decode((string) $this->client->getResponse()->getContent(), true));
+
         $this->client->request('GET', '/en?period=30d&from=2001-01-01&country=XX&road_type=moon');
         self::assertResponseIsSuccessful();
         self::assertSelectorTextContains('.stat-value', '2');

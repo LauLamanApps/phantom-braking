@@ -7,6 +7,10 @@ nav.reports: Reports
 nav.report: Report incident
 nav.language: Language
 nav.menu: Menu
+nav.theme: Appearance
+theme.system: System
+theme.light: Light
+theme.dark: Dark
 
 about.mission: Independent reporting point. Manufacturers don't have to register phantom braking anywhere. These reports make the problem measurable.
 about.privacy: We never store your license plate. We keep only an irreversible fingerprint so we can count repeat reports per vehicle. Dashcam footage is only published after review and with your consent.
@@ -14,6 +18,7 @@ about.sources: 'Vehicle data: <a class="underline" href="https://opendata.rdw.nl
 footer.source_code: Open source (MIT) on GitHub
 nav.faq: "FAQ"
 nav.about: "About"
+nav.glossary: "Glossary"
 footer.nav: "About and legal information"
 about.title: "About"
 about.mission.title: "Why this reporting point exists"
@@ -24,6 +29,49 @@ about.open_source: "The source code of this reporting point is open source (MIT 
 faq.title: "Frequently asked questions"
 faq.intro: "Answers to the most common questions about phantom braking, reporting and what we do with your data."
 faq.more: "Question not listed? Get in touch using the details in the <a href=\"{privacy}\">privacy statement</a>."
+glossary.title: "Glossary"
+glossary.intro: "What do AEB, ACC, GSR2 and the other terms on this site mean? Here they are, briefly explained."
+glossary.more: "For questions about the reporting point itself, see the <a href=\"{faq}\">frequently asked questions</a>."
+glossary.phantom_braking.term: "Phantom braking"
+glossary.phantom_braking.definition: "A car braking by itself when there is nothing to brake for. The driver assistance system wrongly sees an obstacle, for example in a shadow, a viaduct or a lorry in the next lane. It ranges from a brief warning to a full emergency stop."
+glossary.false_positive.term: "False activation"
+glossary.false_positive.definition: "An intervention by the emergency braking system without a real cause: the system thought it saw a collision that was not there. Manufacturers do not have to report these, which is why this reporting point collects them."
+glossary.aeb.term: "AEB (Autonomous Emergency Braking)"
+glossary.aeb.definition: "A system that watches the road ahead with a camera and/or radar and brakes by itself when a collision is imminent. It is on by default on every drive, even without cruise control. Mandatory in every newly registered car in the EU since July 2024 (see GSR2)."
+glossary.fcw.term: "FCW (Forward Collision Warning)"
+glossary.fcw.definition: "Warns of an imminent collision with a sound or a light, often just before automatic emergency braking steps in. A report with only a warning counts here as the mildest form of phantom braking."
+glossary.adas.term: "ADAS (driver assistance systems)"
+glossary.adas.definition: "Advanced Driver Assistance Systems: the umbrella term for systems that help the driver, such as automatic emergency braking, adaptive cruise control and lane centring. The driver always remains responsible."
+glossary.acc.term: "ACC (adaptive cruise control)"
+glossary.acc.definition: "Cruise control that keeps its distance to the car in front by itself, slowing down and speeding up again. ACC uses the same camera and radar as emergency braking, so it can brake for no reason too."
+glossary.lane_assist.term: "Lane centring"
+glossary.lane_assist.definition: "Keeps the car in the middle of its lane with small steering corrections. Together with ACC, the car largely steers, brakes and accelerates by itself on the motorway, supervised by the driver."
+glossary.tad.term: "TAD (Tesla Assisted Driving)"
+glossary.tad.definition: "Tesla's driver assistance system, previously called FSD (Full Self-Driving). It steers, brakes and accelerates under the driver's supervision; the car does not drive itself."
+glossary.sensors.term: "Camera and radar"
+glossary.sensors.definition: "The eyes of driver assistance systems. A camera recognises shapes but can be dazzled by a low sun or confused by shadows. A radar measures distance and speed but sometimes sees fixed objects such as viaducts and signs as obstacles. Many cars combine both (sensor fusion)."
+glossary.gsr2.term: "GSR2"
+glossary.gsr2.definition: "The EU's second General Safety Regulation (Regulation (EU) 2019/2144). Among other things it makes automatic emergency braking mandatory: for new car types since July 2022, for every newly registered car since July 2024. For each vehicle we show whether it was registered after that date."
+glossary.rdw.term: "RDW"
+glossary.rdw.definition: "The Dutch Vehicle Authority (Rijksdienst voor het Wegverkeer): it admits vehicles to Dutch roads and keeps the licence plate register. From the RDW's open data we fetch the make, model and year for a plate. We never store the plate itself."
+glossary.type_approval.term: "Type approval"
+glossary.type_approval.definition: "Approval of a vehicle type by a testing authority in the EU before it may be sold. The type approval number shows exactly which type and version a vehicle is."
+glossary.eu_category.term: "EU vehicle category"
+glossary.eu_category.definition: "The European classification of vehicles: M1 is a passenger car, N1 a van up to 3,500 kg, and so on. The rules for driver assistance systems differ per category."
+glossary.hybrid_class.term: "Hybrid class"
+glossary.hybrid_class.definition: "How a hybrid car charges, as registered by the RDW: OVC-HEV is a plug-in hybrid that charges from the mains, NOVC-HEV a hybrid that only charges while driving."
+glossary.recall.term: "Recall"
+glossary.recall.definition: "A call from the manufacturer to have a vehicle repaired or updated because of a safety issue. An open recall has not been carried out yet. It may be about something entirely different from phantom braking."
+glossary.software_version.term: "Software version"
+glossary.software_version.definition: "Many cars receive software updates at the dealer or wirelessly (over the air). An update can change how the driver assistance systems brake, which is why we ask for the version if you know it."
+glossary.ilt.term: "ILT"
+glossary.ilt.definition: "The Human Environment and Transport Inspectorate (Inspectie Leefomgeving en Transport), a Dutch regulator. Report a dangerous vehicle there too, so it is officially known. A report here does not replace that."
+glossary.sign_gantry.term: "Sign gantry"
+glossary.sign_gantry.definition: "A structure spanning the road that carries traffic signs or matrix signs (the screens showing speeds and crosses above the lanes). Driver assistance systems sometimes mistake such a gantry for an obstacle on the road."
+glossary.road_types.term: "Motorway, expressway and N road"
+glossary.road_types.definition: "In the Netherlands an A road is a motorway. An expressway (autoweg) is a road for fast traffic only, with a lower speed limit than a motorway. An N road is a numbered road outside the motorway network, often managed by the province."
+glossary.rear_end.term: "Rear-end collision"
+glossary.rear_end.definition: "A collision in which a car runs into the back of the car in front. The biggest danger of phantom braking: the driver behind does not expect the car ahead to brake suddenly."
 faq.group.general: "About phantom braking and this site"
 faq.group.reporting: "Reporting"
 faq.group.privacy: "Privacy and footage"

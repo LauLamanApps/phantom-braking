@@ -7,6 +7,10 @@ nav.reports: Signalements
 nav.report: Signaler un incident
 nav.language: Langue
 nav.menu: Menu
+nav.theme: Apparence
+theme.system: Système
+theme.light: Clair
+theme.dark: Sombre
 
 about.mission: Point de signalement indépendant. Les constructeurs n’ont aucune obligation d’enregistrer les freinages fantômes. Ces signalements rendent le problème mesurable.
 about.privacy: Nous ne conservons jamais votre plaque d’immatriculation, seulement une empreinte irréversible qui nous permet de compter les signalements répétés par véhicule. Les vidéos de dashcam ne sont publiées qu’après vérification et avec votre consentement.
@@ -14,6 +18,7 @@ about.sources: 'Données des véhicules : <a class="underline" href="https://op
 footer.source_code: Open source (MIT) sur GitHub
 nav.faq: "FAQ"
 nav.about: "À propos"
+nav.glossary: "Glossaire"
 footer.nav: "À propos et informations légales"
 about.title: "À propos"
 about.mission.title: "Pourquoi ce point de signalement existe"
@@ -24,6 +29,49 @@ about.open_source: "Le code source de ce point de signalement est open source (l
 faq.title: "Questions fréquentes"
 faq.intro: "Réponses aux questions les plus courantes sur les freinages fantômes, les signalements et ce que nous faisons de vos données."
 faq.more: "Votre question n’est pas dans la liste ? Contactez-nous grâce aux coordonnées indiquées dans la <a href=\"{privacy}\">politique de confidentialité</a>."
+glossary.title: "Glossaire"
+glossary.intro: "Que signifient AEB, ACC, GSR2 et les autres termes de ce site ? Les voici expliqués en quelques mots."
+glossary.more: "Pour les questions sur le site lui-même, consultez les <a href=\"{faq}\">questions fréquentes</a>."
+glossary.phantom_braking.term: "Freinage fantôme (phantom braking)"
+glossary.phantom_braking.definition: "Une voiture qui freine d’elle-même alors qu’il n’y a aucune raison de freiner. L’aide à la conduite voit à tort un obstacle, par exemple dans une ombre, un pont ou un camion sur la voie voisine. Cela va d’un simple avertissement à un arrêt d’urgence complet."
+glossary.false_positive.term: "Déclenchement intempestif"
+glossary.false_positive.definition: "Une intervention du freinage d’urgence sans cause réelle : le système a cru voir une collision qui n’existait pas. Les constructeurs ne sont pas tenus de les signaler ; c’est pourquoi ce site les recueille."
+glossary.aeb.term: "AEB (freinage d’urgence automatique)"
+glossary.aeb.definition: "Autonomous Emergency Braking : un système qui surveille la route devant la voiture avec une caméra et/ou un radar et freine seul quand une collision menace. Il est activé par défaut à chaque trajet, même sans régulateur de vitesse. Obligatoire sur toute voiture neuve immatriculée dans l’UE depuis juillet 2024 (voir GSR2)."
+glossary.fcw.term: "FCW (alerte de collision)"
+glossary.fcw.definition: "Forward Collision Warning : avertit d’une collision imminente par un son ou un voyant, souvent juste avant que le freinage d’urgence intervienne. Un signalement avec seulement un avertissement compte ici comme la forme la plus légère de freinage fantôme."
+glossary.adas.term: "ADAS (aides à la conduite)"
+glossary.adas.definition: "Advanced Driver Assistance Systems : le terme générique pour les systèmes qui aident le conducteur, comme le freinage d’urgence automatique, le régulateur adaptatif et l’aide au maintien dans la voie. Le conducteur reste toujours responsable."
+glossary.acc.term: "ACC (régulateur de vitesse adaptatif)"
+glossary.acc.definition: "Un régulateur qui garde seul la distance avec la voiture qui précède, en ralentissant puis en accélérant à nouveau. L’ACC utilise la même caméra et le même radar que le freinage d’urgence et peut donc aussi freiner sans raison."
+glossary.lane_assist.term: "Aide au centrage dans la voie"
+glossary.lane_assist.definition: "Maintient la voiture au milieu de sa voie par de petites corrections de direction. Avec l’ACC, la voiture dirige, freine et accélère en grande partie seule sur autoroute, sous la surveillance du conducteur."
+glossary.tad.term: "TAD (Tesla Assisted Driving)"
+glossary.tad.definition: "L’aide à la conduite de Tesla, auparavant appelée FSD (Full Self-Driving). Elle dirige, freine et accélère sous la surveillance du conducteur ; la voiture ne roule pas de manière autonome."
+glossary.sensors.term: "Caméra et radar"
+glossary.sensors.definition: "Les yeux des aides à la conduite. Une caméra reconnaît les formes mais peut être éblouie par un soleil rasant ou trompée par des ombres. Un radar mesure la distance et la vitesse mais prend parfois des objets fixes, comme des ponts et des panneaux, pour des obstacles. Beaucoup de voitures combinent les deux (fusion de capteurs)."
+glossary.gsr2.term: "GSR2"
+glossary.gsr2.definition: "Le deuxième règlement général sur la sécurité de l’UE (règlement (UE) 2019/2144). Il rend notamment obligatoire le freinage d’urgence automatique : pour les nouveaux types de voitures depuis juillet 2022, pour toute voiture neuve immatriculée depuis juillet 2024. Pour chaque véhicule, nous indiquons s’il a été immatriculé après cette date."
+glossary.rdw.term: "RDW"
+glossary.rdw.definition: "L’autorité néerlandaise des véhicules (Rijksdienst voor het Wegverkeer) : elle autorise les véhicules sur les routes néerlandaises et tient le registre des plaques. Nous tirons des données ouvertes de la RDW la marque, le modèle et l’année d’une plaque. Nous ne conservons jamais la plaque elle-même."
+glossary.type_approval.term: "Réception par type"
+glossary.type_approval.definition: "L’homologation d’un type de véhicule par une autorité de l’UE avant sa mise en vente. Le numéro de réception indique précisément de quel type et de quelle version il s’agit."
+glossary.eu_category.term: "Catégorie de véhicule de l’UE"
+glossary.eu_category.definition: "La classification européenne des véhicules : M1 est une voiture particulière, N1 une camionnette jusqu’à 3 500 kg, etc. Les règles applicables aux aides à la conduite varient selon la catégorie."
+glossary.hybrid_class.term: "Classe hybride"
+glossary.hybrid_class.definition: "La façon dont une voiture hybride se recharge, telle qu’enregistrée par la RDW : OVC-HEV est une hybride rechargeable sur secteur, NOVC-HEV une hybride qui ne se recharge qu’en roulant."
+glossary.recall.term: "Rappel"
+glossary.recall.definition: "Un appel du constructeur à faire réparer ou mettre à jour un véhicule pour un problème de sécurité. Un rappel en cours n’a pas encore été effectué. Il peut porter sur tout autre chose que le freinage fantôme."
+glossary.software_version.term: "Version du logiciel"
+glossary.software_version.definition: "Beaucoup de voitures reçoivent des mises à jour chez le concessionnaire ou à distance (over the air). Une mise à jour peut modifier le freinage des aides à la conduite ; c’est pourquoi nous demandons la version si vous la connaissez."
+glossary.ilt.term: "ILT"
+glossary.ilt.definition: "L’Inspectie Leefomgeving en Transport, une autorité de contrôle néerlandaise. Signalez-y aussi un véhicule dangereux pour qu’il soit officiellement connu. Un signalement ici ne le remplace pas."
+glossary.sign_gantry.term: "Portique de signalisation"
+glossary.sign_gantry.definition: "Une structure au-dessus de la route portant des panneaux ou des panneaux à messages variables (les écrans affichant vitesses et croix au-dessus des voies). Les aides à la conduite prennent parfois un tel portique pour un obstacle sur la route."
+glossary.road_types.term: "Route A, voie express et route N"
+glossary.road_types.definition: "Aux Pays-Bas, une route A est une autoroute. Une voie express (autoweg) est réservée à la circulation rapide, avec une vitesse maximale inférieure à celle d’une autoroute. Une route N est une route numérotée hors du réseau autoroutier, souvent gérée par la province."
+glossary.rear_end.term: "Collision par l’arrière"
+glossary.rear_end.definition: "Un accident où une voiture percute celle qui la précède. Le plus grand danger du freinage fantôme : le conducteur qui suit ne s’attend pas à ce que la voiture devant lui freine brusquement."
 faq.group.general: "Le freinage fantôme et ce site"
 faq.group.reporting: "Signaler"
 faq.group.privacy: "Vie privée et vidéos"

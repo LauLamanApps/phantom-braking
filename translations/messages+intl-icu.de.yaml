@@ -7,6 +7,10 @@ nav.reports: Meldungen
 nav.report: Vorfall melden
 nav.language: Sprache
 nav.menu: Menü
+nav.theme: Darstellung
+theme.system: System
+theme.light: Hell
+theme.dark: Dunkel
 
 about.mission: Unabhängige Meldestelle. Hersteller müssen Phantombremsungen nirgends registrieren. Diese Meldungen machen das Problem messbar.
 about.privacy: Wir speichern dein Kennzeichen nie. Wir behalten nur einen nicht umkehrbaren Fingerabdruck, um wiederholte Meldungen pro Fahrzeug zählen zu können. Dashcam-Aufnahmen werden erst nach Prüfung und mit deiner Einwilligung veröffentlicht.
@@ -14,6 +18,7 @@ about.sources: 'Fahrzeugdaten: <a class="underline" href="https://opendata.rdw.n
 footer.source_code: Open Source (MIT) auf GitHub
 nav.faq: "FAQ"
 nav.about: "Über uns"
+nav.glossary: "Glossar"
 footer.nav: "Über uns und rechtliche Hinweise"
 about.title: "Über uns"
 about.mission.title: "Warum es diese Meldestelle gibt"
@@ -24,6 +29,49 @@ about.open_source: "Der Quellcode dieser Meldestelle ist Open Source (MIT-Lizenz
 faq.title: "Häufig gestellte Fragen"
 faq.intro: "Antworten auf die häufigsten Fragen zu Phantombremsungen, zum Melden und dazu, was wir mit deinen Daten machen."
 faq.more: "Deine Frage ist nicht dabei? Melde dich über die Kontaktdaten in der <a href=\"{privacy}\">Datenschutzerklärung</a>."
+glossary.title: "Glossar"
+glossary.intro: "Was bedeuten AEB, ACC, GSR2 und die anderen Begriffe auf dieser Website? Hier sind sie kurz erklärt."
+glossary.more: "Fragen zur Meldestelle selbst beantworten die <a href=\"{faq}\">häufig gestellten Fragen</a>."
+glossary.phantom_braking.term: "Phantombremsung (phantom braking)"
+glossary.phantom_braking.definition: "Ein Auto bremst von selbst, obwohl es keinen Grund dafür gibt. Das Fahrassistenzsystem erkennt fälschlich ein Hindernis, etwa in einem Schatten, einer Brücke oder einem Lkw auf der Nebenspur. Das reicht von einer kurzen Warnung bis zur Vollbremsung."
+glossary.false_positive.term: "Fehlauslösung"
+glossary.false_positive.definition: "Ein Eingriff des Notbremsassistenten ohne echten Anlass: Das System glaubte, eine Kollision zu erkennen, die es nicht gab. Hersteller müssen solche Fälle nicht melden, deshalb sammelt diese Meldestelle sie."
+glossary.aeb.term: "AEB (Notbremsassistent)"
+glossary.aeb.definition: "Autonomous Emergency Braking: ein System, das die Straße vor dem Auto mit Kamera und/oder Radar überwacht und selbst bremst, wenn eine Kollision droht. Es ist bei jeder Fahrt standardmäßig aktiv, auch ohne Tempomat. Seit Juli 2024 Pflicht in jedem neu zugelassenen Auto in der EU (siehe GSR2)."
+glossary.fcw.term: "FCW (Kollisionswarnung)"
+glossary.fcw.definition: "Forward Collision Warning: warnt mit einem Ton oder einer Leuchte vor einer drohenden Kollision, oft kurz bevor der Notbremsassistent eingreift. Eine Meldung mit nur einer Warnung gilt hier als leichteste Form der Phantombremsung."
+glossary.adas.term: "ADAS (Fahrassistenzsysteme)"
+glossary.adas.definition: "Advanced Driver Assistance Systems: der Sammelbegriff für Systeme, die Fahrerinnen und Fahrer unterstützen, etwa Notbremsassistent, Abstandstempomat und Spurhalteassistent. Die Verantwortung bleibt immer beim Menschen am Steuer."
+glossary.acc.term: "ACC (Abstandstempomat)"
+glossary.acc.definition: "Adaptive Cruise Control: ein Tempomat, der selbst Abstand zum vorausfahrenden Auto hält, abbremst und wieder beschleunigt. ACC nutzt dieselbe Kamera und dasselbe Radar wie der Notbremsassistent und kann daher ebenfalls grundlos bremsen."
+glossary.lane_assist.term: "Spurhalteassistent"
+glossary.lane_assist.definition: "Hält das Auto mit kleinen Lenkkorrekturen in der Mitte der Fahrspur. Zusammen mit ACC lenkt, bremst und beschleunigt das Auto auf der Autobahn weitgehend selbst, unter Aufsicht des Menschen am Steuer."
+glossary.tad.term: "TAD (Tesla Assisted Driving)"
+glossary.tad.definition: "Das Fahrassistenzsystem von Tesla, früher FSD (Full Self-Driving) genannt. Es lenkt, bremst und beschleunigt unter Aufsicht des Menschen am Steuer; das Auto fährt nicht selbstständig."
+glossary.sensors.term: "Kamera und Radar"
+glossary.sensors.definition: "Die Augen der Fahrassistenzsysteme. Eine Kamera erkennt Formen, kann aber von tiefstehender Sonne geblendet oder von Schatten verwirrt werden. Ein Radar misst Abstand und Geschwindigkeit, hält aber feste Objekte wie Brücken und Schilder manchmal für Hindernisse. Viele Autos kombinieren beides (Sensorfusion)."
+glossary.gsr2.term: "GSR2"
+glossary.gsr2.definition: "Die zweite General Safety Regulation der EU (Verordnung (EU) 2019/2144). Sie schreibt unter anderem den Notbremsassistenten vor: für neue Fahrzeugtypen seit Juli 2022, für jedes neu zugelassene Auto seit Juli 2024. Zu jedem Fahrzeug zeigen wir, ob es nach diesem Datum zugelassen wurde."
+glossary.rdw.term: "RDW"
+glossary.rdw.definition: "Die niederländische Zulassungsbehörde (Rijksdienst voor het Wegverkeer): Sie lässt Fahrzeuge für niederländische Straßen zu und führt das Kennzeichenregister. Aus den offenen Daten der RDW holen wir Marke, Modell und Baujahr zu einem Kennzeichen. Das Kennzeichen selbst speichern wir nicht."
+glossary.type_approval.term: "Typgenehmigung"
+glossary.type_approval.definition: "Die Genehmigung eines Fahrzeugtyps durch eine Prüfbehörde in der EU, bevor er verkauft werden darf. Die Typgenehmigungsnummer zeigt genau, um welchen Typ und welche Ausführung es sich handelt."
+glossary.eu_category.term: "EU-Fahrzeugklasse"
+glossary.eu_category.definition: "Die europäische Einteilung von Fahrzeugen: M1 ist ein Pkw, N1 ein Lieferwagen bis 3.500 kg und so weiter. Die Regeln für Fahrassistenzsysteme unterscheiden sich je nach Klasse."
+glossary.hybrid_class.term: "Hybridklasse"
+glossary.hybrid_class.definition: "Wie ein Hybridauto lädt, so wie die RDW es erfasst: OVC-HEV ist ein Plug-in-Hybrid, der an der Steckdose lädt, NOVC-HEV ein Hybrid, der nur während der Fahrt lädt."
+glossary.recall.term: "Rückruf"
+glossary.recall.definition: "Ein Aufruf des Herstellers, ein Fahrzeug wegen eines Sicherheitsproblems reparieren oder aktualisieren zu lassen. Ein offener Rückruf ist noch nicht durchgeführt. Er kann etwas ganz anderes betreffen als Phantombremsungen."
+glossary.software_version.term: "Softwareversion"
+glossary.software_version.definition: "Viele Autos erhalten Software-Updates in der Werkstatt oder drahtlos (over the air). Ein Update kann das Bremsverhalten der Fahrassistenzsysteme ändern; deshalb fragen wir nach der Version, falls du sie kennst."
+glossary.ilt.term: "ILT"
+glossary.ilt.definition: "Die Inspectie Leefomgeving en Transport, eine niederländische Aufsichtsbehörde. Melde ein gefährliches Fahrzeug auch dort, damit es offiziell bekannt ist. Eine Meldung hier ersetzt das nicht."
+glossary.sign_gantry.term: "Schilderbrücke"
+glossary.sign_gantry.definition: "Eine Konstruktion über der Fahrbahn mit Verkehrsschildern oder Wechselverkehrszeichen (den Anzeigen mit Geschwindigkeiten und Kreuzen über den Spuren). Fahrassistenzsysteme halten eine solche Brücke manchmal für ein Hindernis auf der Straße."
+glossary.road_types.term: "A-Straße, Kraftfahrstraße und N-Straße"
+glossary.road_types.definition: "In den Niederlanden ist eine A-Straße eine Autobahn. Eine Kraftfahrstraße (autoweg) ist nur für schnelle Fahrzeuge, mit einer niedrigeren Höchstgeschwindigkeit als eine Autobahn. Eine N-Straße ist eine nummerierte Straße außerhalb des Autobahnnetzes, oft von der Provinz verwaltet."
+glossary.rear_end.term: "Auffahrunfall"
+glossary.rear_end.definition: "Ein Unfall, bei dem ein Auto auf das vorausfahrende auffährt. Die größte Gefahr von Phantombremsungen: Wer dahinter fährt, rechnet nicht damit, dass das Auto davor plötzlich bremst."
 faq.group.general: "Über Phantombremsungen und diese Website"
 faq.group.reporting: "Melden"
 faq.group.privacy: "Datenschutz und Aufnahmen"

@@ -5,6 +5,24 @@ based on [Keep a Changelog](https://keepachangelog.com).
 
 ## [Unreleased]
 
+## [1.0.3] - 2026-11-11
+
+### Added
+
+- Light and dark mode: choose "System", "Light" or "Dark" at the top of every page. The site follows your device by
+  default; a choice of your own is remembered in a cookie (see the cookie notice).
+- A glossary in the main menu that explains the terms used on the site, such as AEB, ACC, GSR2, type approval and
+  sign gantry.
+
+### Changed
+
+- The statistics map shows up to 20,000 reports (was 2,000) and fills its card next to the charts.
+
+### Fixed
+
+- The statistics map could show fewer reports than the numbers above it for up to 5 minutes after new reports came
+  in; it now always matches.
+
 ## [1.0.2] - 2026-11-10
 
 ### Added
@@ -76,7 +94,8 @@ The first public version.
 - About page, FAQ, privacy statement, cookie notice and terms of use.
 - Moderation for administrators, who sign in with a passkey (no passwords).
 
-[Unreleased]: https://github.com/LauLamanApps/phantom-braking/compare/v1.0.2...HEAD
+[Unreleased]: https://github.com/LauLamanApps/phantom-braking/compare/v1.0.3...HEAD
+[1.0.3]: https://github.com/LauLamanApps/phantom-braking/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/LauLamanApps/phantom-braking/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/LauLamanApps/phantom-braking/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/LauLamanApps/phantom-braking/releases/tag/v1.0.0

@@ -24,6 +24,7 @@ final class ShowSitemapController extends AbstractController
         ['incident_report', []],
         ['about', []],
         ['faq', []],
+        ['glossary', []],
         ['changelog', []],
         ['legal', ['page' => 'privacy']],
         ['legal', ['page' => 'cookies']],

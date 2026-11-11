@@ -31,6 +31,11 @@ export default class extends Controller {
         }).addTo(this.map);
         enableWheelZoom(this.map, this.messagesValue.wheel_hint ?? '');
         enableFullscreen(this.map, { enter: this.messagesValue.fullscreen, exit: this.messagesValue.exit_fullscreen });
+        // The container can grow after load (the statistics card stretches to the charts beside it).
+        this.resizeObserver = new ResizeObserver(() => this.map.invalidateSize());
+        this.resizeObserver.observe(this.element);
+        this.repaint = () => this.markers?.forEach((marker) => marker.setStyle(this.markerStyle(marker.options.collision)));
+        window.addEventListener('theme:change', this.repaint);
 
         let points = this.pointsValue;
         if (this.hasUrlValue && this.urlValue) {
@@ -44,20 +49,29 @@ export default class extends Controller {
     }
 
     disconnect() {
+        this.resizeObserver?.disconnect();
+        window.removeEventListener('theme:change', this.repaint);
         this.map?.remove();
     }
 
-    plot(points) {
+    /* Colours from the CSS tokens, so they follow the light/dark theme. */
+    markerStyle(collision) {
         const css = getComputedStyle(document.documentElement);
         const token = (name) => css.getPropertyValue(name).trim();
 
+        return {
+            color: token('--surface-1'),
+            fillColor: collision ? token('--status-critical') : token('--series-1'),
+        };
+    }
+
+    plot(points) {
         const markers = points.map((p) => {
             const marker = L.circleMarker([p.latitude, p.longitude], {
                 collision: p.collision, // read by clusterIcon()
                 radius: p.collision ? 8 : 6,
                 weight: 2,
-                color: token('--surface-1'),
-                fillColor: p.collision ? token('--status-critical') : token('--series-1'),
+                ...this.markerStyle(p.collision),
                 fillOpacity: 0.9,
             });
 
@@ -83,6 +97,7 @@ export default class extends Controller {
             iconCreateFunction: (cluster) => this.clusterIcon(cluster),
         });
         clusters.addLayers(markers);
+        this.markers = markers;
         this.map.addLayer(clusters);
 
         if (markers.length === 1) {

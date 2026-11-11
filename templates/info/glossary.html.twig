@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'glossary.title'|trans }}{% endblock %}
+{% block description %}{{ 'glossary.intro'|trans }}{% endblock %}
+
+{# Alphabetical in the visitor's language. #}
+{% set entries = terms
+    |map(id => {id: id, term: ('glossary.' ~ id ~ '.term')|trans, definition: ('glossary.' ~ id ~ '.definition')|trans})
+    |sort((a, b) => a.term|lower <=> b.term|lower) %}
+
+{% block structured_data %}
+    <script type="application/ld+json">
+        {{ {
+            '@context': 'https://schema.org',
+            '@type': 'DefinedTermSet',
+            name: 'glossary.title'|trans,
+            url: url('glossary'),
+            hasDefinedTerm: entries|map(e => {
+                '@type': 'DefinedTerm',
+                name: e.term,
+                description: e.definition,
+                url: url('glossary') ~ '#' ~ e.id,
+            }),
+        }|json_encode(constant('JSON_UNESCAPED_UNICODE') b-or constant('JSON_UNESCAPED_SLASHES') b-or constant('JSON_HEX_TAG'))|raw }}
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="mx-auto max-w-3xl">
+        <h1 class="text-3xl font-bold tracking-tight">{{ 'glossary.title'|trans }}</h1>
+        <p class="mt-2 text-stone-600 dark:text-stone-300">{{ 'glossary.intro'|trans }}</p>
+
+        <dl class="mt-8 divide-y divide-stone-200 rounded-2xl border border-stone-200 bg-white dark:divide-stone-800 dark:border-stone-800 dark:bg-stone-900">
+            {% for entry in entries %}
+                <div id="{{ entry.id }}" class="scroll-mt-6 px-5 py-4 target:bg-brand-50 dark:target:bg-brand-700/15">
+                    <dt class="font-semibold"><a href="#{{ entry.id }}" class="hover:underline">{{ entry.term }}</a></dt>
+                    <dd class="mt-1 leading-relaxed text-stone-700 dark:text-stone-300">{{ entry.definition }}</dd>
+                </div>
+            {% endfor %}
+        </dl>
+
+        <p class="mt-10 text-sm text-stone-500 [&_a]:underline">{{ 'glossary.more'|trans({faq: path('faq')})|raw }}</p>
+    </div>
+{% endblock %}

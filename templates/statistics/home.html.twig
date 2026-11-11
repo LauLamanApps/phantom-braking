@@ -88,11 +88,13 @@
         <h2 class="mt-12 text-2xl font-bold tracking-tight">{{ 'section.where'|trans }}</h2>
         <p class="mt-1 text-stone-600 dark:text-stone-400">{{ 'section.where.sub'|trans }}</p>
         <div class="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
-            <section class="card lg:row-span-2">
+            {# From lg the map grows to the height of the two charts beside it. #}
+            <section class="card flex flex-col lg:row-span-2">
                 <h3 class="font-semibold">{{ 'chart.map'|trans }}</h3>
-                <div class="mt-4 h-[28rem] overflow-hidden rounded-xl"
+                <div class="mt-4 h-[28rem] overflow-hidden rounded-xl lg:h-auto lg:min-h-[28rem] lg:flex-1"
                      data-controller="incident-map"
-                     data-incident-map-url-value="{{ path('incident_map_points', filter_bar.query.toQuery) }}"
+                     {# v: the points are cached for 5 minutes; a new report changes the URL, so the map never lags behind the numbers. #}
+                     data-incident-map-url-value="{{ path('incident_map_points', filter_bar.query.toQuery|merge({v: totals.reports})) }}"
                      data-incident-map-centre-value="{{ filter_bar.map.centre|json_encode }}" data-incident-map-zoom-value="{{ filter_bar.map.zoom }}"
                      data-incident-map-show-url-value="{{ path('incident_show', {id: '__ID__'}) }}"
                      data-incident-map-messages-value="{{ {open: 'map.open'|trans, wheel_hint: 'map.wheel_hint'|trans, fullscreen: 'map.fullscreen'|trans, exit_fullscreen: 'map.exit_fullscreen'|trans}|json_encode }}"></div>
