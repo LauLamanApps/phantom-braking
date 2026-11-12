@@ -38,6 +38,9 @@ interface IncidentRepositoryInterface
     /** @return list<Incident> incidents whose reporter asked to delete the media, oldest request first */
     public function getWithDeletionRequests(): array;
 
+    /** @return list<IncidentId> reports with a location whose sun or measured weather is still missing, newest first */
+    public function getIdsNeedingMeasuredConditions(int $limit): array;
+
     public function persist(Incident $incident): void;
 
     public function flush(): void;

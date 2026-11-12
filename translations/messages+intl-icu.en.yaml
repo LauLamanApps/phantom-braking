@@ -126,7 +126,7 @@ home.intro: "Since July 2024, automatic emergency braking (AEB) has been mandato
 home.cta: Report an incident
 home.browse: Browse reports
 home.why.title: Why this reporting point?
-home.why.1: "Kassa (a Dutch consumer TV show) estimates at least hundreds of incidents a year. The ILT received only twenty reports in four years."
+home.why.1: "<a href=\"{kassa}\" target=\"_blank\" rel=\"noopener\">Kassa</a> (a Dutch consumer TV show) estimates at least hundreds of incidents a year. The ILT received only twenty reports in four years."
 home.why.2: Manufacturers don't share vehicle data and don't have to report false brake interventions.
 home.why.3: With plate, location and circumstances, a pattern emerges that manufacturers, regulators and politicians cannot ignore.
 home.empty.title: No reports yet
@@ -546,16 +546,10 @@ changelog.title: Changelog
 changelog.intro: "What changed in each version of the reporting point."
 changelog.current: "This site runs {version}."
 footer.changelog: What changed in this version
-authority_prompt.title: Report it to the ILT as well
-authority_prompt.intro: "Thanks for your report! Automatic emergency braking is mandatory on your car, because it was first registered after 7 July 2024. The Dutch Human Environment and Transport Inspectorate (ILT) can only act if it knows about incidents like this. With the text below it takes two minutes."
 authority_prompt.step.copy: Copy this text
 authority_prompt.copy: Copy
 authority_prompt.copied: Copied!
-authority_prompt.step.form: Fill in the ILT's report form
-authority_prompt.open_form: Go to the ILT report forms
-authority_prompt.reported: I reported it to the ILT
 authority_prompt.later: Not now
-authority_prompt.thanks: "Great that you reported it to the ILT too. We've added that to your report."
 authority_prompt.text.opening: "I am reporting a case of phantom braking: my car braked automatically although there was no obstacle."
 authority_prompt.text.vehicle: Vehicle
 authority_prompt.text.when: Date and time
@@ -571,7 +565,86 @@ authority_prompt.text.dealer: Response from dealer or importer
 authority_prompt.text.description: Description
 authority_prompt.text.closing: "This report is also published, without the plate, on the {site}: {url}"
 authority_prompt.text_language: Language of the text
-authority_prompt.form_steps.open: 'Go to <a class="underline" href="{url}" target="_blank" rel="noopener">ilent.nl/meldformulieren</a>.'
-authority_prompt.form_steps.topic: Click "Overige onderwerpen" (other topics).
-authority_prompt.form_steps.form: Choose the form "Overige onderwerpen".
-authority_prompt.form_steps.paste: Paste the text into the form and fill in your plate and contact details; they are not in the text. The form is in Dutch.
+authority.ilt.title: Report it to the ILT as well
+authority.ilt.intro: "Thanks for your report! Automatic emergency braking is mandatory on your car, because it was first registered after 7 July 2024. The Dutch Human Environment and Transport Inspectorate (ILT) can only act if it knows about incidents like this. With the text below it takes two minutes."
+authority.ilt.step_form: Fill in the ILT's report form
+authority.ilt.open_form: Go to the ILT report forms
+authority.ilt.reported: I reported it to the ILT
+authority.ilt.thanks: "Great that you reported it to the ILT too. We've added that to your report."
+authority.ilt.form_steps.open: 'Go to <a class="underline" href="{url}" target="_blank" rel="noopener">ilent.nl/meldformulieren</a>.'
+authority.ilt.form_steps.topic: Click "Overige onderwerpen" (other topics).
+authority.ilt.form_steps.form: Choose the form "Overige onderwerpen".
+authority.ilt.form_steps.paste: Paste the text into the form and fill in your plate and contact details; they are not in the text. The form is in Dutch.
+
+# Measured conditions: sun (calculated) and weather (Open-Meteo)
+conditions.measured: "Measured at that hour:"
+conditions.calculated: "Calculated:"
+conditions.dry: no rain
+conditions.rain: "{mm} mm rain"
+conditions.snow: "{cm} cm snow"
+conditions.clouds: "{pct} % cloud"
+conditions.visibility: "visibility {km} km"
+conditions.sun: "sun {deg}° high"
+conditions.sun_down: sun below the horizon
+conditions.check: "Weather and light are pre-filled from this; change them if you saw something else. Weather data:"
+section.measured: Measured conditions
+section.measured.sub: "The sun calculated for the moment and place of each report, and the weather a weather model recorded in that area and hour ({measured, plural, =0 {not yet available} other {# of {reports, plural, one {# report} other {# reports}}}}). Weather data: {source}."
+chart.sun: Height of the sun
+chart.sun.sub: A low sun can dazzle the camera behind the windscreen.
+chart.temperature: Temperature
+chart.temperature.sub: Around freezing, sensors can mist up or ice over.
+chart.precipitation: Rain or snow in that hour
+chart.precipitation.sub: Measured, so it can differ from the weather the reporter saw.
+measured.sun.night: Dark (more than 6° below the horizon)
+measured.sun.twilight: Twilight (just below the horizon)
+measured.sun.low: Low (0–15°)
+measured.sun.mid: 15–35°
+measured.sun.high: Above 35°
+measured.temperature.below_minus5: Below −5 °C
+measured.temperature.minus5_0: −5 to 0 °C
+measured.temperature.0_5: 0 to 5 °C
+measured.temperature.5_10: 5 to 10 °C
+measured.temperature.10_20: 10 to 20 °C
+measured.temperature.20_plus: 20 °C or more
+measured.precipitation.dry: Dry
+measured.precipitation.light: Light (under 1 mm)
+measured.precipitation.moderate: Moderate (1–4 mm)
+measured.precipitation.heavy: Heavy (4 mm or more)
+incident.sun: Sun (calculated)
+incident.sun.value: "{deg}° high, in the {direction}"
+compass.0: north
+compass.1: north-east
+compass.2: east
+compass.3: south-east
+compass.4: south
+compass.5: south-west
+compass.6: west
+compass.7: north-west
+incident.measured: Measured weather
+incident.measured.source: "Recorded by a weather model for the area (about 10 km) and hour of the report, so it can differ from what the reporter saw. Weather data: {source}."
+measured.label.temperature: Temperature
+measured.label.precipitation: Rain or snow (that hour)
+measured.label.snowfall: Fresh snow
+measured.label.cloud_cover: Cloud cover
+measured.label.visibility: Visibility
+measured.label.wind: Wind
+measured.label.wind.value: "{speed} km/h, gusts {gusts} km/h"
+measured.label.humidity: Humidity
+measured.label.radiation: Sunlight
+
+# Per make and model
+vehicle_models.title: Makes and models
+vehicle_models.intro: Every make and model with reports. Each has its own page with its numbers, map and reports.
+vehicle_models.count: "{reports, plural, one {# report} other {# reports}}"
+vehicle_models.all: All makes and models
+vehicle_model.title: "Phantom braking on the {vehicle}"
+vehicle_model.description: "{reports, plural, one {# report} other {# reports}} of phantom braking on the {vehicle} ({vehicles, plural, one {# vehicle} other {# vehicles}}): where, when, the software versions and the reports themselves."
+vehicle_model.intro: "{reports, plural, one {# report} other {# reports}} of phantom braking on the {vehicle}, from {vehicles, plural, one {# vehicle} other {# different vehicles}}."
+vehicle_model.report: "Report your {vehicle}"
+vehicle_model.all_reports: "{count, plural, one {View the report} other {View all # reports}}"
+vehicle_model.dashboard: Statistics with this filter
+vehicle_model.kpi.vehicles: "{vehicles, plural, one {# vehicle} other {# vehicles}}"
+vehicle_model.software: Software versions
+vehicle_model.software.sub: As given by reporters. Does it happen less after an update?
+vehicle_model.recent: Latest reports
+vehicle_model.more: "All reports on the {vehicle}"

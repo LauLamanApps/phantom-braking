@@ -5,6 +5,28 @@ based on [Keep a Changelog](https://keepachangelog.com).
 
 ## [Unreleased]
 
+### Added
+
+- A page per make and model, such as "Volkswagen ID.3", with its numbers, trend, map, the software versions reporters
+  gave and the latest reports. The models table on the statistics page and every report link to it, and "Makes and
+  models" lists them all.
+- The weather and light in the report form are filled in for you once you've picked a time and a place: from the
+  weather Open-Meteo recorded for that hour and area, and the position of the sun. Change them if you saw something
+  else.
+- Every report with a location now also records the measured weather (temperature, rain or snow, cloud cover,
+  visibility, wind, humidity, sunlight) and the calculated height and direction of the sun. The report page shows
+  them, and the statistics have charts for the sun's height, the temperature and rain or snow. Open-Meteo only
+  receives the place rounded to about 10 km and the hour (see the privacy statement).
+
+### Changed
+
+- "Kassa" on the home page links to their article on phantom braking.
+- The request to also report it to the ILT only appears for cars registered in the Netherlands: the ILT is the Dutch
+  authority. Its address is now `/reports/{id}/report-to-authority` (was `/report-to-ilt`).
+- Reports, photos and admin accounts have time-ordered IDs (UUID v7) instead of random ones (v4), including the
+  existing ones. Links with an old ID redirect permanently to the new one. Admins add their passkey again after
+  logging in with a login link.
+
 ## [1.1.0] - 2026-11-12
 
 ### Added

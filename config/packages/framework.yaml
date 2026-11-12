@@ -20,6 +20,13 @@ framework:
                     Accept: 'application/json'
                     # Required by the Nominatim usage policy: identify the application.
                     User-Agent: 'SpookremmenMeldpunt/1.0 (+%env(DEFAULT_URI)%)'
+            # Measured weather for the hour of a report (see OpenMeteoWeatherHistory).
+            open_meteo.client:
+                base_uri: 'https://historical-forecast-api.open-meteo.com'
+                timeout: 5
+                headers:
+                    Accept: 'application/json'
+                    User-Agent: 'SpookremmenMeldpunt/1.0 (+%env(DEFAULT_URI)%)'
 
     rate_limiter:
         vehicle_lookup:
@@ -38,6 +45,10 @@ framework:
             policy: sliding_window
             limit: 5
             interval: '15 minutes'
+        conditions_lookup:
+            policy: sliding_window
+            limit: 30
+            interval: '1 minute'
         # Site-wide: Nominatim allows at most 1 request per second per application.
         nominatim:
             policy: token_bucket
@@ -57,6 +68,8 @@ when@test:
             road_lookup:
                 policy: no_limit
             media_withdrawal:
+                policy: no_limit
+            conditions_lookup:
                 policy: no_limit
             nominatim:
                 policy: no_limit

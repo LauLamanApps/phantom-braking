@@ -35,6 +35,15 @@ enum Country: string implements TranslatableEnum
         };
     }
 
+    /** Where a dangerous vehicle registered here can also be reported, if we guide reporters there. */
+    public function authority(): ?Authority
+    {
+        return match ($this) {
+            self::Netherlands => Authority::Ilt,
+            self::Germany, self::France => null,
+        };
+    }
+
     public function mapZoom(): int
     {
         return match ($this) {

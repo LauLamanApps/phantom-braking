@@ -33,6 +33,10 @@ Status as of November 2026. Re-check before building anything: access rules chan
 3. **Everywhere else**, including Germany and France, there is no official open lookup, and that is unlikely to
    change. The options are the EU registration certificate (below), manual entry marked as unverified, or a commercial
    provider (not recommended: unknown sources, cost, and plates sent to a third party).
+4. **The EU-wide route**: there is no EU-wide register to query by plate (EUCARIS is for authorities only), but there
+   *is* an EU-wide table keyed by **type-approval number**: the EEA's CO2 monitoring data. Combined with field K of
+   the registration certificate, it gives make and model for any EU country from an official source. See
+   [EU-wide: type approval as the key](#eu-wide-type-approval-as-the-key) below. **Verify the join first.**
 
 ## 🇳🇱 Netherlands: RDW Open Data
 
@@ -135,6 +139,9 @@ Status as of November 2026. Re-check before building anything: access rules chan
 
 - No official API for the **Motorregister** (DMR). Skat delivers it in bulk to Danmarks Statistik, not to the public.
 - Community tools (e.g. `dmr.py`) scrape motorregister.skat.dk; not an option for us.
+- **Third party:** Synsbasen and Soge.dk offer APIs with most of the DMR data (Soge.dk with a free account and key).
+  Their source and terms are **not verified**.
+  [Synsbasen API](https://api.synsbasen.dk/v1/docs)
   [dmr.py](https://github.com/j4asper/dmr.py) · [Danmarks Statistik on DMR](https://www.dst.dk/da/Statistik/dokumentation/Times/bilregister-dmr)
 
 ## 🇵🇱 Poland
@@ -195,6 +202,67 @@ type-approval number the RDW returns, so platforms (and their ADAS hardware) can
 **Trade-off:** this is data *transcribed* from an official document, not *looked up* in a register. It breaks the
 current "registry-backed only" rule, so it needs an explicit decision. If it's adopted, store a source marker on the
 vehicle snapshot (`registry` vs `certificate`) so statistics can tell the two apart.
+
+## EU-wide: type approval as the key
+
+**No EU-wide plate lookup exists.** EUCARIS, the exchange between national registration authorities, can search by
+plate, but only for those authorities; private parties are sent to each country's national contact point.
+[EUCARIS](https://www.eucaris.net/services/vat)
+
+**But there is an EU-wide table keyed by type approval.** Under Regulation (EU) 2019/631, every country reports each
+year's new car (M1) and van (N1) registrations to the European Environment Agency for CO2 monitoring. The EEA
+publishes it per type approval, type, variant and version, per country:
+
+| Field | Meaning |
+|---|---|
+| `TAN` | Type-approval number, e.g. `e4*2007/46*1293*42` |
+| `T`, `Va`, `Ve` | Type, variant, version |
+| `Mk` | Make |
+| `Cn` | Commercial name (the model) |
+| `Ct` | Vehicle category (M1, N1) |
+| `MS` | Country of registration |
+| `r` | Number of registrations |
+
+- Covers the EU27, Iceland and Norway (the UK until it left), from about 2010. No plates, no VINs: it is not personal
+  data.
+- Downloads per year (CSV, Access, SQL) and a SQL endpoint (`discodata.eea.europa.eu`). The endpoint answered our
+  test query with a 403, so start from the CSV.
+- The column names change case between years (`TAN` / `Tan`, `m` / `M`). Parse by a mapping, not by position.
+  [2019 schema](https://www.eea.europa.eu/data-and-maps/data/co2-cars-emission-19/co2-emissions-cars-2019-final) ·
+  [2025 metadata (PDF)](https://sdi.eea.europa.eu/catalogue/api/records/b4044b06-2e6b-4f8e-a6e6-66e0e98bb0dd/attachments/CO2%20from%20cars%20and%20vans_Stastical%20metadata_2025P.pdf) ·
+  [CO2 cars viewer](https://co2cars.apps.eea.europa.eu/1)
+
+**It joins with what we already have.** The RDW returns the same number (`typegoedkeuringsnummer`, e.g.
+`e4*2007/46*1293*42` for a Tesla Model Y), and `RdwVehicleRegistry` already maps it to the vehicle snapshot's
+`typeApprovalNumber`. Field K on every EU registration certificate is that number as well.
+
+### Possible design
+
+1. **Netherlands: unchanged.** Plate → RDW, which also gives the type approval.
+2. **Other EU/EEA countries:** the reporter gives the registration country, the plate (only for the fingerprint), field
+   **K** and field **B** (first registration). Make and model come from a local copy of the EEA table, imported once a
+   year with a console command. If field K is unknown or not found, fall back to choosing make and model, marked as
+   unverified.
+3. **One model key everywhere:** group the model pages and statistics by type approval, so a car counts as the same
+   model whichever country it was reported from.
+4. **Fingerprint per country:** hash the plate together with the registration country, so equal plates in two
+   countries don't count as one vehicle.
+5. **AEB requirement:** field B gives the first registration date, so the "report it to the ILT" prompt keeps working.
+6. Store the source on the vehicle snapshot (`registry`, `certificate+eea`, `manual`), as above.
+
+### Caveats
+
+- Only vehicles registered **new** in the EU/EEA since about 2010, and only M1 and N1. A used import appears under the
+  country where it was first registered, which is fine for a lookup by number.
+- The same number is written differently across sources (spaces, `*` or `/`, leading `e`). Normalise both sides before
+  matching.
+- One type approval can cover several variants, and sometimes more than one commercial name. A lookup can return more
+  than one model: pick the most registered, or let the reporter choose from that short list.
+- **Not verified yet:**
+  - that our production type-approval numbers appear in the EEA file;
+  - the EEA's reuse terms.
+
+  Download one recent year's CSV and match it against the numbers in our database before building anything.
 
 ## Adding a country
 

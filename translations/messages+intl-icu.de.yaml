@@ -126,7 +126,7 @@ home.intro: "Seit Juli 2024 ist der automatische Notbremsassistent (AEB) in jede
 home.cta: Vorfall melden
 home.browse: Meldungen ansehen
 home.why.title: Warum diese Meldestelle?
-home.why.1: "Kassa (eine niederländische Verbrauchersendung) schätzt mindestens Hunderte Vorfälle pro Jahr. Die ILT erhielt in vier Jahren nur zwanzig Meldungen."
+home.why.1: "<a href=\"{kassa}\" target=\"_blank\" rel=\"noopener\">Kassa</a> (eine niederländische Verbrauchersendung) schätzt mindestens Hunderte Vorfälle pro Jahr. Die ILT erhielt in vier Jahren nur zwanzig Meldungen."
 home.why.2: Hersteller teilen keine Fahrzeugdaten und müssen Fehlauslösungen der Bremse nicht melden.
 home.why.3: Mit Kennzeichen, Ort und Umständen entsteht ein Muster, das Hersteller, Behörden und Politik nicht ignorieren können.
 home.empty.title: Noch keine Meldungen
@@ -546,18 +546,91 @@ changelog.title: Änderungsprotokoll
 changelog.intro: "Was sich in jeder Version der Meldestelle geändert hat. Die Liste ist auf Englisch, wie der Quellcode auf GitHub."
 changelog.current: "Diese Website läuft mit {version}."
 footer.changelog: Änderungen in dieser Version
-authority_prompt.title: Melde es auch der ILT
-authority_prompt.intro: "Danke für deine Meldung! Der automatische Notbremsassistent ist bei deinem Auto Pflicht, weil es nach dem 7. Juli 2024 erstmals zugelassen wurde. Die niederländische Inspektion für Umwelt und Verkehr (ILT) kann nur handeln, wenn sie von solchen Vorfällen weiß. Mit dem Text unten dauert es zwei Minuten."
 authority_prompt.step.copy: Kopiere diesen Text
 authority_prompt.copy: Kopieren
 authority_prompt.copied: Kopiert!
-authority_prompt.step.form: Fülle das Meldeformular der ILT aus
-authority_prompt.open_form: Zu den Meldeformularen der ILT
-authority_prompt.reported: Ich habe es der ILT gemeldet
 authority_prompt.later: Jetzt nicht
-authority_prompt.thanks: "Schön, dass du es auch der ILT gemeldet hast. Wir haben das bei deiner Meldung vermerkt."
 authority_prompt.text_language: Sprache des Textes
-authority_prompt.form_steps.open: 'Gehe zu <a class="underline" href="{url}" target="_blank" rel="noopener">ilent.nl/meldformulieren</a>.'
-authority_prompt.form_steps.topic: Klicke auf „Overige onderwerpen“ (sonstige Themen).
-authority_prompt.form_steps.form: Wähle das Formular „Overige onderwerpen“.
-authority_prompt.form_steps.paste: Füge den Text in das Formular ein und trage dein Kennzeichen und deine Kontaktdaten ein; sie stehen nicht im Text. Das Formular ist auf Niederländisch.
+authority.ilt.title: Melde es auch der ILT
+authority.ilt.intro: "Danke für deine Meldung! Der automatische Notbremsassistent ist bei deinem Auto Pflicht, weil es nach dem 7. Juli 2024 erstmals zugelassen wurde. Die niederländische Inspektion für Umwelt und Verkehr (ILT) kann nur handeln, wenn sie von solchen Vorfällen weiß. Mit dem Text unten dauert es zwei Minuten."
+authority.ilt.step_form: Fülle das Meldeformular der ILT aus
+authority.ilt.open_form: Zu den Meldeformularen der ILT
+authority.ilt.reported: Ich habe es der ILT gemeldet
+authority.ilt.thanks: "Schön, dass du es auch der ILT gemeldet hast. Wir haben das bei deiner Meldung vermerkt."
+authority.ilt.form_steps.open: 'Gehe zu <a class="underline" href="{url}" target="_blank" rel="noopener">ilent.nl/meldformulieren</a>.'
+authority.ilt.form_steps.topic: Klicke auf „Overige onderwerpen“ (sonstige Themen).
+authority.ilt.form_steps.form: Wähle das Formular „Overige onderwerpen“.
+authority.ilt.form_steps.paste: Füge den Text in das Formular ein und trage dein Kennzeichen und deine Kontaktdaten ein; sie stehen nicht im Text. Das Formular ist auf Niederländisch.
+
+# Gemessene Bedingungen: Sonne (berechnet) und Wetter (Open-Meteo)
+conditions.measured: "Gemessen in dieser Stunde:"
+conditions.calculated: "Berechnet:"
+conditions.dry: kein Niederschlag
+conditions.rain: "{mm} mm Regen"
+conditions.snow: "{cm} cm Schnee"
+conditions.clouds: "{pct} % Bewölkung"
+conditions.visibility: "Sicht {km} km"
+conditions.sun: "Sonne {deg}° hoch"
+conditions.sun_down: Sonne unter dem Horizont
+conditions.check: "Wetter und Licht sind damit vorausgefüllt; ändere sie, wenn du etwas anderes gesehen hast. Wetterdaten:"
+section.measured: Gemessene Bedingungen
+section.measured.sub: "Die Sonne, berechnet für Zeitpunkt und Ort jeder Meldung, und das Wetter, das ein Wettermodell in dieser Gegend und Stunde aufgezeichnet hat ({measured, plural, =0 {noch nicht verfügbar} other {# von {reports, plural, one {# Meldung} other {# Meldungen}}}}). Wetterdaten: {source}."
+chart.sun: Sonnenhöhe
+chart.sun.sub: Eine tiefstehende Sonne kann die Kamera hinter der Windschutzscheibe blenden.
+chart.temperature: Temperatur
+chart.temperature.sub: Um den Gefrierpunkt können Sensoren beschlagen oder vereisen.
+chart.precipitation: Regen oder Schnee in dieser Stunde
+chart.precipitation.sub: Gemessen, kann also vom Wetter abweichen, das die meldende Person gesehen hat.
+measured.sun.night: Dunkel (mehr als 6° unter dem Horizont)
+measured.sun.twilight: Dämmerung (knapp unter dem Horizont)
+measured.sun.low: Tief (0–15°)
+measured.sun.mid: 15–35°
+measured.sun.high: Über 35°
+measured.temperature.below_minus5: Unter −5 °C
+measured.temperature.minus5_0: −5 bis 0 °C
+measured.temperature.0_5: 0 bis 5 °C
+measured.temperature.5_10: 5 bis 10 °C
+measured.temperature.10_20: 10 bis 20 °C
+measured.temperature.20_plus: 20 °C oder mehr
+measured.precipitation.dry: Trocken
+measured.precipitation.light: Leicht (unter 1 mm)
+measured.precipitation.moderate: Mäßig (1–4 mm)
+measured.precipitation.heavy: Stark (4 mm oder mehr)
+incident.sun: Sonne (berechnet)
+incident.sun.value: "{deg}° hoch, im {direction}"
+compass.0: Norden
+compass.1: Nordosten
+compass.2: Osten
+compass.3: Südosten
+compass.4: Süden
+compass.5: Südwesten
+compass.6: Westen
+compass.7: Nordwesten
+incident.measured: Gemessenes Wetter
+incident.measured.source: "Von einem Wettermodell für die Gegend (etwa 10 km) und die Stunde der Meldung aufgezeichnet, kann also von dem abweichen, was die meldende Person gesehen hat. Wetterdaten: {source}."
+measured.label.temperature: Temperatur
+measured.label.precipitation: Regen oder Schnee (diese Stunde)
+measured.label.snowfall: Neuschnee
+measured.label.cloud_cover: Bewölkung
+measured.label.visibility: Sicht
+measured.label.wind: Wind
+measured.label.wind.value: "{speed} km/h, Böen {gusts} km/h"
+measured.label.humidity: Luftfeuchtigkeit
+measured.label.radiation: Sonnenlicht
+
+# Pro Marke und Modell
+vehicle_models.title: Marken und Modelle
+vehicle_models.intro: Jede Marke und jedes Modell mit Meldungen. Jedes hat eine eigene Seite mit Zahlen, Karte und Meldungen.
+vehicle_models.count: "{reports, plural, one {# Meldung} other {# Meldungen}}"
+vehicle_models.all: Alle Marken und Modelle
+vehicle_model.title: "Phantombremsungen beim {vehicle}"
+vehicle_model.description: "{reports, plural, one {# Meldung} other {# Meldungen}} von Phantombremsungen beim {vehicle} ({vehicles, plural, one {# Fahrzeug} other {# Fahrzeuge}}): wo, wann, die Softwareversionen und die Meldungen selbst."
+vehicle_model.intro: "{reports, plural, one {# Meldung} other {# Meldungen}} von Phantombremsungen beim {vehicle}, von {vehicles, plural, one {# Fahrzeug} other {# verschiedenen Fahrzeugen}}."
+vehicle_model.report: "Deinen {vehicle} melden"
+vehicle_model.all_reports: "{count, plural, one {Meldung ansehen} other {Alle # Meldungen ansehen}}"
+vehicle_model.dashboard: Statistiken mit diesem Filter
+vehicle_model.kpi.vehicles: "{vehicles, plural, one {# Fahrzeug} other {# Fahrzeuge}}"
+vehicle_model.software: Softwareversionen
+vehicle_model.software.sub: Wie von den Meldenden angegeben. Passiert es nach einem Update seltener?
+vehicle_model.recent: Neueste Meldungen
+vehicle_model.more: "Alle Meldungen zum {vehicle}"

@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace App\SharedKernel\Domain\ValueObject;
 
 /**
- * UUIDv4 identifier. Generated in the domain so an entity is valid (and
- * addressable) before it is flushed, and so public URLs cannot be enumerated.
+ * UUIDv7 identifier (RFC 9562): a millisecond timestamp followed by 74 random
+ * bits, so new IDs sort by creation time (index-friendly) while public URLs
+ * still cannot be enumerated. Generated in the domain so an entity is valid
+ * (and addressable) before it is flushed. IDs created before v7 are v4 and
+ * remain valid.
  */
 abstract class AbstractId implements \Stringable
 {
-    private const string PATTERN = '/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/';
+    private const string PATTERN = '/^[0-9a-f]{8}-[0-9a-f]{4}-[47][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/';
 
     final private function __construct(private readonly string $value)
     {
@@ -18,8 +21,9 @@ abstract class AbstractId implements \Stringable
 
     public static function generate(): static
     {
-        $bytes = random_bytes(16);
-        $bytes[6] = chr(ord($bytes[6]) & 0x0F | 0x40);
+        $milliseconds = (int) floor(microtime(true) * 1000);
+        $bytes = substr(pack('J', $milliseconds), 2).random_bytes(10);
+        $bytes[6] = chr(ord($bytes[6]) & 0x0F | 0x70);
         $bytes[8] = chr(ord($bytes[8]) & 0x3F | 0x80);
 
         return new static(vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($bytes), 4)));

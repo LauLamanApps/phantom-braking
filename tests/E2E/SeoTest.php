@@ -46,7 +46,8 @@ final class SeoTest extends WebTestCase
         $xpath = static fn (string $query): array => $xml->xpath($query) ?: [];
         $locs = array_map('strval', $xpath('//s:loc'));
 
-        self::assertCount(10 * 4, $locs);
+        self::assertCount(11 * 4, $locs);
+        self::assertContains('http://localhost/en/vehicles', $locs);
         self::assertContains('http://localhost/de/faq', $locs);
         self::assertContains('http://localhost/nl/glossary', $locs);
         self::assertContains('http://localhost/fr/privacy', $locs);

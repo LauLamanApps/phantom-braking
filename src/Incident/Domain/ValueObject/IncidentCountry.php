@@ -40,6 +40,19 @@ final readonly class IncidentCountry implements \Stringable
         return null !== $code && \in_array(strtoupper(trim($code)), self::EUROPE, true) ? self::fromString($code) : null;
     }
 
+    /** The country's mainland time zone (Europe/Madrid, not the Canaries), to turn a reported local time into an instant. */
+    public function timezone(): \DateTimeZone
+    {
+        if ('CY' === $this->code) {
+            return new \DateTimeZone('Asia/Nicosia'); // listed under Asia, and Famagusta comes first
+        }
+
+        $zones = \DateTimeZone::listIdentifiers(\DateTimeZone::PER_COUNTRY, $this->code);
+        $european = array_values(array_filter($zones, static fn (string $zone): bool => str_starts_with($zone, 'Europe/')));
+
+        return new \DateTimeZone($european[0] ?? $zones[0] ?? 'UTC');
+    }
+
     public function equals(self $other): bool
     {
         return $this->code === $other->code;

@@ -2,12 +2,13 @@
 
 {% set v = incident.vehicle %}
 {% set loc = incident.location %}
-{% block title %}{{ 'authority_prompt.title'|trans }}{% endblock %}
+{% set a = authority.translationKey %}
+{% block title %}{{ (a ~ '.title')|trans }}{% endblock %}
 {% block robots %}noindex, nofollow{% endblock %}
 
 {% block body %}
     {% set tl = text_locale %}
-    {# Plain text for the ILT form, in Dutch or English (tl): label/value pairs, empty values left out. #}
+    {# Plain text for the authority's form, in one of the languages it reads (tl): label/value pairs, empty values left out. #}
     {% set warning = incident.wasWarningShown() %}
     {% set details = [
         ['authority_prompt.text.vehicle'|trans({}, 'messages', tl), v.make ~ ' ' ~ v.model],
@@ -38,8 +39,8 @@
         |merge(['', 'authority_prompt.text.closing'|trans({site: 'site.name'|trans({}, 'messages', tl), url: url('incident_show', {id: incident.id, _locale: tl})}, 'messages', tl)]))|join("\n") %}
 
     <div class="mx-auto max-w-3xl">
-        <h1 class="text-3xl font-bold tracking-tight">{{ 'authority_prompt.title'|trans }}</h1>
-        <p class="mt-3 text-lg text-stone-600 dark:text-stone-300">{{ 'authority_prompt.intro'|trans }}</p>
+        <h1 class="text-3xl font-bold tracking-tight">{{ (a ~ '.title')|trans }}</h1>
+        <p class="mt-3 text-lg text-stone-600 dark:text-stone-300">{{ (a ~ '.intro')|trans }}</p>
 
         <ol class="mt-6 space-y-4">
             <li class="card" data-controller="clipboard" data-clipboard-copied-label-value="{{ 'authority_prompt.copied'|trans }}">
@@ -58,15 +59,13 @@
                           class="mt-3 w-full rounded-xl border border-stone-300 bg-stone-50 p-3 font-mono text-xs dark:border-stone-700 dark:bg-stone-950">{{ text }}</textarea>
             </li>
             <li class="card">
-                <h2 class="font-semibold">2. {{ 'authority_prompt.step.form'|trans }}</h2>
-                {# The e-loket form itself can't be linked: without a session started from ilent.nl it shows "Sessie verlopen". #}
+                <h2 class="font-semibold">2. {{ (a ~ '.step_form')|trans }}</h2>
                 <ol class="mt-2 list-decimal space-y-1 pl-5 text-sm text-stone-700 dark:text-stone-300">
-                    <li>{{ 'authority_prompt.form_steps.open'|trans({url: 'https://www.ilent.nl/meldformulieren'})|raw }}</li>
-                    <li>{{ 'authority_prompt.form_steps.topic'|trans }}</li>
-                    <li>{{ 'authority_prompt.form_steps.form'|trans }}</li>
-                    <li>{{ 'authority_prompt.form_steps.paste'|trans }}</li>
+                    {% for step in authority.formSteps %}
+                        <li>{{ (a ~ '.form_steps.' ~ step)|trans({url: authority.formUrl})|raw }}</li>
+                    {% endfor %}
                 </ol>
-                <a href="https://www.ilent.nl/meldformulieren" target="_blank" rel="noopener" class="btn-primary mt-4">{{ 'authority_prompt.open_form'|trans }} ↗</a>
+                <a href="{{ authority.formUrl }}" target="_blank" rel="noopener" class="btn-primary mt-4">{{ (a ~ '.open_form')|trans }} ↗</a>
             </li>
         </ol>
 

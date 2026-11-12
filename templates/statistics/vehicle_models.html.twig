@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'vehicle_models.title'|trans }}{% endblock %}
+{% block description %}{{ 'vehicle_models.intro'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="mx-auto max-w-4xl">
+        <h1 class="text-3xl font-bold tracking-tight">{{ 'vehicle_models.title'|trans }}</h1>
+        <p class="mt-2 text-stone-600 dark:text-stone-300">{{ 'vehicle_models.intro'|trans }}</p>
+
+        {% if makes|length == 0 %}
+            <p class="card mt-8 text-stone-500">{{ 'home.empty.title'|trans }}</p>
+        {% endif %}
+        <div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {% for make, models in makes %}
+                <section class="card" id="{{ make|lower|replace({' ': '-'}) }}">
+                    <h2 class="font-semibold">{{ make }}</h2>
+                    <ul class="mt-2 divide-y divide-stone-100 text-sm dark:divide-stone-800">
+                        {% for m in models %}
+                            {% set href = vehicle_model_path(m.make, m.model) %}
+                            <li class="flex items-baseline justify-between gap-4 py-1.5">
+                                {% if href %}<a class="hover:underline" href="{{ href }}">{{ m.model }}</a>{% else %}<span>{{ m.model }}</span>{% endif %}
+                                <span class="tabular-nums text-stone-500">{{ 'vehicle_models.count'|trans({reports: m.reports}) }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </section>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

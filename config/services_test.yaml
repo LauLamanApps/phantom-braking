@@ -15,6 +15,12 @@ services:
         alias: App\Tests\Double\FakeRoadLocator
         public: true
 
+    App\Tests\Double\FakeWeatherHistory: ~
+
+    App\Incident\Domain\Service\WeatherHistoryInterface:
+        alias: App\Tests\Double\FakeWeatherHistory
+        public: true
+
     # Tests keep media on local disk: fast, offline, and inspectable.
     App\Incident\Domain\Service\MediaStorageInterface:
         alias: App\Incident\Infrastructure\Service\LocalMediaStorage

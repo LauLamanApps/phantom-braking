@@ -75,6 +75,7 @@ export default class extends Controller {
         this.latitudeTarget.value = '';
         this.longitudeTarget.value = '';
         this.status(this.messagesValue.empty);
+        this.dispatch('placed');
     }
 
     /* Colours from the CSS tokens, so they follow the light/dark theme. */
@@ -104,6 +105,7 @@ export default class extends Controller {
         this.latitudeTarget.value = latlng[0];
         this.longitudeTarget.value = latlng[1];
         this.status(`${this.messagesValue.set} ${latlng[0]}, ${latlng[1]}`);
+        this.dispatch('placed'); // the conditions lookup waits for a point
 
         if (lookup && this.hasLookupUrlValue) {
             this.lookup(latlng[0], latlng[1]);

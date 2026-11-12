@@ -48,7 +48,7 @@
         <aside class="card md:col-span-2">
             <h2 class="font-semibold">{{ 'home.why.title'|trans }}</h2>
             <ul class="mt-3 space-y-2 text-sm text-stone-600 dark:text-stone-300">
-                <li>• {{ 'home.why.1'|trans }}</li>
+                <li class="[&_a]:underline">• {{ 'home.why.1'|trans({kassa: 'https://www.bnnvara.nl/kassa/artikelen/de-nachtmerrie-van-zelfremmende-autos-het-vervolg'})|raw }}</li>
                 <li>• {{ 'home.why.2'|trans }}</li>
                 <li>• {{ 'home.why.3'|trans }}</li>
             </ul>
@@ -130,7 +130,10 @@
         <div class="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
             {{ s.chart_card('chart.make'|trans, charts.make, stats.byMake, null, null, true) }}
             <section class="card overflow-x-auto">
-                <h3 class="font-semibold">{{ 'chart.models'|trans }}</h3>
+                <div class="flex flex-wrap items-baseline justify-between gap-2">
+                    <h3 class="font-semibold">{{ 'chart.models'|trans }}</h3>
+                    <a href="{{ path('vehicle_models') }}" class="text-sm text-stone-500 hover:underline">{{ 'vehicle_models.all'|trans }} →</a>
+                </div>
                 <table class="mt-3 w-full text-sm">
                     <thead class="text-left text-stone-500">
                         <tr><th class="py-1.5 font-medium">{{ 'table.vehicle'|trans }}</th><th class="py-1.5 text-right font-medium">{{ 'table.reports'|trans }}</th><th class="py-1.5 text-right font-medium">{{ 'table.vehicles'|trans }}</th></tr>
@@ -138,7 +141,7 @@
                     <tbody>
                     {% for m in stats.topModels %}
                         <tr class="border-t border-stone-100 dark:border-stone-800">
-                            <td class="py-1.5"><a class="hover:underline" href="{{ path('incident_list', filter_bar.query.toQuery|merge({make: m.make, model: m.model})) }}">{{ m.make }} <span class="text-stone-500">{{ m.model }}</span></a></td>
+                            <td class="py-1.5"><a class="hover:underline" href="{{ vehicle_model_path(m.make, m.model) ?? path('incident_list', filter_bar.query.toQuery|merge({make: m.make, model: m.model})) }}">{{ m.make }} <span class="text-stone-500">{{ m.model }}</span></a></td>
                             <td class="py-1.5 text-right tabular-nums">{{ m.reports }}</td>
                             <td class="py-1.5 text-right tabular-nums">{{ m.vehicles }}</td>
                         </tr>
@@ -158,6 +161,14 @@
             {{ s.chart_card('chart.weather'|trans, charts.weather, stats.dimension('weather'), 'enum.weather.') }}
             {{ s.chart_card('chart.hour'|trans, charts.hour, stats.byHour, null) }}
             {{ s.chart_card('chart.speed'|trans, charts.speed, stats.bySpeed, null, 'chart.speed.sub'|trans) }}
+        </div>
+
+        <h2 class="mt-12 text-2xl font-bold tracking-tight">{{ 'section.measured'|trans }}</h2>
+        <p class="mt-1 text-stone-600 dark:text-stone-400 [&_a]:underline">{{ 'section.measured.sub'|trans({measured: stats.measuredReports, reports: totals.reports, source: '<a href="https://open-meteo.com/" rel="noopener">Open-Meteo.com</a>'})|raw }}</p>
+        <div class="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
+            {{ s.chart_card('chart.sun'|trans, charts.sun, stats.measured('sun'), 'measured.sun.', 'chart.sun.sub'|trans) }}
+            {{ s.chart_card('chart.temperature'|trans, charts.temperature, stats.measured('temperature'), 'measured.temperature.', 'chart.temperature.sub'|trans) }}
+            {{ s.chart_card('chart.precipitation'|trans, charts.precipitation, stats.measured('precipitation'), 'measured.precipitation.', 'chart.precipitation.sub'|trans) }}
         </div>
 
         <h2 class="mt-12 text-2xl font-bold tracking-tight">{{ 'section.impact'|trans }}</h2>
