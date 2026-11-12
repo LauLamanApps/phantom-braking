@@ -546,3 +546,32 @@ changelog.title: Wijzigingen
 changelog.intro: "Wat er per versie van het meldpunt is veranderd. De lijst is in het Engels, net als de broncode op GitHub."
 changelog.current: "Deze site draait op {version}."
 footer.changelog: Wijzigingen in deze versie
+authority_prompt.title: Meld het ook bij de ILT
+authority_prompt.intro: "Bedankt voor je melding! Automatisch noodremmen is verplicht op jouw auto, omdat die na 7 juli 2024 voor het eerst is toegelaten. De Inspectie Leefomgeving en Transport (ILT) kan alleen optreden als ze van zulke incidenten weet. Met de tekst hieronder ben je in twee minuten klaar."
+authority_prompt.step.copy: Kopieer deze tekst
+authority_prompt.copy: Kopiëren
+authority_prompt.copied: Gekopieerd!
+authority_prompt.step.form: Vul het meldformulier van de ILT in
+authority_prompt.open_form: Naar de meldformulieren van de ILT
+authority_prompt.reported: Ik heb het gemeld bij de ILT
+authority_prompt.later: Nu niet
+authority_prompt.thanks: "Fijn dat je het ook bij de ILT hebt gemeld. We hebben dat bij je melding gezet."
+authority_prompt.text.opening: "Ik meld een geval van phantom braking: mijn auto remde automatisch, terwijl er geen obstakel was."
+authority_prompt.text.vehicle: Voertuig
+authority_prompt.text.when: Datum en tijd
+authority_prompt.text.where: Plaats
+authority_prompt.text.braking: Remmen
+authority_prompt.text.assist: Actief systeem
+authority_prompt.text.warning: Waarschuwing op het dashboard
+authority_prompt.text.trigger: Vermoedelijke aanleiding
+authority_prompt.text.consequence: Gevolg
+authority_prompt.text.conditions: Weer en licht
+authority_prompt.text.recurrence: Eerder voorgekomen
+authority_prompt.text.dealer: Reactie dealer of importeur
+authority_prompt.text.description: Toelichting
+authority_prompt.text.closing: "Deze melding staat ook, zonder kenteken, op {site}: {url}"
+authority_prompt.text_language: Taal van de tekst
+authority_prompt.form_steps.open: 'Ga naar <a class="underline" href="{url}" target="_blank" rel="noopener">ilent.nl/meldformulieren</a>.'
+authority_prompt.form_steps.topic: Klik op "Overige onderwerpen".
+authority_prompt.form_steps.form: Kies het formulier "Overige onderwerpen".
+authority_prompt.form_steps.paste: Plak de tekst in het formulier en vul je kenteken en contactgegevens in; die staan niet in de tekst.

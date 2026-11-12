@@ -546,3 +546,32 @@ changelog.title: Changelog
 changelog.intro: "What changed in each version of the reporting point."
 changelog.current: "This site runs {version}."
 footer.changelog: What changed in this version
+authority_prompt.title: Report it to the ILT as well
+authority_prompt.intro: "Thanks for your report! Automatic emergency braking is mandatory on your car, because it was first registered after 7 July 2024. The Dutch Human Environment and Transport Inspectorate (ILT) can only act if it knows about incidents like this. With the text below it takes two minutes."
+authority_prompt.step.copy: Copy this text
+authority_prompt.copy: Copy
+authority_prompt.copied: Copied!
+authority_prompt.step.form: Fill in the ILT's report form
+authority_prompt.open_form: Go to the ILT report forms
+authority_prompt.reported: I reported it to the ILT
+authority_prompt.later: Not now
+authority_prompt.thanks: "Great that you reported it to the ILT too. We've added that to your report."
+authority_prompt.text.opening: "I am reporting a case of phantom braking: my car braked automatically although there was no obstacle."
+authority_prompt.text.vehicle: Vehicle
+authority_prompt.text.when: Date and time
+authority_prompt.text.where: Location
+authority_prompt.text.braking: Braking
+authority_prompt.text.assist: Active system
+authority_prompt.text.warning: Warning on the dashboard
+authority_prompt.text.trigger: Suspected trigger
+authority_prompt.text.consequence: Consequence
+authority_prompt.text.conditions: Weather and light
+authority_prompt.text.recurrence: Happened before
+authority_prompt.text.dealer: Response from dealer or importer
+authority_prompt.text.description: Description
+authority_prompt.text.closing: "This report is also published, without the plate, on the {site}: {url}"
+authority_prompt.text_language: Language of the text
+authority_prompt.form_steps.open: 'Go to <a class="underline" href="{url}" target="_blank" rel="noopener">ilent.nl/meldformulieren</a>.'
+authority_prompt.form_steps.topic: Click "Overige onderwerpen" (other topics).
+authority_prompt.form_steps.form: Choose the form "Overige onderwerpen".
+authority_prompt.form_steps.paste: Paste the text into the form and fill in your plate and contact details; they are not in the text. The form is in Dutch.

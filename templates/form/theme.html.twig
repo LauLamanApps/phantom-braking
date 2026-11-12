@@ -17,7 +17,7 @@
 
 {%- block form_label_content -%}
     {{- parent() -}}
-    {%- if required and not compound -%}<span class="text-brand-600" aria-hidden="true"> *</span>{%- endif -%}
+    {%- if required|default(false) and not compound -%}<span class="text-brand-600" aria-hidden="true"> *</span>{%- endif -%}
 {%- endblock form_label_content -%}
 
 {%- block form_help -%}

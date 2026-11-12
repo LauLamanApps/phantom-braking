@@ -5,6 +5,18 @@ based on [Keep a Changelog](https://keepachangelog.com).
 
 ## [Unreleased]
 
+### Added
+
+- After reporting a car on which automatic emergency braking is mandatory (first registered on or after 7 July 2024),
+  and that you haven't reported to the ILT yet, you're asked to report it to the ILT as well. The page gives a
+  ready-made text in Dutch or English to copy, and the steps to the ILT's "Overige onderwerpen" form. Answer "I
+  reported it to the ILT" and your report shows it was reported, or choose "Not now". The report records when a
+  confirmation came from this page, so we can see whether the prompt works.
+
+### Fixed
+
+- Buttons in forms no longer break the page; the form theme assumed every field has a "required" setting.
+
 ## [1.0.3] - 2026-11-11
 
 ### Added

@@ -546,3 +546,18 @@ changelog.title: Journal des modifications
 changelog.intro: "Ce qui a changé dans chaque version du point de signalement. La liste est en anglais, comme le code source sur GitHub."
 changelog.current: "Ce site utilise la {version}."
 footer.changelog: Modifications de cette version
+authority_prompt.title: Signalez-le aussi à l’ILT
+authority_prompt.intro: "Merci pour votre signalement ! Le freinage d’urgence automatique est obligatoire sur votre voiture, car elle a été immatriculée pour la première fois après le 7 juillet 2024. L’inspection néerlandaise des transports (ILT) ne peut agir que si elle a connaissance de tels incidents. Avec le texte ci-dessous, c’est fait en deux minutes."
+authority_prompt.step.copy: Copiez ce texte
+authority_prompt.copy: Copier
+authority_prompt.copied: Copié !
+authority_prompt.step.form: Remplissez le formulaire de signalement de l’ILT
+authority_prompt.open_form: Vers les formulaires de l’ILT
+authority_prompt.reported: Je l’ai signalé à l’ILT
+authority_prompt.later: Pas maintenant
+authority_prompt.thanks: "Merci de l’avoir aussi signalé à l’ILT. Nous l’avons indiqué dans votre signalement."
+authority_prompt.text_language: Langue du texte
+authority_prompt.form_steps.open: 'Allez sur <a class="underline" href="{url}" target="_blank" rel="noopener">ilent.nl/meldformulieren</a>.'
+authority_prompt.form_steps.topic: Cliquez sur « Overige onderwerpen » (autres sujets).
+authority_prompt.form_steps.form: Choisissez le formulaire « Overige onderwerpen ».
+authority_prompt.form_steps.paste: Collez le texte dans le formulaire et indiquez votre plaque et vos coordonnées ; elles ne figurent pas dans le texte. Le formulaire est en néerlandais.

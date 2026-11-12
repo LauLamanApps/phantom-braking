@@ -165,6 +165,25 @@ final class IncidentTest extends TestCase
         self::assertNull((new VehicleSnapshot('A', 'B'))->isSubjectToGsr2());
     }
 
+    public function testOnlyCarsWithMandatoryAebAreToBeReportedToTheAuthority(): void
+    {
+        self::assertFalse(self::incident(new \DateTimeImmutable('-1 day'), 100, 40, new VehicleSnapshot('A', 'B', new \DateTimeImmutable('2022-01-01')))->shouldBeReportedToAuthority());
+        self::assertFalse(self::incident(new \DateTimeImmutable('-1 day'), 100, 40, new VehicleSnapshot('A', 'B'))->shouldBeReportedToAuthority(), 'unknown admission date');
+
+        $incident = self::incident(new \DateTimeImmutable('-1 day'), 100, 40);
+        self::assertTrue($incident->shouldBeReportedToAuthority());
+
+        $now = new \DateTimeImmutable();
+        $incident->confirmReportedToAuthorityViaPrompt($now);
+        self::assertTrue($incident->isReportedToAuthority());
+        self::assertSame($now, $incident->getReportedToAuthorityViaPromptAt());
+        self::assertFalse($incident->shouldBeReportedToAuthority());
+
+        // Confirming again doesn't move the moment the prompt worked.
+        $incident->confirmReportedToAuthorityViaPrompt(new \DateTimeImmutable('+1 hour'));
+        self::assertSame($now, $incident->getReportedToAuthorityViaPromptAt());
+    }
+
     public function testTeslaAssistedDrivingOnlyExistsOnATesla(): void
     {
         $tesla = new VehicleSnapshot('Tesla', 'Model Y');

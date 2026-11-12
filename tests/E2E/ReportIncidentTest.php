@@ -65,7 +65,10 @@ final class ReportIncidentTest extends WebTestCase
             ],
         ]);
 
+        // A 2024 car must have AEB, so the reporter is first asked to report it to the ILT too.
         self::assertResponseRedirects();
+        $this->client->followRedirect();
+        $this->client->submitForm('Not now');
         $this->client->followRedirect();
         self::assertSelectorTextContains('h1', 'TESLA');
         self::assertSelectorTextContains('body', 'being reviewed');
@@ -234,6 +237,81 @@ final class ReportIncidentTest extends WebTestCase
         self::assertSelectorNotExists('select[name="report_incident[country]"] option[value="DE"]');
         self::assertSelectorExists('select[name="report_incident[incidentCountry]"] option[value="BE"]');
         self::assertSelectorExists('select[name="report_incident[incidentCountry]"] option[value="NL"][selected]');
+    }
+
+    public function testReporterOfACarWithMandatoryAebIsAskedToReportToTheIlt(): void
+    {
+        $this->report('TE123S', ['report_incident[description]' => 'Braked hard under the viaduct & nothing was there.']);
+        /** @var Incident $incident */
+        $incident = $this->em->getRepository(Incident::class)->findOneBy([]);
+        self::assertResponseRedirects('/en/reports/'.$incident->getId().'/report-to-ilt');
+
+        $this->client->followRedirect();
+        self::assertResponseIsSuccessful();
+        self::assertSelectorTextContains('h1', 'Report it to the ILT as well');
+        // The e-loket form needs a session started on ilent.nl, so the reporter is guided there instead of deep-linked.
+        self::assertSelectorExists('a[href="https://www.ilent.nl/meldformulieren"]');
+        self::assertSelectorTextContains('main', 'Choose the form "Overige onderwerpen".');
+        $text = $this->client->getCrawler()->filter('textarea')->text(normalizeWhitespace: false);
+        self::assertStringContainsString('Vehicle: TESLA MODEL 3', $text);
+        self::assertStringContainsString('Type approval: e4*2018/858*00217*07', $text);
+        self::assertStringContainsString('Braked hard under the viaduct & nothing was there.', $text);
+        self::assertStringContainsString('http://localhost/en/reports/'.$incident->getId(), $text);
+        self::assertStringNotContainsStringIgnoringCase('TE123S', (string) $this->client->getResponse()->getContent());
+
+        // The text to copy is offered in Dutch or English only, whatever the site language.
+        $this->client->click($this->client->getCrawler()->filter('nav[aria-label="Language of the text"] a')->selectLink('Dutch')->link());
+        $text = $this->client->getCrawler()->filter('textarea')->text(normalizeWhitespace: false);
+        self::assertStringContainsString('Voertuig: TESLA MODEL 3', $text);
+        self::assertStringContainsString('http://localhost/nl/reports/'.$incident->getId(), $text);
+        self::assertSelectorTextContains('h1', 'Report it to the ILT as well');
+        $this->client->request('GET', '/de/reports/'.$incident->getId().'/report-to-ilt');
+        self::assertSelectorTextContains('h1', 'Melde es auch der ILT');
+        self::assertSelectorTextContains('nav[aria-label="Sprache des Textes"]', 'Niederländisch');
+        self::assertStringContainsString('Vehicle: TESLA MODEL 3', $this->client->getCrawler()->filter('textarea')->text(normalizeWhitespace: false));
+        $this->client->request('GET', '/de/reports/'.$incident->getId().'/report-to-ilt?text=fr');
+        self::assertStringContainsString('Vehicle: TESLA MODEL 3', $this->client->getCrawler()->filter('textarea')->text(normalizeWhitespace: false));
+
+        $this->client->request('GET', '/en/reports/'.$incident->getId().'/report-to-ilt');
+        $this->client->submitForm('I reported it to the ILT');
+        self::assertResponseRedirects('/en/reports/'.$incident->getId());
+        $this->client->followRedirect();
+        self::assertSelectorTextContains('main', "We've added that to your report.");
+        self::assertSelectorTextContains('main', 'Thank you for your report!');
+
+        $this->em->clear();
+        $incident = $this->em->getRepository(Incident::class)->find($incident->getId());
+        self::assertInstanceOf(Incident::class, $incident);
+        self::assertTrue($incident->isReportedToAuthority());
+        self::assertNotNull($incident->getReportedToAuthorityViaPromptAt(), 'records that the prompt worked');
+
+        // The prompt was for that one visit only.
+        $this->client->request('GET', '/en/reports/'.$incident->getId().'/report-to-ilt');
+        self::assertResponseRedirects('/en/reports/'.$incident->getId());
+    }
+
+    public function testOnlyTheReporterCanAnswerTheIltPrompt(): void
+    {
+        $this->report('TE123S');
+        /** @var Incident $incident */
+        $incident = $this->em->getRepository(Incident::class)->findOneBy([]);
+
+        // Anyone else (another session) is sent to the public report page, and cannot mark it as reported.
+        $this->client->getCookieJar()->clear();
+        $this->client->request('POST', '/en/reports/'.$incident->getId().'/report-to-ilt', ['authority_prompt' => ['reported' => '']]);
+        self::assertResponseRedirects('/en/reports/'.$incident->getId());
+        $this->em->clear();
+        self::assertFalse($this->em->getRepository(Incident::class)->find($incident->getId())?->isReportedToAuthority());
+    }
+
+    public function testNoIltPromptForOlderCarsOrWhenAlreadyReported(): void
+    {
+        $this->report('VW001X'); // first registered in 2022: AEB not mandatory
+        self::assertResponseRedirects();
+        self::assertStringEndsNotWith('/report-to-ilt', (string) $this->client->getResponse()->headers->get('Location'));
+
+        $this->report('TE123S', ['report_incident[reportedToAuthority]' => '1']);
+        self::assertStringEndsNotWith('/report-to-ilt', (string) $this->client->getResponse()->headers->get('Location'));
     }
 
     public function testUnknownPlateIsReportedOnTheField(): void
