@@ -230,7 +230,7 @@ final readonly class SeedDemoDataCli
                 snowfall: 0.0,
                 cloudCover: Weather::Dry === $weather ? random_int(0, 100) : random_int(70, 100),
                 weatherCode: match ($weather) {
-                    Weather::Rain => 61, Weather::Fog => 45, default => 2
+                    Weather::Rain => 61, Weather::Fog => 45, default => 2,
                 },
                 visibility: Weather::Fog === $weather ? random_int(50, 900) : random_int(8000, 40000),
                 windSpeed: random_int(0, 400) / 10,
