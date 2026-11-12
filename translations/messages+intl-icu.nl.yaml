@@ -126,7 +126,7 @@ home.intro: "Sinds juli 2024 is de automatische noodrem (AEB) verplicht in elke 
 home.cta: Meld een incident
 home.browse: Bekijk meldingen
 home.why.title: Waarom dit meldpunt?
-home.why.1: "Kassa schat minstens honderden incidenten per jaar; de ILT ontving er in vier jaar maar twintig meldingen."
+home.why.1: "<a href=\"{kassa}\" target=\"_blank\" rel=\"noopener\">Kassa</a> schat minstens honderden incidenten per jaar; de ILT ontving er in vier jaar maar twintig meldingen."
 home.why.2: Fabrikanten delen geen voertuigdata en hoeven valse remingrepen niet te rapporteren.
 home.why.3: Met kenteken, locatie en omstandigheden ontstaat een patroon dat fabrikanten, RDW en politiek niet kunnen negeren.
 home.empty.title: Nog geen meldingen
@@ -546,16 +546,10 @@ changelog.title: Wijzigingen
 changelog.intro: "Wat er per versie van het meldpunt is veranderd. De lijst is in het Engels, net als de broncode op GitHub."
 changelog.current: "Deze site draait op {version}."
 footer.changelog: Wijzigingen in deze versie
-authority_prompt.title: Meld het ook bij de ILT
-authority_prompt.intro: "Bedankt voor je melding! Automatisch noodremmen is verplicht op jouw auto, omdat die na 7 juli 2024 voor het eerst is toegelaten. De Inspectie Leefomgeving en Transport (ILT) kan alleen optreden als ze van zulke incidenten weet. Met de tekst hieronder ben je in twee minuten klaar."
 authority_prompt.step.copy: Kopieer deze tekst
 authority_prompt.copy: Kopiëren
 authority_prompt.copied: Gekopieerd!
-authority_prompt.step.form: Vul het meldformulier van de ILT in
-authority_prompt.open_form: Naar de meldformulieren van de ILT
-authority_prompt.reported: Ik heb het gemeld bij de ILT
 authority_prompt.later: Nu niet
-authority_prompt.thanks: "Fijn dat je het ook bij de ILT hebt gemeld. We hebben dat bij je melding gezet."
 authority_prompt.text.opening: "Ik meld een geval van phantom braking: mijn auto remde automatisch, terwijl er geen obstakel was."
 authority_prompt.text.vehicle: Voertuig
 authority_prompt.text.when: Datum en tijd
@@ -571,7 +565,86 @@ authority_prompt.text.dealer: Reactie dealer of importeur
 authority_prompt.text.description: Toelichting
 authority_prompt.text.closing: "Deze melding staat ook, zonder kenteken, op {site}: {url}"
 authority_prompt.text_language: Taal van de tekst
-authority_prompt.form_steps.open: 'Ga naar <a class="underline" href="{url}" target="_blank" rel="noopener">ilent.nl/meldformulieren</a>.'
-authority_prompt.form_steps.topic: Klik op "Overige onderwerpen".
-authority_prompt.form_steps.form: Kies het formulier "Overige onderwerpen".
-authority_prompt.form_steps.paste: Plak de tekst in het formulier en vul je kenteken en contactgegevens in; die staan niet in de tekst.
+authority.ilt.title: Meld het ook bij de ILT
+authority.ilt.intro: "Bedankt voor je melding! Automatisch noodremmen is verplicht op jouw auto, omdat die na 7 juli 2024 voor het eerst is toegelaten. De Inspectie Leefomgeving en Transport (ILT) kan alleen optreden als ze van zulke incidenten weet. Met de tekst hieronder ben je in twee minuten klaar."
+authority.ilt.step_form: Vul het meldformulier van de ILT in
+authority.ilt.open_form: Naar de meldformulieren van de ILT
+authority.ilt.reported: Ik heb het gemeld bij de ILT
+authority.ilt.thanks: "Fijn dat je het ook bij de ILT hebt gemeld. We hebben dat bij je melding gezet."
+authority.ilt.form_steps.open: 'Ga naar <a class="underline" href="{url}" target="_blank" rel="noopener">ilent.nl/meldformulieren</a>.'
+authority.ilt.form_steps.topic: Klik op "Overige onderwerpen".
+authority.ilt.form_steps.form: Kies het formulier "Overige onderwerpen".
+authority.ilt.form_steps.paste: Plak de tekst in het formulier en vul je kenteken en contactgegevens in; die staan niet in de tekst.
+
+# Gemeten omstandigheden: zon (berekend) en weer (Open-Meteo)
+conditions.measured: "Gemeten in dat uur:"
+conditions.calculated: "Berekend:"
+conditions.dry: geen neerslag
+conditions.rain: "{mm} mm regen"
+conditions.snow: "{cm} cm sneeuw"
+conditions.clouds: "{pct} % bewolking"
+conditions.visibility: "zicht {km} km"
+conditions.sun: "zon {deg}° hoog"
+conditions.sun_down: zon onder de horizon
+conditions.check: "Weer en licht zijn hiermee vooringevuld; pas ze aan als je iets anders zag. Weerdata:"
+section.measured: Gemeten omstandigheden
+section.measured.sub: "De zon berekend voor het moment en de plek van elke melding, en het weer dat een weermodel in dat gebied en uur registreerde ({measured, plural, =0 {nog niet beschikbaar} other {# van {reports, plural, one {# melding} other {# meldingen}}}}). Weerdata: {source}."
+chart.sun: Hoogte van de zon
+chart.sun.sub: Een laagstaande zon kan de camera achter de voorruit verblinden.
+chart.temperature: Temperatuur
+chart.temperature.sub: Rond het vriespunt kunnen sensoren beslaan of bevriezen.
+chart.precipitation: Regen of sneeuw in dat uur
+chart.precipitation.sub: Gemeten, dus het kan afwijken van het weer dat de melder zag.
+measured.sun.night: Donker (meer dan 6° onder de horizon)
+measured.sun.twilight: Schemering (net onder de horizon)
+measured.sun.low: Laag (0–15°)
+measured.sun.mid: 15–35°
+measured.sun.high: Hoger dan 35°
+measured.temperature.below_minus5: Onder −5 °C
+measured.temperature.minus5_0: −5 tot 0 °C
+measured.temperature.0_5: 0 tot 5 °C
+measured.temperature.5_10: 5 tot 10 °C
+measured.temperature.10_20: 10 tot 20 °C
+measured.temperature.20_plus: 20 °C of meer
+measured.precipitation.dry: Droog
+measured.precipitation.light: Licht (minder dan 1 mm)
+measured.precipitation.moderate: Matig (1–4 mm)
+measured.precipitation.heavy: Zwaar (4 mm of meer)
+incident.sun: Zon (berekend)
+incident.sun.value: "{deg}° hoog, in het {direction}"
+compass.0: noorden
+compass.1: noordoosten
+compass.2: oosten
+compass.3: zuidoosten
+compass.4: zuiden
+compass.5: zuidwesten
+compass.6: westen
+compass.7: noordwesten
+incident.measured: Gemeten weer
+incident.measured.source: "Geregistreerd door een weermodel voor het gebied (ongeveer 10 km) en het uur van de melding, dus het kan afwijken van wat de melder zag. Weerdata: {source}."
+measured.label.temperature: Temperatuur
+measured.label.precipitation: Regen of sneeuw (dat uur)
+measured.label.snowfall: Verse sneeuw
+measured.label.cloud_cover: Bewolking
+measured.label.visibility: Zicht
+measured.label.wind: Wind
+measured.label.wind.value: "{speed} km/u, windstoten {gusts} km/u"
+measured.label.humidity: Luchtvochtigheid
+measured.label.radiation: Zonlicht
+
+# Per merk en model
+vehicle_models.title: Merken en modellen
+vehicle_models.intro: Elk merk en model met meldingen. Elk heeft een eigen pagina met de cijfers, kaart en meldingen.
+vehicle_models.count: "{reports, plural, one {# melding} other {# meldingen}}"
+vehicle_models.all: Alle merken en modellen
+vehicle_model.title: "Spookremmen bij de {vehicle}"
+vehicle_model.description: "{reports, plural, one {# melding} other {# meldingen}} van spookremmen bij de {vehicle} ({vehicles, plural, one {# voertuig} other {# voertuigen}}): waar, wanneer, de softwareversies en de meldingen zelf."
+vehicle_model.intro: "{reports, plural, one {# melding} other {# meldingen}} van spookremmen bij de {vehicle}, van {vehicles, plural, one {# voertuig} other {# verschillende voertuigen}}."
+vehicle_model.report: "Meld je {vehicle}"
+vehicle_model.all_reports: "{count, plural, one {Bekijk de melding} other {Bekijk alle # meldingen}}"
+vehicle_model.dashboard: Statistieken met dit filter
+vehicle_model.kpi.vehicles: "{vehicles, plural, one {# voertuig} other {# voertuigen}}"
+vehicle_model.software: Softwareversies
+vehicle_model.software.sub: Zoals de melders ze opgaven. Gebeurt het minder na een update?
+vehicle_model.recent: Laatste meldingen
+vehicle_model.more: "Alle meldingen over de {vehicle}"

@@ -6,9 +6,14 @@ namespace App\Tests\E2E;
 
 use App\Incident\Domain\Command\ModerateFootageCommand;
 use App\Incident\Domain\Command\ModeratePhotoCommand;
+use App\Incident\Domain\Command\RecordMeasuredConditionsCommand;
+use App\Incident\Domain\Event\IncidentReportedEvent;
 use App\Incident\Domain\Model\Incident;
+use App\Incident\Domain\Service\WeatherHistoryInterface;
 use App\Incident\Domain\ValueObject\IncidentId;
 use App\SharedKernel\Domain\Messenger\Bus\CommandBusInterface;
+use App\SharedKernel\Domain\Model\RenamedId;
+use App\Tests\Double\FakeWeatherHistory;
 use App\Tests\Support\JpegFixture;
 use App\Tests\Support\ResetsTestStorage;
 use App\Vehicle\Domain\ValueObject\Country;
@@ -18,6 +23,8 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Messenger\Envelope;
+use Symfony\Component\Messenger\Transport\InMemory\InMemoryTransport;
 
 final class ReportIncidentTest extends WebTestCase
 {
@@ -163,6 +170,97 @@ final class ReportIncidentTest extends WebTestCase
         self::assertNotNull($incident->getMediaDeletionRequestedAt());
     }
 
+    public function testReportGetsTheMeasuredWeatherAndTheSunInTheBackground(): void
+    {
+        $this->report('vw001x', ['report_incident[occurredAt]' => '2026-07-01T14:00']);
+
+        // The lookup runs in the worker, not while the reporter waits.
+        $transport = self::getContainer()->get('messenger.transport.async');
+        self::assertInstanceOf(InMemoryTransport::class, $transport);
+        $events = array_map(static fn (Envelope $e): object => $e->getMessage(), $transport->getSent());
+        self::assertCount(1, $events);
+        self::assertInstanceOf(IncidentReportedEvent::class, $events[0]);
+
+        self::getContainer()->get(CommandBusInterface::class)->dispatch(new RecordMeasuredConditionsCommand($events[0]->incidentId));
+        $weather = self::weatherHistory();
+        // 14:00 in the Netherlands in summer is 12:00 UTC; the point stays as reported, the adapter rounds it.
+        self::assertSame('2026-07-01T12:00:00+00:00', $weather->lookups[0][2]->setTimezone(new \DateTimeZone('UTC'))->format('c'));
+
+        $this->client->request('GET', '/en/reports/'.$events[0]->incidentId);
+        self::assertSelectorTextContains('main', 'Measured weather');
+        self::assertSelectorTextContains('main', '4.2 °C');
+        self::assertSelectorTextContains('main', '35 km/h');
+        self::assertMatchesRegularExpression('/Sun \(calculated\)\s*6\d° high, in the south/', (string) $this->client->getCrawler()->filter('main')->text());
+        self::assertSelectorExists('main a[href="https://open-meteo.com/"]');
+
+        $this->client->request('GET', '/en');
+        self::assertSelectorTextContains('main', 'Measured conditions');
+        self::assertSelectorTextContains('main', '(1 of 1 report)');
+    }
+
+    public function testConditionsLookupSuggestsWeatherAndLightForTheForm(): void
+    {
+        $this->client->disableReboot(); // keep the weather double between requests
+        $crawler = $this->client->request('GET', '/en/report');
+        self::assertSame('/api/conditions-lookup', $crawler->filter('form[name="report_incident"]')->attr('data-conditions-lookup-url-value'));
+
+        $this->client->jsonRequest('POST', '/api/conditions-lookup', ['latitude' => 52.09, 'longitude' => 5.12, 'occurredAt' => '2026-07-01T14:00', 'country' => 'NL']);
+        self::assertResponseIsSuccessful();
+        $conditions = json_decode((string) $this->client->getResponse()->getContent(), true);
+        self::assertSame('rain', $conditions['weather']); // 0.6 mm in that hour
+        self::assertSame('daylight', $conditions['light']);
+        self::assertGreaterThan(55, $conditions['sun']['elevation']);
+        self::assertSame(4.2, $conditions['measured']['temperature']);
+
+        // Without the weather service, the sun still helps.
+        $weather = self::weatherHistory();
+        $weather->down = true;
+        $this->client->jsonRequest('POST', '/api/conditions-lookup', ['latitude' => 52.09, 'longitude' => 5.12, 'occurredAt' => '2026-11-12T08:30', 'country' => 'NL']);
+        $conditions = json_decode((string) $this->client->getResponse()->getContent(), true);
+        self::assertNull($conditions['weather']);
+        self::assertSame('low_sun', $conditions['light']);
+
+        $this->client->jsonRequest('POST', '/api/conditions-lookup', ['latitude' => 52.09, 'longitude' => 5.12, 'occurredAt' => 'yesterday', 'country' => 'US']);
+        self::assertResponseStatusCodeSame(422);
+    }
+
+    public function testEveryModelHasItsOwnPage(): void
+    {
+        foreach (['vw001x', 'vw001x', 'vw001x', 'te-123-s'] as $plate) {
+            $this->report($plate);
+        }
+
+        $crawler = $this->client->request('GET', '/en/vehicles');
+        self::assertResponseIsSuccessful();
+        self::assertCount(1, $crawler->filter('a[href="/en/vehicles/volkswagen/id-3"]'));
+        self::assertCount(1, $crawler->filter('a[href="/en/vehicles/tesla/model-3"]'));
+
+        $crawler = $this->client->request('GET', '/en/vehicles/volkswagen/id-3');
+        self::assertResponseIsSuccessful();
+        self::assertSelectorTextContains('h1', 'VOLKSWAGEN ID.3');
+        self::assertSelectorTextContains('main', '3 reports of phantom braking on the VOLKSWAGEN ID.3, from 1 vehicle.');
+        self::assertStringStartsWith('index', (string) $crawler->filter('meta[name="robots"]')->attr('content'));
+        self::assertSame('/api/incidents/map?make=VOLKSWAGEN&model=ID.3&v=3', $crawler->filter('[data-controller="incident-map"]')->attr('data-incident-map-url-value'));
+        self::assertCount(3, $crawler->filter('main a[href^="/en/reports/"]'));
+
+        // One report is too thin for search engines, but still a page for visitors.
+        $crawler = $this->client->request('GET', '/en/vehicles/tesla/model-3');
+        self::assertResponseIsSuccessful();
+        self::assertSame('noindex, follow', $crawler->filter('meta[name="robots"]')->attr('content'));
+
+        $this->client->request('GET', '/en/vehicles/volkswagen/golf');
+        self::assertResponseStatusCodeSame(404);
+
+        // The statistics table and a report page link to it.
+        $this->client->request('GET', '/en');
+        self::assertSelectorExists('main a[href="/en/vehicles/volkswagen/id-3"]');
+
+        $this->client->request('GET', '/sitemap.xml');
+        $sitemap = (string) $this->client->getResponse()->getContent();
+        self::assertStringContainsString('<loc>http://localhost/nl/vehicles/volkswagen/id-3</loc>', $sitemap);
+        self::assertStringNotContainsString('tesla/model-3', $sitemap);
+    }
+
     public function testFiltersApplyToDashboardListAndMap(): void
     {
         $this->report('TE123S', ['report_incident[roadType]' => 'motorway']);
@@ -239,12 +337,12 @@ final class ReportIncidentTest extends WebTestCase
         self::assertSelectorExists('select[name="report_incident[incidentCountry]"] option[value="NL"][selected]');
     }
 
-    public function testReporterOfACarWithMandatoryAebIsAskedToReportToTheIlt(): void
+    public function testReporterOfACarWithMandatoryAebIsAskedToReportToTheAuthority(): void
     {
         $this->report('TE123S', ['report_incident[description]' => 'Braked hard under the viaduct & nothing was there.']);
         /** @var Incident $incident */
         $incident = $this->em->getRepository(Incident::class)->findOneBy([]);
-        self::assertResponseRedirects('/en/reports/'.$incident->getId().'/report-to-ilt');
+        self::assertResponseRedirects('/en/reports/'.$incident->getId().'/report-to-authority');
 
         $this->client->followRedirect();
         self::assertResponseIsSuccessful();
@@ -265,14 +363,14 @@ final class ReportIncidentTest extends WebTestCase
         self::assertStringContainsString('Voertuig: TESLA MODEL 3', $text);
         self::assertStringContainsString('http://localhost/nl/reports/'.$incident->getId(), $text);
         self::assertSelectorTextContains('h1', 'Report it to the ILT as well');
-        $this->client->request('GET', '/de/reports/'.$incident->getId().'/report-to-ilt');
+        $this->client->request('GET', '/de/reports/'.$incident->getId().'/report-to-authority');
         self::assertSelectorTextContains('h1', 'Melde es auch der ILT');
         self::assertSelectorTextContains('nav[aria-label="Sprache des Textes"]', 'Niederländisch');
         self::assertStringContainsString('Vehicle: TESLA MODEL 3', $this->client->getCrawler()->filter('textarea')->text(normalizeWhitespace: false));
-        $this->client->request('GET', '/de/reports/'.$incident->getId().'/report-to-ilt?text=fr');
+        $this->client->request('GET', '/de/reports/'.$incident->getId().'/report-to-authority?text=fr');
         self::assertStringContainsString('Vehicle: TESLA MODEL 3', $this->client->getCrawler()->filter('textarea')->text(normalizeWhitespace: false));
 
-        $this->client->request('GET', '/en/reports/'.$incident->getId().'/report-to-ilt');
+        $this->client->request('GET', '/en/reports/'.$incident->getId().'/report-to-authority');
         $this->client->submitForm('I reported it to the ILT');
         self::assertResponseRedirects('/en/reports/'.$incident->getId());
         $this->client->followRedirect();
@@ -286,11 +384,11 @@ final class ReportIncidentTest extends WebTestCase
         self::assertNotNull($incident->getReportedToAuthorityViaPromptAt(), 'records that the prompt worked');
 
         // The prompt was for that one visit only.
-        $this->client->request('GET', '/en/reports/'.$incident->getId().'/report-to-ilt');
+        $this->client->request('GET', '/en/reports/'.$incident->getId().'/report-to-authority');
         self::assertResponseRedirects('/en/reports/'.$incident->getId());
     }
 
-    public function testOnlyTheReporterCanAnswerTheIltPrompt(): void
+    public function testOnlyTheReporterCanAnswerTheAuthorityPrompt(): void
     {
         $this->report('TE123S');
         /** @var Incident $incident */
@@ -298,20 +396,40 @@ final class ReportIncidentTest extends WebTestCase
 
         // Anyone else (another session) is sent to the public report page, and cannot mark it as reported.
         $this->client->getCookieJar()->clear();
-        $this->client->request('POST', '/en/reports/'.$incident->getId().'/report-to-ilt', ['authority_prompt' => ['reported' => '']]);
+        $this->client->request('POST', '/en/reports/'.$incident->getId().'/report-to-authority', ['authority_prompt' => ['reported' => '']]);
         self::assertResponseRedirects('/en/reports/'.$incident->getId());
         $this->em->clear();
         self::assertFalse($this->em->getRepository(Incident::class)->find($incident->getId())?->isReportedToAuthority());
     }
 
-    public function testNoIltPromptForOlderCarsOrWhenAlreadyReported(): void
+    public function testNoAuthorityPromptForOlderCarsOrWhenAlreadyReported(): void
     {
         $this->report('VW001X'); // first registered in 2022: AEB not mandatory
         self::assertResponseRedirects();
-        self::assertStringEndsNotWith('/report-to-ilt', (string) $this->client->getResponse()->headers->get('Location'));
+        self::assertStringEndsNotWith('/report-to-authority', (string) $this->client->getResponse()->headers->get('Location'));
 
         $this->report('TE123S', ['report_incident[reportedToAuthority]' => '1']);
-        self::assertStringEndsNotWith('/report-to-ilt', (string) $this->client->getResponse()->headers->get('Location'));
+        self::assertStringEndsNotWith('/report-to-authority', (string) $this->client->getResponse()->headers->get('Location'));
+    }
+
+    public function testLinksWithARenamedIdRedirectToTheNewOne(): void
+    {
+        $this->report('VW001X');
+        /** @var Incident $incident */
+        $incident = $this->em->getRepository(Incident::class)->findOneBy([]);
+        $old = '0b6e2f3c-1a4d-4c8e-9f2a-3b5c7d9e1f20';
+        $this->em->persist(new RenamedId($old, (string) $incident->getId()));
+        $this->em->flush();
+
+        $this->client->request('GET', '/de/reports/'.$old.'?utm_source=kassa');
+        self::assertResponseStatusCodeSame(301);
+        self::assertResponseRedirects('/de/reports/'.$incident->getId().'?utm_source=kassa');
+
+        // Only for pages that weren't found, and never for a form being sent.
+        $this->client->request('GET', '/en/reports/00000000-0000-4000-8000-000000000000');
+        self::assertResponseStatusCodeSame(404);
+        $this->client->request('POST', '/en/reports/'.$old.'/request-media-deletion');
+        self::assertNotSame(301, $this->client->getResponse()->getStatusCode());
     }
 
     public function testUnknownPlateIsReportedOnTheField(): void
@@ -448,6 +566,15 @@ final class ReportIncidentTest extends WebTestCase
         $values['report_incident'] = array_merge($values['report_incident'], $overrides);
 
         return $values;
+    }
+
+    /** The test container swaps Open-Meteo for this double (services_test.yaml); PHPStan only sees the dev container. */
+    private static function weatherHistory(): FakeWeatherHistory
+    {
+        /** @var FakeWeatherHistory $weather */
+        $weather = self::getContainer()->get(WeatherHistoryInterface::class);
+
+        return $weather;
     }
 
     /** @param array<string, string> $overrides */

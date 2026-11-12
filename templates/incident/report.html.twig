@@ -22,8 +22,20 @@
         {{ form_start(form, {attr: {
             class: 'mt-8 space-y-6',
             novalidate: null,
-            'data-controller': 'upload-progress',
-            'data-action': 'submit->upload-progress#submit',
+            'data-controller': 'upload-progress conditions-lookup',
+            'data-action': 'submit->upload-progress#submit location-picker:placed->conditions-lookup#schedule change->conditions-lookup#schedule',
+            'data-conditions-lookup-url-value': path('conditions_lookup'),
+            'data-conditions-lookup-messages-value': {
+                measured: 'conditions.measured'|trans,
+                calculated: 'conditions.calculated'|trans,
+                dry: 'conditions.dry'|trans,
+                rain: 'conditions.rain'|trans,
+                snow: 'conditions.snow'|trans,
+                clouds: 'conditions.clouds'|trans,
+                visibility: 'conditions.visibility'|trans,
+                sun: 'conditions.sun'|trans,
+                sun_down: 'conditions.sun_down'|trans,
+            }|json_encode,
             'data-upload-progress-messages-value': {
                 processing: 'report.footage.processing'|trans,
                 failed: 'report.footage.failed'|trans,
@@ -70,7 +82,7 @@
                       }|json_encode }}">
                 {{ m.section(2, 'report.section.where'|trans, 'report.section.where.sub'|trans) }}
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                    {{ form_row(form.occurredAt) }}
+                    {{ form_row(form.occurredAt, {attr: {'data-conditions-lookup-target': 'occurredAt'}}) }}
                 </div>
                 <div class="mt-4">
                     <p class="text-sm font-medium">{{ 'report.map'|trans }}</p>
@@ -86,7 +98,7 @@
                     {{ form_errors(form.latitude) }}
                 </div>
                 <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-                    {{ form_row(form.incidentCountry, {attr: {'data-location-picker-target': 'country', 'data-autofilled': '1'}}) }}
+                    {{ form_row(form.incidentCountry, {attr: {'data-location-picker-target': 'country', 'data-conditions-lookup-target': 'country', 'data-autofilled': '1'}}) }}
                     {{ form_row(form.roadType, {attr: {'data-location-picker-target': 'roadType'}}) }}
                     {{ form_row(form.roadSituation, {row_attr: {class: 'sm:col-span-2'}, attr: {'data-location-picker-target': 'roadSituation'}}) }}
                     {{ form_row(form.roadNumber, {attr: {'data-location-picker-target': 'roadNumber'}}) }}
@@ -105,8 +117,13 @@
                     {{ form_row(form.assistSystem) }}
                     {{ form_row(form.warningShown) }}
                     {{ form_row(form.consequence) }}
-                    {{ form_row(form.weather) }}
-                    {{ form_row(form.light) }}
+                    {{ form_row(form.weather, {attr: {'data-conditions-lookup-target': 'weather'}}) }}
+                    {{ form_row(form.light, {attr: {'data-conditions-lookup-target': 'light'}}) }}
+                    <p data-conditions-lookup-target="hint" hidden aria-live="polite"
+                       class="rounded-xl border border-emerald-300 bg-emerald-50 px-4 py-3 text-sm sm:col-span-2 dark:border-emerald-800 dark:bg-emerald-950">
+                        <span data-text></span>
+                        <span class="mt-1 block text-xs text-stone-500 dark:text-stone-400">{{ 'conditions.check'|trans }} <a href="https://open-meteo.com/" rel="noopener" class="underline">Open-Meteo.com</a></span>
+                    </p>
                 </div>
             </fieldset>
 

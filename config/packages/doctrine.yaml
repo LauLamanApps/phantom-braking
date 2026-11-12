@@ -35,6 +35,11 @@ doctrine:
                 is_bundle: false
                 dir: '%kernel.project_dir%/src/Vehicle/Domain/Model'
                 prefix: 'App\Vehicle\Domain\Model'
+            SharedKernel:
+                type: attribute
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/SharedKernel/Domain/Model'
+                prefix: 'App\SharedKernel\Domain\Model'
 
 when@test:
     doctrine:

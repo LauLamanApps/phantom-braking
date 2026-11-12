@@ -24,6 +24,7 @@ use App\Incident\Domain\ValueObject\RoadType;
 use App\Incident\Domain\ValueObject\SuspectedTrigger;
 use App\Incident\Domain\ValueObject\Weather;
 use App\Vehicle\Domain\Model\VehicleSnapshot;
+use App\Vehicle\Domain\ValueObject\Authority;
 use App\Vehicle\Domain\ValueObject\Country;
 use PHPUnit\Framework\TestCase;
 
@@ -169,6 +170,9 @@ final class IncidentTest extends TestCase
     {
         self::assertFalse(self::incident(new \DateTimeImmutable('-1 day'), 100, 40, new VehicleSnapshot('A', 'B', new \DateTimeImmutable('2022-01-01')))->shouldBeReportedToAuthority());
         self::assertFalse(self::incident(new \DateTimeImmutable('-1 day'), 100, 40, new VehicleSnapshot('A', 'B'))->shouldBeReportedToAuthority(), 'unknown admission date');
+        self::assertFalse(self::incident(new \DateTimeImmutable('-1 day'), 100, 40, country: Country::Germany)->shouldBeReportedToAuthority(), 'not registered in the Netherlands');
+        self::assertSame(Authority::Ilt, self::incident(new \DateTimeImmutable('-1 day'), 100, 40)->getAuthority());
+        self::assertNull(self::incident(new \DateTimeImmutable('-1 day'), 100, 40, country: Country::Germany)->getAuthority());
 
         $incident = self::incident(new \DateTimeImmutable('-1 day'), 100, 40);
         self::assertTrue($incident->shouldBeReportedToAuthority());
@@ -200,10 +204,11 @@ final class IncidentTest extends TestCase
         ?int $after,
         ?VehicleSnapshot $vehicle = null,
         ActiveAssistSystem $assist = ActiveAssistSystem::AdaptiveCruise,
+        Country $country = Country::Netherlands,
     ): Incident {
         return new Incident(
             id: IncidentId::generate(),
-            country: Country::Netherlands,
+            country: $country,
             plateFingerprint: str_repeat('a', 64),
             vehicle: $vehicle ?? new VehicleSnapshot(' mazda ', 'cx-60', new \DateTimeImmutable('2024-10-01')),
             occurredAt: $occurredAt,

@@ -7,6 +7,7 @@ namespace App\Incident\Presentation\Cli;
 use App\Incident\Domain\Model\DashcamFootage;
 use App\Incident\Domain\Model\Incident;
 use App\Incident\Domain\Model\Location;
+use App\Incident\Domain\Model\MeasuredWeather;
 use App\Incident\Domain\Repository\IncidentRepositoryInterface;
 use App\Incident\Domain\Service\ImageSanitizerInterface;
 use App\Incident\Domain\Service\MediaStorageInterface;
@@ -208,7 +209,7 @@ final readonly class SeedDemoDataCli
                 trigger: $weighted([[SuspectedTrigger::ViaductOrGantry, 30], [SuspectedTrigger::NothingVisible, 25], [SuspectedTrigger::Shadow, 15], [SuspectedTrigger::TruckAdjacentLane, 12], [SuspectedTrigger::OncomingTraffic, 8], [SuspectedTrigger::LowSunOrReflection, 10]]),
                 assistSystem: $weighted([[ActiveAssistSystem::AdaptiveCruise, 40], [ActiveAssistSystem::AdaptiveCruiseWithLaneCentering, 30], [ActiveAssistSystem::None, 25], [ActiveAssistSystem::Unknown, 5], [ActiveAssistSystem::TeslaAssistedDriving, 'TESLA' === mb_strtoupper($make) ? 30 : 0]]),
                 warningShown: $pick([true, false, null]),
-                weather: $weighted([[Weather::Dry, 70], [Weather::Rain, 25], [Weather::Fog, 5]]),
+                weather: $weather = $weighted([[Weather::Dry, 70], [Weather::Rain, 25], [Weather::Fog, 5]]),
                 light: $weighted([[LightCondition::Daylight, 55], [LightCondition::LowSun, 20], [LightCondition::Twilight, 10], [LightCondition::DarkLit, 15]]),
                 consequence: $weighted([[Consequence::DriverStartled, 40], [Consequence::FollowerHadToBrake, 30], [Consequence::NearRearEnd, 20], [Consequence::RearEndCollision, 7], [Consequence::None, 3]]),
                 recurrence: $weighted([[Recurrence::FirstTime, 35], [Recurrence::Few, 40], [Recurrence::Regular, 20], [Recurrence::Frequent, 5]]),
@@ -216,10 +217,27 @@ final readonly class SeedDemoDataCli
                 reportedToAuthority: 0 === random_int(0, 12),
                 windscreenReplacedRecently: $pick([false, false, true, null]),
                 odometerKm: random_int(0, 1) ? random_int(1000, 90000) : null,
-                softwareVersion: null,
+                softwareVersion: random_int(0, 2) ? null : sprintf('%d.%d.%d', random_int(2024, 2026), random_int(1, 12), random_int(0, 5)),
                 description: '[DEMO] Generated demo report.',
                 reportedAt: new \DateTimeImmutable(),
             );
+
+            // Plausible measured weather that mostly agrees with what the "reporter" said (no Open-Meteo calls for demo data).
+            $incident->recordMeasuredWeather(MeasuredWeather::measured(
+                checkedAt: new \DateTimeImmutable(),
+                temperature: random_int(-80, 280) / 10,
+                precipitation: Weather::Rain === $weather ? random_int(1, 60) / 10 : 0.0,
+                snowfall: 0.0,
+                cloudCover: Weather::Dry === $weather ? random_int(0, 100) : random_int(70, 100),
+                weatherCode: match ($weather) {
+                    Weather::Rain => 61, Weather::Fog => 45, default => 2
+                },
+                visibility: Weather::Fog === $weather ? random_int(50, 900) : random_int(8000, 40000),
+                windSpeed: random_int(0, 400) / 10,
+                windGusts: random_int(50, 700) / 10,
+                humidity: random_int(40, 100),
+                solarRadiation: (float) random_int(0, 700),
+            ));
 
             if ($i < $withMedia) {
                 $this->addDemoMedia($incident, $make, $model, $road, $mediaStats);

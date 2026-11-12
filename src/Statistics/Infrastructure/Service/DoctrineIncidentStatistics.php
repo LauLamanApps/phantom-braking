@@ -39,12 +39,38 @@ final readonly class DoctrineIncidentStatistics implements IncidentStatisticsInt
 
     private const array SPEED_BUCKETS = [0, 30, 50, 80, 100, 120, 131];
 
+    /** Calculated and measured conditions, bucketed: dimension → bucket → DQL condition. */
+    private const array MEASURED_BUCKETS = [
+        'sun' => [
+            'night' => 'i.sun.elevation < -6',
+            'twilight' => 'i.sun.elevation >= -6 AND i.sun.elevation <= 0',
+            'low' => 'i.sun.elevation > 0 AND i.sun.elevation < 15',
+            'mid' => 'i.sun.elevation >= 15 AND i.sun.elevation < 35',
+            'high' => 'i.sun.elevation >= 35',
+        ],
+        'temperature' => [
+            'below_minus5' => 'i.measuredWeather.temperature < -5',
+            'minus5_0' => 'i.measuredWeather.temperature >= -5 AND i.measuredWeather.temperature < 0',
+            '0_5' => 'i.measuredWeather.temperature >= 0 AND i.measuredWeather.temperature < 5',
+            '5_10' => 'i.measuredWeather.temperature >= 5 AND i.measuredWeather.temperature < 10',
+            '10_20' => 'i.measuredWeather.temperature >= 10 AND i.measuredWeather.temperature < 20',
+            '20_plus' => 'i.measuredWeather.temperature >= 20',
+        ],
+        'precipitation' => [
+            'dry' => 'i.measuredWeather.precipitation < 0.1',
+            'light' => 'i.measuredWeather.precipitation >= 0.1 AND i.measuredWeather.precipitation < 1',
+            'moderate' => 'i.measuredWeather.precipitation >= 1 AND i.measuredWeather.precipitation < 4',
+            'heavy' => 'i.measuredWeather.precipitation >= 4',
+        ],
+    ];
+
     public function __construct(private EntityManagerInterface $entityManager)
     {
     }
 
     public function overview(IncidentFilter $filter, \DateTimeImmutable $now): StatisticsOverview
     {
+        $measured = $this->measured($filter);
         $byEnum = [];
         foreach (self::DIMENSIONS as $name => $field) {
             $byEnum[$name] = $this->groupCount($filter, $field);
@@ -60,6 +86,8 @@ final readonly class DoctrineIncidentStatistics implements IncidentStatisticsInt
             bySpeed: $this->bySpeed($filter),
             topRoads: $this->topRoads($filter),
             byEnum: $byEnum,
+            byMeasured: $measured['byMeasured'],
+            measuredReports: $measured['measuredReports'],
         );
     }
 
@@ -208,15 +236,27 @@ final readonly class DoctrineIncidentStatistics implements IncidentStatisticsInt
         return $hours;
     }
 
+    public function vehicleModels(IncidentFilter $filter): array
+    {
+        return $this->topModels($filter, null);
+    }
+
+    public function softwareVersions(IncidentFilter $filter, int $limit = 10): array
+    {
+        return $this->groupCount($filter, 'i.softwareVersion', $limit, excludeNull: true);
+    }
+
     /** @return list<array{make: string, model: string, reports: int, vehicles: int}> */
-    private function topModels(IncidentFilter $filter): array
+    private function topModels(IncidentFilter $filter, ?int $limit = 15): array
     {
         $rows = $this->base($filter)
             ->select('i.vehicle.make AS make', 'i.vehicle.model AS model', 'COUNT(i.id) AS reports', 'COUNT(DISTINCT i.plateFingerprint) AS vehicles')
             ->groupBy('i.vehicle.make, i.vehicle.model')
             ->orderBy('reports', 'DESC')
             ->addOrderBy('vehicles', 'DESC')
-            ->setMaxResults(15)
+            ->addOrderBy('make', 'ASC')
+            ->addOrderBy('model', 'ASC')
+            ->setMaxResults($limit)
             ->getQuery()
             ->getArrayResult();
 
@@ -266,6 +306,27 @@ final readonly class DoctrineIncidentStatistics implements IncidentStatisticsInt
         ksort($years);
 
         return $years;
+    }
+
+    /** @return array{byMeasured: array<string, array<string, int>>, measuredReports: int} */
+    private function measured(IncidentFilter $filter): array
+    {
+        $select = ['SUM(CASE WHEN i.measuredWeather.temperature IS NOT NULL THEN 1 ELSE 0 END) AS measuredReports'];
+        foreach (self::MEASURED_BUCKETS as $dimension => $buckets) {
+            foreach ($buckets as $bucket => $condition) {
+                $select[] = sprintf('SUM(CASE WHEN %s THEN 1 ELSE 0 END) AS %s_%s', $condition, $dimension, $bucket);
+            }
+        }
+        $row = $this->base($filter)->select(...$select)->getQuery()->getSingleResult();
+
+        $byMeasured = [];
+        foreach (self::MEASURED_BUCKETS as $dimension => $buckets) {
+            foreach (array_keys($buckets) as $bucket) {
+                $byMeasured[$dimension][$bucket] = (int) $row[$dimension.'_'.$bucket];
+            }
+        }
+
+        return ['byMeasured' => $byMeasured, 'measuredReports' => (int) $row['measuredReports']];
     }
 
     /** @return array<string, int> */

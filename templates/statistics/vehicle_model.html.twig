@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+{% import 'partials/_stats.html.twig' as s %}
+
+{% set name = vehicle.make ~ ' ' ~ vehicle.model %}
+{% block title %}{{ 'vehicle_model.title'|trans({vehicle: name}) }}{% endblock %}
+{% block description %}{{ 'vehicle_model.description'|trans({vehicle: name, reports: totals.reports, vehicles: totals.vehicles}) }}{% endblock %}
+{% block robots %}{{ indexable ? parent() : 'noindex, follow' }}{% endblock %}
+
+{% block body %}
+    <a href="{{ path('vehicle_models') }}" class="text-sm text-stone-500 hover:underline">← {{ 'vehicle_models.title'|trans }}</a>
+    <h1 class="mt-2 text-3xl font-bold tracking-tight">{{ vehicle.make }} <span class="font-normal">{{ vehicle.model }}</span></h1>
+    <p class="mt-2 max-w-3xl text-lg text-stone-600 dark:text-stone-300">{{ 'vehicle_model.intro'|trans({vehicle: name, reports: totals.reports, vehicles: totals.vehicles}) }}</p>
+    <div class="mt-4 flex flex-wrap gap-3">
+        <a href="{{ path('incident_report') }}" class="btn-primary">{{ 'vehicle_model.report'|trans({vehicle: name}) }}</a>
+        <a href="{{ path('incident_list', filter_query) }}" class="btn-secondary">{{ 'vehicle_model.all_reports'|trans({count: totals.reports}) }}</a>
+        <a href="{{ path('home', filter_query) }}" class="btn-secondary">{{ 'vehicle_model.dashboard'|trans }}</a>
+    </div>
+
+    <h2 class="sr-only">{{ 'home.kpis'|trans }}</h2>
+    <section class="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4">
+        {{ s.tile(totals.reports|format_number, 'kpi.reports'|trans, 'vehicle_model.kpi.vehicles'|trans({vehicles: totals.vehicles})) }}
+        {{ s.tile(s.pct(totals.share(totals.endangeredFollower)), 'kpi.endangered'|trans, 'kpi.endangered.hint'|trans({collisions: totals.collisions})) }}
+        {{ s.tile(s.pct(totals.share(totals.recurring)), 'kpi.recurring'|trans, 'kpi.recurring.hint'|trans({repeat: totals.repeatVehicles})) }}
+        {{ s.tile(s.pct(totals.share(totals.dealerDismissive, totals.dealerContacted)), 'kpi.dismissed'|trans, 'kpi.dismissed.hint'|trans({contacted: totals.dealerContacted})) }}
+    </section>
+
+    <section class="mt-8">
+        {{ s.chart_card('chart.trend'|trans, charts.trend, stats.byMonth, null, 'chart.trend.sub'|trans) }}
+    </section>
+
+    <div class="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
+        <section class="card flex flex-col">
+            <h2 class="font-semibold">{{ 'chart.map'|trans }}</h2>
+            <div class="mt-4 h-[24rem] overflow-hidden rounded-xl lg:h-auto lg:min-h-[24rem] lg:flex-1"
+                 data-controller="incident-map"
+                 data-incident-map-url-value="{{ path('incident_map_points', filter_query|merge({v: totals.reports})) }}"
+                 data-incident-map-show-url-value="{{ path('incident_show', {id: '__ID__'}) }}"
+                 data-incident-map-messages-value="{{ {open: 'map.open'|trans, wheel_hint: 'map.wheel_hint'|trans, fullscreen: 'map.fullscreen'|trans, exit_fullscreen: 'map.exit_fullscreen'|trans}|json_encode }}"></div>
+        </section>
+        <section class="card overflow-x-auto">
+            <h2 class="font-semibold">{{ 'vehicle_model.software'|trans }}</h2>
+            <p class="mt-0.5 text-sm text-stone-500 dark:text-stone-400">{{ 'vehicle_model.software.sub'|trans }}</p>
+            {% if software_versions|length == 0 %}
+                <p class="mt-6 text-sm text-stone-500">{{ 'stats.no_data'|trans }}</p>
+            {% else %}
+                <table class="mt-3 w-full text-sm">
+                    <thead class="text-left text-stone-500">
+                        <tr><th class="py-1.5 font-medium">{{ 'report.software_version'|trans }}</th><th class="py-1.5 text-right font-medium">{{ 'table.reports'|trans }}</th></tr>
+                    </thead>
+                    <tbody>
+                    {% for version, count in software_versions %}
+                        <tr class="border-t border-stone-100 dark:border-stone-800">
+                            <td class="py-1.5 font-mono">{{ version }}</td>
+                            <td class="py-1.5 text-right tabular-nums">{{ count }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </section>
+        {{ s.chart_card('chart.situation'|trans, charts.situation, stats.dimension('road_situation'), 'enum.road_situation.', 'chart.situation.sub'|trans) }}
+        {{ s.chart_card('chart.trigger'|trans, charts.trigger, stats.dimension('trigger'), 'enum.trigger.', 'chart.trigger.sub'|trans) }}
+        {{ s.chart_card('chart.assist'|trans, charts.assist, stats.dimension('assist'), 'enum.assist.', 'chart.assist.sub'|trans) }}
+        {{ s.chart_card('chart.sun'|trans, charts.sun, stats.measured('sun'), 'measured.sun.', 'chart.sun.sub'|trans) }}
+        {{ s.chart_card('chart.year'|trans, charts.year, stats.byFirstAdmissionYear, null, 'chart.year.sub'|trans) }}
+    </div>
+
+    <h2 class="mt-12 text-2xl font-bold tracking-tight">{{ 'vehicle_model.recent'|trans }}</h2>
+    <div class="mt-4 grid gap-3">
+        {% for incident in recent %}
+            {{ include('incident/_summary.html.twig') }}
+        {% endfor %}
+    </div>
+    {% if totals.reports > recent|length %}
+        <a href="{{ path('incident_list', filter_query) }}" class="btn-secondary mt-4">{{ 'vehicle_model.all_reports'|trans({count: totals.reports}) }}</a>
+    {% endif %}
+{% endblock %}

@@ -12,6 +12,12 @@ interface IncidentStatisticsInterface
 {
     public function overview(IncidentFilter $filter, \DateTimeImmutable $now): StatisticsOverview;
 
+    /** @return list<array{make: string, model: string, reports: int, vehicles: int}> every model with reports, most reported first */
+    public function vehicleModels(IncidentFilter $filter): array;
+
+    /** @return array<int|string, int> software version as reported → reports, most reported first (a numeric version becomes an int key) */
+    public function softwareVersions(IncidentFilter $filter, int $limit = 10): array;
+
     /**
      * The most recent reports with coordinates. The map clusters them client-side, so the cap is only
      * there to bound the response (about 35 bytes per point gzipped).

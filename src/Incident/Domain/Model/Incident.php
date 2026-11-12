@@ -17,6 +17,7 @@ use App\Incident\Domain\ValueObject\Recurrence;
 use App\Incident\Domain\ValueObject\SuspectedTrigger;
 use App\Incident\Domain\ValueObject\Weather;
 use App\Vehicle\Domain\Model\VehicleSnapshot;
+use App\Vehicle\Domain\ValueObject\Authority;
 use App\Vehicle\Domain\ValueObject\Country;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -63,6 +64,12 @@ class Incident
     /** Set when the reporter confirmed on the prompt after reporting that they also reported it to the ILT: shows whether that prompt works. */
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private ?\DateTimeImmutable $reportedToAuthorityViaPromptAt = null;
+
+    #[ORM\Embedded(class: SunPosition::class, columnPrefix: 'sun_')]
+    private SunPosition $sun;
+
+    #[ORM\Embedded(class: MeasuredWeather::class, columnPrefix: 'measured_')]
+    private MeasuredWeather $measuredWeather;
 
     /** @var Collection<int, Photo> */
     #[ORM\OneToMany(targetEntity: Photo::class, mappedBy: 'incident', cascade: ['persist', 'remove'], orphanRemoval: true)]
@@ -136,6 +143,53 @@ class Incident
         $this->softwareVersion = null === $softwareVersion || '' === trim($softwareVersion) ? null : trim($softwareVersion);
         $this->footage = DashcamFootage::none();
         $this->photos = new ArrayCollection();
+        $this->sun = SunPosition::unknown();
+        $this->measuredWeather = MeasuredWeather::notChecked();
+        $this->calculateSunPosition();
+    }
+
+    /**
+     * The moment it happened. The reporter gives the local time where it happened, which is stored as is
+     * (the hour chart counts local hours); for the sun and the weather it has to be a real instant.
+     */
+    public function getOccurredInstant(): \DateTimeImmutable
+    {
+        return new \DateTimeImmutable($this->occurredAt->format('Y-m-d H:i:s'), $this->location->getCountry()->timezone());
+    }
+
+    /** Idempotent; also used to fill in reports from before the sun was calculated. */
+    public function calculateSunPosition(): void
+    {
+        if (!$this->location->hasCoordinates()) {
+            return;
+        }
+
+        $this->sun = SunPosition::at((float) $this->location->getLatitude(), (float) $this->location->getLongitude(), $this->getOccurredInstant());
+    }
+
+    public function getSun(): SunPosition
+    {
+        return $this->sun;
+    }
+
+    /** Only reports with a location can be looked up, and each only once. */
+    public function needsMeasuredWeather(): bool
+    {
+        return $this->location->hasCoordinates() && !$this->measuredWeather->isChecked();
+    }
+
+    public function recordMeasuredWeather(MeasuredWeather $weather): void
+    {
+        if (!$weather->isChecked()) {
+            throw new \DomainException('Only a completed weather lookup can be recorded.');
+        }
+
+        $this->measuredWeather = $weather;
+    }
+
+    public function getMeasuredWeather(): MeasuredWeather
+    {
+        return $this->measuredWeather;
     }
 
     public function attachFootage(DashcamFootage $footage): void
@@ -365,13 +419,19 @@ class Incident
         return $this->reportedToAuthority;
     }
 
-    /** AEB is mandatory on this car, so the ILT should know about it, and the reporter hasn't told them yet. */
-    public function shouldBeReportedToAuthority(): bool
+    /** The authority for the country where the car is registered, if there is one we guide reporters to. */
+    public function getAuthority(): ?Authority
     {
-        return !$this->reportedToAuthority && true === $this->vehicle->isSubjectToGsr2();
+        return $this->country->authority();
     }
 
-    /** The reporter confirms, on the prompt after reporting, that they reported it to the ILT as well. */
+    /** AEB is mandatory on this car, so its country's authority should know about it, and the reporter hasn't told them yet. */
+    public function shouldBeReportedToAuthority(): bool
+    {
+        return null !== $this->getAuthority() && !$this->reportedToAuthority && true === $this->vehicle->isSubjectToGsr2();
+    }
+
+    /** The reporter confirms, on the prompt after reporting, that they reported it to the authority as well. */
     public function confirmReportedToAuthorityViaPrompt(\DateTimeImmutable $now): void
     {
         if ($this->reportedToAuthority) {

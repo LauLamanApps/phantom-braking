@@ -75,8 +75,8 @@ final class ReportIncidentType extends AbstractType
             ->add('roadNumber', TextType::class, ['label' => 'report.road_number', 'required' => false, 'attr' => ['placeholder' => 'A15, N325, …']])
             ->add('direction', TextType::class, ['label' => 'report.direction', 'required' => false, 'attr' => ['placeholder' => 'report.direction.placeholder']])
             ->add('speedLimit', IntegerType::class, ['label' => 'report.speed_limit', 'required' => false, 'attr' => ['min' => 15, 'max' => 200, 'step' => 5]])
-            ->add('latitude', HiddenType::class, ['required' => false, 'attr' => ['data-location-picker-target' => 'latitude']])
-            ->add('longitude', HiddenType::class, ['required' => false, 'attr' => ['data-location-picker-target' => 'longitude']])
+            ->add('latitude', HiddenType::class, ['required' => false, 'attr' => ['data-location-picker-target' => 'latitude', 'data-conditions-lookup-target' => 'latitude']])
+            ->add('longitude', HiddenType::class, ['required' => false, 'attr' => ['data-location-picker-target' => 'longitude', 'data-conditions-lookup-target' => 'longitude']])
             // What happened
             ->add('severity', EnumType::class, $enum(BrakeSeverity::class, ['label' => 'report.severity', 'expanded' => true, 'placeholder' => false]))
             ->add('speedBefore', IntegerType::class, ['label' => 'report.speed_before', 'attr' => ['min' => 0, 'max' => 250, 'inputmode' => 'numeric']])

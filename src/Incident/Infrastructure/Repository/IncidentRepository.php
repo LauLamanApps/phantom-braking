@@ -105,6 +105,20 @@ final class IncidentRepository extends AbstractRepository implements IncidentRep
             ->getResult();
     }
 
+    public function getIdsNeedingMeasuredConditions(int $limit): array
+    {
+        $ids = $this->repository()->createQueryBuilder('i')
+            ->select('i.id')
+            ->where('i.location.latitude IS NOT NULL')
+            ->andWhere('i.sun.elevation IS NULL OR i.measuredWeather.checkedAt IS NULL')
+            ->orderBy('i.occurredAt', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getSingleColumnResult();
+
+        return array_values(array_map(static fn (mixed $id): IncidentId => $id instanceof IncidentId ? $id : IncidentId::fromString((string) $id), $ids));
+    }
+
     public function persist(Incident $incident): void
     {
         $this->entityManager->persist($incident);

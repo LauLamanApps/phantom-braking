@@ -96,6 +96,8 @@
                     {{ m.row('report.consequence'|trans, incident.consequence.translationKey|trans) }}
                     {{ m.row('report.weather'|trans, incident.weather.translationKey|trans) }}
                     {{ m.row('report.light'|trans, incident.light.translationKey|trans) }}
+                    {% set sun = incident.sun %}
+                    {{ m.row('incident.sun'|trans, sun.known ? (sun.elevation > 0 ? 'incident.sun.value'|trans({deg: sun.elevation|round, direction: ('compass.' ~ ((sun.azimuth / 45)|round % 8))|trans}) : 'conditions.sun_down'|trans) : null) }}
                     {{ m.row('report.incident_country'|trans, loc.country.code|country_name) }}
                     {{ m.row('report.speed_limit'|trans, loc.speedLimit ? loc.speedLimit ~ ' km/h' : null) }}
                     {{ m.row('report.direction'|trans, loc.direction) }}
@@ -104,6 +106,23 @@
                     {{ m.row('report.reported_to_authority'|trans, m.yesno(incident.isReportedToAuthority())) }}
                 </dl>
             </section>
+            {% set measured = incident.measuredWeather %}
+            {% if measured.available %}
+                <section class="card">
+                    <h2 class="font-semibold">{{ 'incident.measured'|trans }}</h2>
+                    <p class="mt-1 text-xs text-stone-500 [&_a]:underline">{{ 'incident.measured.source'|trans({source: '<a href="https://open-meteo.com/" rel="noopener">Open-Meteo.com</a>'})|raw }}</p>
+                    <dl class="mt-2">
+                        {{ m.row('measured.label.temperature'|trans, measured.temperature|format_number({fraction_digit: 1}) ~ ' °C') }}
+                        {{ m.row('measured.label.precipitation'|trans, measured.precipitation|format_number({fraction_digit: 1}) ~ ' mm') }}
+                        {{ m.row('measured.label.snowfall'|trans, measured.snowfall > 0 ? measured.snowfall|format_number({fraction_digit: 1}) ~ ' cm' : null) }}
+                        {{ m.row('measured.label.cloud_cover'|trans, measured.cloudCover ~ ' %') }}
+                        {{ m.row('measured.label.visibility'|trans, measured.visibility is null ? null : (measured.visibility / 1000)|format_number({fraction_digit: 1}) ~ ' km') }}
+                        {{ m.row('measured.label.wind'|trans, measured.windSpeed is null ? null : 'measured.label.wind.value'|trans({speed: measured.windSpeed|round, gusts: (measured.windGusts ?? measured.windSpeed)|round})) }}
+                        {{ m.row('measured.label.humidity'|trans, measured.humidity is null ? null : measured.humidity ~ ' %') }}
+                        {{ m.row('measured.label.radiation'|trans, measured.solarRadiation is null ? null : measured.solarRadiation|round ~ ' W/m²') }}
+                    </dl>
+                </section>
+            {% endif %}
         </div>
 
         <aside class="space-y-4">
@@ -134,6 +153,8 @@
                     {{ m.row('report.odometer'|trans, incident.odometerKm ? incident.odometerKm|format_number ~ ' km' : null) }}
                     {{ m.row('report.software_version'|trans, incident.softwareVersion) }}
                 </dl>
+                {% set model_page = vehicle_model_path(v.make, v.model) %}
+                {% if model_page %}<a href="{{ model_page }}" class="mt-3 inline-block text-sm text-stone-500 hover:underline">{{ 'vehicle_model.more'|trans({vehicle: v.make ~ ' ' ~ v.model}) }} →</a>{% endif %}
             </section>
             {% if incident.mediaDeletedAt %}
                 <p class="card text-sm text-stone-500">{{ 'incident.media_deleted'|trans }}</p>
