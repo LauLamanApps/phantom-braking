@@ -5,6 +5,8 @@ based on [Keep a Changelog](https://keepachangelog.com).
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-11-12
+
 ### Added
 
 - A page per make and model, such as "Volkswagen ID.3", with its numbers, trend, map, the software versions reporters
@@ -130,7 +132,8 @@ The first public version.
 - About page, FAQ, privacy statement, cookie notice and terms of use.
 - Moderation for administrators, who sign in with a passkey (no passwords).
 
-[Unreleased]: https://github.com/LauLamanApps/phantom-braking/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/LauLamanApps/phantom-braking/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/LauLamanApps/phantom-braking/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/LauLamanApps/phantom-braking/compare/v1.0.3...v1.1.0
 [1.0.3]: https://github.com/LauLamanApps/phantom-braking/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/LauLamanApps/phantom-braking/compare/v1.0.1...v1.0.2
