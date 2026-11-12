@@ -9,6 +9,7 @@ use App\Incident\Domain\Command\PhotoUpload;
 use App\Incident\Domain\Command\ReportIncidentCommand;
 use App\Incident\Domain\Exception\AssistSystemNotAvailableException;
 use App\Incident\Domain\Exception\InvalidImageException;
+use App\Incident\Domain\Repository\IncidentRepositoryInterface;
 use App\Incident\Domain\ValueObject\IncidentCountry;
 use App\Incident\Domain\ValueObject\IncidentId;
 use App\Incident\Presentation\Form\ReportIncidentData;
@@ -35,6 +36,7 @@ final class ReportIncidentController extends AbstractController
 {
     public function __construct(
         private readonly CommandBusInterface $commandBus,
+        private readonly IncidentRepositoryInterface $incidents,
         private readonly RateLimiterFactoryInterface $incidentReportLimiter,
         private readonly TranslatorInterface $translator,
         private readonly VehicleRegistryInterface $vehicleRegistry,
@@ -65,6 +67,13 @@ final class ReportIncidentController extends AbstractController
 
             try {
                 $this->commandBus->dispatch($command);
+
+                if ($this->incidents->get($id)->shouldBeReportedToAuthority()) {
+                    $request->getSession()->set(PromptAuthorityReportController::SESSION_KEY, (string) $id);
+
+                    return $this->redirectToRoute('incident_authority_prompt', ['id' => (string) $id]);
+                }
+
                 $this->addFlash('success', 'report.thanks');
 
                 return $this->redirectToRoute('incident_show', ['id' => (string) $id]);

@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% set v = incident.vehicle %}
+{% set loc = incident.location %}
+{% block title %}{{ 'authority_prompt.title'|trans }}{% endblock %}
+{% block robots %}noindex, nofollow{% endblock %}
+
+{% block body %}
+    {% set tl = text_locale %}
+    {# Plain text for the ILT form, in Dutch or English (tl): label/value pairs, empty values left out. #}
+    {% set warning = incident.wasWarningShown() %}
+    {% set details = [
+        ['authority_prompt.text.vehicle'|trans({}, 'messages', tl), v.make ~ ' ' ~ v.model],
+        ['vehicle.first_admission'|trans({}, 'messages', tl), v.firstAdmission ? v.firstAdmission|format_date('long', locale: tl) : null],
+        ['vehicle.type_approval'|trans({}, 'messages', tl), v.typeApprovalNumber],
+        ['vehicle.variant'|trans({}, 'messages', tl), v.variant],
+        ['report.software_version'|trans({}, 'messages', tl), incident.softwareVersion],
+        ['report.odometer'|trans({}, 'messages', tl), incident.odometerKm ? incident.odometerKm|format_number(locale: tl) ~ ' km' : null],
+        ['authority_prompt.text.when'|trans({}, 'messages', tl), incident.occurredAt|format_datetime('long', 'short', locale: tl)],
+        ['authority_prompt.text.where'|trans({}, 'messages', tl), [
+            loc.roadType.translationKey|trans({}, 'messages', tl) ~ (loc.roadNumber ? ' ' ~ loc.roadNumber : ''),
+            loc.situation.translationKey|trans({}, 'messages', tl),
+            loc.direction,
+            loc.country.code|country_name(tl),
+            loc.hasCoordinates ? loc.latitude ~ ', ' ~ loc.longitude : null,
+        ]|filter(part => part is not empty)|join(', ')],
+        ['authority_prompt.text.braking'|trans({}, 'messages', tl), incident.severity.translationKey|trans({}, 'messages', tl) ~ ', ' ~ incident.speedBefore ~ (incident.speedAfter is not null ? ' → ' ~ incident.speedAfter : '') ~ ' km/h'],
+        ['authority_prompt.text.assist'|trans({}, 'messages', tl), incident.assistSystem.translationKey|trans({}, 'messages', tl)],
+        ['authority_prompt.text.warning'|trans({}, 'messages', tl), warning is null ? null : (warning ? 'form.yes'|trans({}, 'messages', tl) : 'form.no'|trans({}, 'messages', tl))],
+        ['authority_prompt.text.trigger'|trans({}, 'messages', tl), incident.trigger.translationKey|trans({}, 'messages', tl)],
+        ['authority_prompt.text.consequence'|trans({}, 'messages', tl), incident.consequence.translationKey|trans({}, 'messages', tl)],
+        ['authority_prompt.text.conditions'|trans({}, 'messages', tl), incident.weather.translationKey|trans({}, 'messages', tl) ~ ', ' ~ incident.light.translationKey|trans({}, 'messages', tl)],
+        ['authority_prompt.text.recurrence'|trans({}, 'messages', tl), incident.recurrence.translationKey|trans({}, 'messages', tl)],
+        ['authority_prompt.text.dealer'|trans({}, 'messages', tl), incident.dealerResponse.translationKey|trans({}, 'messages', tl)],
+    ]|filter(d => d[1] is not empty)|map(d => d[0] ~ ': ' ~ d[1]) %}
+    {% set text = (['authority_prompt.text.opening'|trans({}, 'messages', tl), '', details|join("\n")]
+        |merge(incident.description ? ['', 'authority_prompt.text.description'|trans({}, 'messages', tl) ~ ':', incident.description] : [])
+        |merge(['', 'authority_prompt.text.closing'|trans({site: 'site.name'|trans({}, 'messages', tl), url: url('incident_show', {id: incident.id, _locale: tl})}, 'messages', tl)]))|join("\n") %}
+
+    <div class="mx-auto max-w-3xl">
+        <h1 class="text-3xl font-bold tracking-tight">{{ 'authority_prompt.title'|trans }}</h1>
+        <p class="mt-3 text-lg text-stone-600 dark:text-stone-300">{{ 'authority_prompt.intro'|trans }}</p>
+
+        <ol class="mt-6 space-y-4">
+            <li class="card" data-controller="clipboard" data-clipboard-copied-label-value="{{ 'authority_prompt.copied'|trans }}">
+                <div class="flex flex-wrap items-baseline justify-between gap-3">
+                    <h2 class="font-semibold">1. {{ 'authority_prompt.step.copy'|trans }}</h2>
+                    <nav class="flex gap-1 text-sm" aria-label="{{ 'authority_prompt.text_language'|trans }}">
+                        {% for code in text_locales %}
+                            <a href="{{ path('incident_authority_prompt', {id: incident.id, text: code}) }}"
+                               {% if code == tl %}aria-current="true"{% endif %}
+                               class="rounded-lg px-3 py-1 font-medium {{ code == tl ? 'bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900' : 'text-stone-600 hover:bg-stone-100 dark:text-stone-300 dark:hover:bg-stone-800' }}">{{ code|language_name|capitalize }}</a>
+                        {% endfor %}
+                    </nav>
+                    <button type="button" class="btn-secondary" data-action="clipboard#copy" data-clipboard-target="button">{{ 'authority_prompt.copy'|trans }}</button>
+                </div>
+                <textarea readonly rows="16" data-clipboard-target="source" aria-label="{{ 'authority_prompt.step.copy'|trans }}"
+                          class="mt-3 w-full rounded-xl border border-stone-300 bg-stone-50 p-3 font-mono text-xs dark:border-stone-700 dark:bg-stone-950">{{ text }}</textarea>
+            </li>
+            <li class="card">
+                <h2 class="font-semibold">2. {{ 'authority_prompt.step.form'|trans }}</h2>
+                {# The e-loket form itself can't be linked: without a session started from ilent.nl it shows "Sessie verlopen". #}
+                <ol class="mt-2 list-decimal space-y-1 pl-5 text-sm text-stone-700 dark:text-stone-300">
+                    <li>{{ 'authority_prompt.form_steps.open'|trans({url: 'https://www.ilent.nl/meldformulieren'})|raw }}</li>
+                    <li>{{ 'authority_prompt.form_steps.topic'|trans }}</li>
+                    <li>{{ 'authority_prompt.form_steps.form'|trans }}</li>
+                    <li>{{ 'authority_prompt.form_steps.paste'|trans }}</li>
+                </ol>
+                <a href="https://www.ilent.nl/meldformulieren" target="_blank" rel="noopener" class="btn-primary mt-4">{{ 'authority_prompt.open_form'|trans }} ↗</a>
+            </li>
+        </ol>
+
+        {{ form_start(form, {attr: {class: 'mt-8 flex flex-wrap gap-3'}}) }}
+            {{ form_widget(form.reported) }}
+            {{ form_widget(form.later) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

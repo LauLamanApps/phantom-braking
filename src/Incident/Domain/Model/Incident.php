@@ -60,6 +60,10 @@ class Incident
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private ?\DateTimeImmutable $mediaDeletedAt = null;
 
+    /** Set when the reporter confirmed on the prompt after reporting that they also reported it to the ILT: shows whether that prompt works. */
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?\DateTimeImmutable $reportedToAuthorityViaPromptAt = null;
+
     /** @var Collection<int, Photo> */
     #[ORM\OneToMany(targetEntity: Photo::class, mappedBy: 'incident', cascade: ['persist', 'remove'], orphanRemoval: true)]
     #[ORM\OrderBy(['position' => 'ASC'])]
@@ -359,6 +363,28 @@ class Incident
     public function isReportedToAuthority(): bool
     {
         return $this->reportedToAuthority;
+    }
+
+    /** AEB is mandatory on this car, so the ILT should know about it, and the reporter hasn't told them yet. */
+    public function shouldBeReportedToAuthority(): bool
+    {
+        return !$this->reportedToAuthority && true === $this->vehicle->isSubjectToGsr2();
+    }
+
+    /** The reporter confirms, on the prompt after reporting, that they reported it to the ILT as well. */
+    public function confirmReportedToAuthorityViaPrompt(\DateTimeImmutable $now): void
+    {
+        if ($this->reportedToAuthority) {
+            return;
+        }
+
+        $this->reportedToAuthority = true;
+        $this->reportedToAuthorityViaPromptAt = $now;
+    }
+
+    public function getReportedToAuthorityViaPromptAt(): ?\DateTimeImmutable
+    {
+        return $this->reportedToAuthorityViaPromptAt;
     }
 
     public function wasWindscreenReplacedRecently(): ?bool
