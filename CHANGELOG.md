@@ -5,6 +5,8 @@ based on [Keep a Changelog](https://keepachangelog.com).
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-11-16
+
 ### Added
 
 - While Tesla footage plays, a blue arrow on the report's map follows the car and points where it drives. It hides
@@ -159,7 +161,8 @@ The first public version.
 - About page, FAQ, privacy statement, cookie notice and terms of use.
 - Moderation for administrators, who sign in with a passkey (no passwords).
 
-[Unreleased]: https://github.com/LauLamanApps/phantom-braking/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/LauLamanApps/phantom-braking/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/LauLamanApps/phantom-braking/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/LauLamanApps/phantom-braking/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/LauLamanApps/phantom-braking/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/LauLamanApps/phantom-braking/compare/v1.0.3...v1.1.0
