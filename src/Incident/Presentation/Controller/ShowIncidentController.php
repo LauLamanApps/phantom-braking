@@ -29,7 +29,8 @@ final class ShowIncidentController extends AbstractController
 
         return $this->render('incident/show.html.twig', [
             'incident' => $incident,
-            'withdraw_form' => $incident->hasMedia() && null === $incident->getMediaDeletionRequestedAt()
+            // Also while a request is pending: the page must not tell a visitor which plate they entered was right.
+            'withdraw_form' => $incident->hasMedia()
                 ? $this->createForm(WithdrawMediaType::class, null, ['action' => $this->generateUrl('incident_request_media_deletion', ['id' => (string) $id])])
                 : null,
         ]);

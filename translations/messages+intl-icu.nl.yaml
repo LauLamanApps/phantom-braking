@@ -101,7 +101,7 @@ faq.plate.a: "Nee. We gebruiken het kenteken alleen om de voertuiggegevens bij d
 faq.plate_needed.q: "Waarom moet ik dan een kenteken invullen?"
 faq.plate_needed.a: "Zo krijgen we het exacte merk, model, bouwjaar en typegoedkeuring van de RDW, zonder tikfouten. Juist die details maken het mogelijk om te zien of een probleem bij een bepaald model of softwareversie hoort."
 faq.footage.q: "Wat gebeurt er met mijn dashcambeelden en foto’s?"
-faq.footage.a: "Ze blijven privé tot een beheerder ze heeft gecontroleerd. We verwijderen metagegevens zoals de GPS-locatie. Kentekens op foto’s maak je zelf zwart bij het uploaden, en de beheerder controleert dat. Dashcambeelden met een leesbaar kenteken publiceren we niet."
+faq.footage.a: "Ze blijven privé tot een beheerder ze heeft gecontroleerd. Uit foto's verwijderen we metagegevens zoals de GPS-locatie. Video's publiceren we zoals ze zijn: sommige auto's, zoals een Tesla, leggen er rijgegevens in vast (snelheid, pedalen, stuur, rijhulp en de GPS-positie). Die tonen we over de video, met de positie afgerond op zo'n 10 meter. Kentekens op foto’s maak je zelf zwart bij het uploaden, en de beheerder controleert dat. Dashcambeelden met een leesbaar kenteken publiceren we niet."
 faq.withdraw.q: "Hoe trek ik mijn toestemming voor beelden en foto’s in?"
 faq.withdraw.a: "Open je melding via <a href=\"{reports}\">Meldingen</a> en vraag daar verwijdering van de beelden en foto’s aan door het kenteken in te vullen. Klopt het, dan verwijdert een beheerder ze."
 faq.delete_report.q: "Kan ik mijn hele melding laten verwijderen?"
@@ -432,7 +432,7 @@ report.photos.help: "Bijvoorbeeld schade of de situatie op de weg. Maximaal {max
 report.photos.too_many_client: "Je kunt maximaal {max} foto's toevoegen."
 report.photos.too_big: Een van de foto's is groter dan 15 MB.
 report.photos.invalid: Een van de foto's kon niet worden gelezen. Probeer een andere foto of een ander bestandsformaat.
-report.media.privacy: "We verwijderen alle metagegevens uit foto's, zoals de GPS-locatie en het toestel. Tot een beheerder ze heeft gecontroleerd blijven beelden en foto's privé."
+report.media.privacy: "We verwijderen alle metagegevens uit foto's, zoals de GPS-locatie en het toestel. Video's blijven zoals ze zijn, met de rijgegevens die je auto erin vastlegde (zoals de snelheid en GPS-positie van een Tesla). Tot een beheerder ze heeft gecontroleerd blijven beelden en foto's privé."
 
 incident.photos: Foto's van de nasleep
 incident.photo_alt: "Foto {n} van de nasleep"
@@ -459,10 +459,20 @@ withdraw.intro: "Heb je deze melding zelf gedaan en wil je de beelden en foto's 
 withdraw.plate: Kenteken
 withdraw.plate.help: Hetzelfde kenteken als bij je melding.
 withdraw.submit: Verwijdering aanvragen
-withdraw.mismatch: Dit kenteken hoort niet bij deze melding.
 withdraw.invalid: Vul een kenteken in.
 withdraw.rate_limited: Te veel pogingen. Probeer het over een kwartier opnieuw.
 incident.footage_status.withdrawn: De melder heeft de dashcambeelden offline gehaald.
+footage.telemetry.toggle: Rijgegevens
+footage.telemetry.source: De rijgegevens over de video heeft de auto zelf vastgelegd, beeld voor beeld. De positie is afgerond op zo'n 10 meter.
+footage.telemetry.accelerator: Gaspedaal
+footage.telemetry.brake: Rempedaal
+footage.telemetry.steering: Stuur
+footage.telemetry.gear: Versnelling
+footage.telemetry.gforce: "Optrekken (+) of remmen (−), in g: 1 g is 9,81 m/s²"
+footage.telemetry.automation.none: Handmatig
+footage.telemetry.automation.self_driving: TAD (FSD)
+footage.telemetry.automation.lane_centering: Autosteer
+footage.telemetry.automation.adaptive_cruise: TACC
 enum.moderation_status.withdrawn: Ingetrokken
 
 admin.title: Beheer
@@ -523,7 +533,7 @@ admin.flash.deletion_approved: "Alle beelden en foto's van de melding zijn verwi
 admin.flash.deletion_denied: Verwijderverzoek afgewezen.
 report.photos.mask_hint: "Staan er kentekens op je foto's? Sleep er een vak overheen om ze zwart te maken. Een beheerder controleert dit nog."
 report.photos.mask_remove: Vak verwijderen
-withdraw.requested: "Je verzoek is ontvangen. Een beheerder verwijdert de beelden en foto's zo snel mogelijk."
+withdraw.requested: "Bedankt. Als het kenteken klopt, verwijdert een van onze beheerders de beelden en foto's."
 incident.media_deleted: "De beelden en foto's van deze melding zijn op verzoek van de melder verwijderd."
 admin.storage.title: Opslag
 admin.storage.objects: "{count, plural, one {# bestand} other {# bestanden}}"

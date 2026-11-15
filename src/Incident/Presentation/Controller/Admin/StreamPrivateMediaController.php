@@ -15,10 +15,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 /**
- * Admin-only access to media regardless of moderation status: footage, a photo's
- * private original, or its masked copy. Never cached anywhere.
+ * Admin-only access to media regardless of moderation status: footage (and the driving
+ * data embedded in it), a photo's private original, or its masked copy. Never cached anywhere.
  */
-#[Route('/admin/media/{kind}/{id}', name: 'admin_media', requirements: ['kind' => 'footage|photo-original|photo-masked'], methods: ['GET'])]
+#[Route('/admin/media/{kind}/{id}', name: 'admin_media', requirements: ['kind' => 'footage|footage-telemetry|photo-original|photo-masked'], methods: ['GET'])]
 final class StreamPrivateMediaController extends AbstractController
 {
     public function __construct(
@@ -33,6 +33,9 @@ final class StreamPrivateMediaController extends AbstractController
             if ('footage' === $kind) {
                 $footage = $this->incidents->get(IncidentId::fromString($id))->getFootage();
                 [$path, $mimeType] = [$footage->getPath(), $footage->getMimeType()];
+            } elseif ('footage-telemetry' === $kind) {
+                $footage = $this->incidents->get(IncidentId::fromString($id))->getFootage();
+                [$path, $mimeType] = [$footage->getTelemetryPath(), 'application/json'];
             } else {
                 $photoId = PhotoId::fromString($id);
                 $photo = $this->incidents->getByPhoto($photoId)->getPhoto($photoId);

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Incident;
 
 use App\Incident\Domain\Command\ApproveMediaDeletionCommand;
+use App\Incident\Domain\Command\ExtractFootageTelemetryCommand;
 use App\Incident\Domain\Command\FootageUpload;
 use App\Incident\Domain\Command\ModerateFootageCommand;
 use App\Incident\Domain\Command\ModeratePhotoCommand;
@@ -13,6 +14,7 @@ use App\Incident\Domain\Command\ReportIncidentCommand;
 use App\Incident\Domain\Command\RequestMediaDeletionCommand;
 use App\Incident\Domain\Command\SavePhotoMasksCommand;
 use App\Incident\Domain\CommandHandler\ApproveMediaDeletionCommandHandler;
+use App\Incident\Domain\CommandHandler\ExtractFootageTelemetryCommandHandler;
 use App\Incident\Domain\CommandHandler\ModerateFootageCommandHandler;
 use App\Incident\Domain\CommandHandler\ModeratePhotoCommandHandler;
 use App\Incident\Domain\CommandHandler\ReportIncidentCommandHandler;
@@ -26,6 +28,8 @@ use App\Incident\Domain\ValueObject\ActiveAssistSystem;
 use App\Incident\Domain\ValueObject\BrakeSeverity;
 use App\Incident\Domain\ValueObject\Consequence;
 use App\Incident\Domain\ValueObject\DealerResponse;
+use App\Incident\Domain\ValueObject\DrivingAutomation;
+use App\Incident\Domain\ValueObject\FootageTelemetry;
 use App\Incident\Domain\ValueObject\IncidentCountry;
 use App\Incident\Domain\ValueObject\IncidentFilter;
 use App\Incident\Domain\ValueObject\IncidentId;
@@ -36,7 +40,9 @@ use App\Incident\Domain\ValueObject\Recurrence;
 use App\Incident\Domain\ValueObject\RoadSituation;
 use App\Incident\Domain\ValueObject\RoadType;
 use App\Incident\Domain\ValueObject\SuspectedTrigger;
+use App\Incident\Domain\ValueObject\TelemetrySample;
 use App\Incident\Domain\ValueObject\Weather;
+use App\Tests\Double\FakeFootageTelemetryReader;
 use App\Tests\Double\FakeImageRedactor;
 use App\Tests\Double\FakeImageSanitizer;
 use App\Tests\Double\InMemoryIncidentRepository;
@@ -124,6 +130,54 @@ final class ReportIncidentCommandHandlerTest extends TestCase
 
         (new ModerateFootageCommandHandler($this->incidents))(new ModerateFootageCommand($id, true));
         self::assertTrue($this->incidents->get($id)->getFootage()->isPublic());
+    }
+
+    public function testStoresTheDrivingDataEmbeddedInTheFootageNextToIt(): void
+    {
+        $id = IncidentId::generate();
+        ($this->handler)(self::command($id, 'TE123S', new FootageUpload('/tmp/upload', 'mp4', 'video/mp4', 4096, true)));
+        $footagePath = (string) $this->incidents->get($id)->getFootage()->getPath();
+        $reader = new FakeFootageTelemetryReader(['/memory/'.$footagePath => new FootageTelemetry('tesla', [
+            new TelemetrySample(time: 0.0, speed: 90.0, automation: DrivingAutomation::SelfDriving),
+            new TelemetrySample(time: 0.1, speed: 70.0, brakePedal: true, longitudinalAcceleration: -6.5),
+        ])]);
+        $extract = new ExtractFootageTelemetryCommandHandler($this->incidents, $this->storage, $reader);
+        self::assertSame([$id], $this->incidents->getIdsNeedingFootageTelemetry(10));
+
+        $extract(new ExtractFootageTelemetryCommand($id));
+
+        $footage = $this->incidents->get($id)->getFootage();
+        self::assertTrue($footage->hasTelemetry());
+        self::assertSame($id.'/footage-telemetry.json', $footage->getTelemetryPath());
+        $json = json_decode((string) file_get_contents($this->storage->files[$id.'/footage-telemetry.json']), true, flags: \JSON_THROW_ON_ERROR);
+        self::assertSame('tesla', $json['source']);
+        self::assertSame([90.0, 70.0], array_column($json['samples'], 'speed'));
+        self::assertSame([false, true], array_column($json['samples'], 'brake'));
+        self::assertSame([], $this->incidents->getIdsNeedingFootageTelemetry(10));
+
+        // Read once: running it again (a retry, the backfill command) doesn't download the video again.
+        $extract(new ExtractFootageTelemetryCommand($id));
+        self::assertCount(1, $reader->reads);
+
+        // Deleting the media on request deletes the driving data too.
+        $this->incidents->get($id)->requestMediaDeletion(new \DateTimeImmutable());
+        (new ApproveMediaDeletionCommandHandler($this->incidents, $this->storage))(new ApproveMediaDeletionCommand($id));
+        self::assertSame([], $this->storage->files);
+    }
+
+    public function testFootageWithoutDrivingDataIsReadOnlyOnce(): void
+    {
+        $id = IncidentId::generate();
+        ($this->handler)(self::command($id, 'TE123S', new FootageUpload('/tmp/upload', 'mp4', 'video/mp4', 4096, true)));
+        $extract = new ExtractFootageTelemetryCommandHandler($this->incidents, $this->storage, $reader = new FakeFootageTelemetryReader());
+
+        $extract(new ExtractFootageTelemetryCommand($id));
+        $extract(new ExtractFootageTelemetryCommand($id));
+
+        self::assertFalse($this->incidents->get($id)->getFootage()->hasTelemetry());
+        self::assertCount(1, $reader->reads);
+        self::assertSame([], $this->incidents->getIdsNeedingFootageTelemetry(10));
+        self::assertCount(1, $this->storage->files, 'only the footage');
     }
 
     public function testStoresSanitisedPhotosPrivatelyUntilApproved(): void

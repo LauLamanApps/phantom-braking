@@ -18,6 +18,14 @@ class DashcamFootage
     #[ORM\Column(enumType: ModerationStatus::class, nullable: true)]
     private ?ModerationStatus $status;
 
+    /** The driving data the car embedded in the video (speed, pedals, …), stored next to it as JSON. */
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $telemetryPath = null;
+
+    /** Set once the video has been read for driving data, found or not, so it is only read once. */
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?\DateTimeImmutable $telemetryCheckedAt = null;
+
     public function __construct(
         #[ORM\Column(length: 255, nullable: true)]
         private ?string $path,
@@ -66,6 +74,32 @@ class DashcamFootage
         }
 
         $this->status = ModerationStatus::Rejected;
+    }
+
+    public function needsTelemetryCheck(): bool
+    {
+        return $this->exists() && null === $this->telemetryCheckedAt;
+    }
+
+    /** @param string|null $path null when the video carries no driving data */
+    public function recordTelemetry(?string $path, \DateTimeImmutable $checkedAt): void
+    {
+        if (!$this->exists()) {
+            throw new \DomainException('There is no footage to record driving data for.');
+        }
+
+        $this->telemetryPath = $path;
+        $this->telemetryCheckedAt = $checkedAt;
+    }
+
+    public function hasTelemetry(): bool
+    {
+        return null !== $this->telemetryPath;
+    }
+
+    public function getTelemetryPath(): ?string
+    {
+        return $this->telemetryPath;
     }
 
     public function isPublic(): bool

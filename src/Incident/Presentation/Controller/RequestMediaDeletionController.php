@@ -19,7 +19,8 @@ use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * The reporter asks to delete their footage and photos, proving it's their report with the plate
- * (never stored). An admin then approves or denies the request.
+ * (never stored). An admin then approves or denies the request. Whether the plate was right is never
+ * shown, so the form can't be used to find out which car a report is about.
  */
 #[Route('/{_locale}/reports/{id}/request-media-deletion', name: 'incident_request_media_deletion', requirements: ['_locale' => '%app.locales%'], methods: ['POST'])]
 final class RequestMediaDeletionController extends AbstractController
@@ -60,9 +61,7 @@ final class RequestMediaDeletionController extends AbstractController
             if (!$cause instanceof PlateMismatchException) {
                 throw $e;
             }
-            $this->addFlash('error', 'withdraw.mismatch');
-
-            return $back;
+            // A wrong plate files nothing, but gets the same answer as the right one.
         }
 
         $this->addFlash('success', 'withdraw.requested');

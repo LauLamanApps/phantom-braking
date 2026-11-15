@@ -5,6 +5,25 @@ based on [Keep a Changelog](https://keepachangelog.com).
 
 ## [Unreleased]
 
+### Added
+
+- Dashcam footage from a Tesla (firmware 2025.44.25 or later) shows the driving data the car recorded in the video
+  over it, in step with playback: speed, gear, FSD/Autosteer/TACC, accelerator and brake pedal, steering angle,
+  blinkers, how hard it brakes or speeds up (in g) and the position, rounded to about 10 metres. A button hides it.
+  The worker reads the data once after the report is sent; run `app:footage:extract-telemetry` once to read
+  footage that was already there.
+
+### Changed
+
+- The privacy statement, the FAQ and the upload form now say that videos are published as they are, including any
+  driving data and GPS position the car recorded in them; only photos are stripped of metadata.
+
+### Security
+
+- A removal request no longer says whether the plate was right: every request gets "If the license plate is
+  correct, one of our moderators will remove the footage and photos." The form stays on the report page and the
+  page no longer says a request is pending, so it can't be used to find out which car a report is about.
+
 ## [1.2.0] - 2026-11-12
 
 ### Added

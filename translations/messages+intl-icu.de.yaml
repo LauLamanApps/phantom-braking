@@ -101,7 +101,7 @@ faq.plate.a: "Nein. Wir nutzen das Kennzeichen nur, um die Fahrzeugdaten beim RD
 faq.plate_needed.q: "Warum muss ich dann überhaupt ein Kennzeichen eingeben?"
 faq.plate_needed.a: "So bekommen wir vom RDW genau Marke, Modell, Baujahr und Typgenehmigung, ohne Tippfehler. Erst diese Angaben machen sichtbar, ob ein Problem zu einem bestimmten Modell oder einer bestimmten Softwareversion gehört."
 faq.footage.q: "Was passiert mit meinen Dashcam-Aufnahmen und Fotos?"
-faq.footage.a: "Sie bleiben privat, bis eine Moderatorin oder ein Moderator sie geprüft hat. Wir entfernen Metadaten wie den GPS-Standort. Kennzeichen auf Fotos schwärzt du beim Hochladen, und die Moderatorin oder der Moderator prüft das. Dashcam-Aufnahmen mit lesbarem Kennzeichen veröffentlichen wir nicht."
+faq.footage.a: "Sie bleiben privat, bis eine Moderatorin oder ein Moderator sie geprüft hat. Aus Fotos entfernen wir Metadaten wie den GPS-Standort. Videos veröffentlichen wir so, wie sie sind: Manche Autos, etwa ein Tesla, speichern darin Fahrdaten (Geschwindigkeit, Pedale, Lenkung, Fahrassistenz und die GPS-Position). Diese zeigen wir über dem Video an, die Position auf etwa 10 Meter gerundet. Kennzeichen auf Fotos schwärzt du beim Hochladen, und die Moderatorin oder der Moderator prüft das. Dashcam-Aufnahmen mit lesbarem Kennzeichen veröffentlichen wir nicht."
 faq.withdraw.q: "Wie widerrufe ich meine Einwilligung für Aufnahmen und Fotos?"
 faq.withdraw.a: "Öffne deine Meldung über <a href=\"{reports}\">Meldungen</a> und beantrage dort die Löschung der Aufnahmen und Fotos, indem du das Kennzeichen eingibst. Passt es, löscht eine Moderatorin oder ein Moderator sie."
 faq.delete_report.q: "Kann ich meine ganze Meldung löschen lassen?"
@@ -432,7 +432,7 @@ report.photos.help: "Zum Beispiel Schäden oder die Situation auf der Straße. B
 report.photos.too_many_client: "Du kannst bis zu {max} Fotos hinzufügen."
 report.photos.too_big: Eines der Fotos ist größer als 15 MB.
 report.photos.invalid: Eines der Fotos konnte nicht gelesen werden. Versuche ein anderes Foto oder Dateiformat.
-report.media.privacy: "Wir entfernen alle Metadaten aus Fotos, etwa den GPS-Standort und das Gerät. Aufnahmen und Fotos bleiben privat, bis eine Moderatorin oder ein Moderator sie geprüft hat."
+report.media.privacy: "Wir entfernen alle Metadaten aus Fotos, etwa den GPS-Standort und das Gerät. Videos bleiben, wie sie sind, samt der Fahrdaten, die dein Auto darin gespeichert hat (etwa Geschwindigkeit und GPS-Position eines Tesla). Aufnahmen und Fotos bleiben privat, bis eine Moderatorin oder ein Moderator sie geprüft hat."
 
 incident.photos: Fotos der Folgen
 incident.photo_alt: "Foto {n} der Folgen"
@@ -459,10 +459,20 @@ withdraw.intro: "Hast du diese Meldung eingereicht und möchtest die Aufnahmen u
 withdraw.plate: Kennzeichen
 withdraw.plate.help: Dasselbe Kennzeichen wie in deiner Meldung.
 withdraw.submit: Löschung beantragen
-withdraw.mismatch: Dieses Kennzeichen gehört nicht zu dieser Meldung.
 withdraw.invalid: Bitte gib ein Kennzeichen ein.
 withdraw.rate_limited: Zu viele Versuche. Bitte versuche es in 15 Minuten erneut.
 incident.footage_status.withdrawn: Die meldende Person hat die Dashcam-Aufnahmen offline genommen.
+footage.telemetry.toggle: Fahrdaten
+footage.telemetry.source: Die Fahrdaten über dem Video hat das Auto selbst aufgezeichnet, Bild für Bild. Die Position ist auf etwa 10 Meter gerundet.
+footage.telemetry.accelerator: Gaspedal
+footage.telemetry.brake: Bremspedal
+footage.telemetry.steering: Lenkung
+footage.telemetry.gear: Gang
+footage.telemetry.gforce: "Beschleunigen (+) oder Bremsen (−), in g: 1 g sind 9,81 m/s²"
+footage.telemetry.automation.none: Manuell
+footage.telemetry.automation.self_driving: TAD (FSD)
+footage.telemetry.automation.lane_centering: Autosteer
+footage.telemetry.automation.adaptive_cruise: TACC
 enum.moderation_status.withdrawn: Zurückgezogen
 
 admin.title: Verwaltung
@@ -523,7 +533,7 @@ admin.flash.deletion_approved: Alle Aufnahmen und Fotos der Meldung wurden gelö
 admin.flash.deletion_denied: Löschanfrage abgelehnt.
 report.photos.mask_hint: "Sind Kennzeichen auf deinen Fotos? Ziehe ein Rechteck darüber, um sie zu schwärzen. Eine Moderatorin oder ein Moderator prüft das zusätzlich."
 report.photos.mask_remove: Rechteck entfernen
-withdraw.requested: "Wir haben deine Anfrage erhalten. Eine Moderatorin oder ein Moderator löscht die Aufnahmen und Fotos so schnell wie möglich."
+withdraw.requested: "Danke. Wenn das Kennzeichen stimmt, löscht eine Moderatorin oder ein Moderator die Aufnahmen und Fotos."
 incident.media_deleted: "Die Aufnahmen und Fotos dieser Meldung wurden auf Wunsch der meldenden Person gelöscht."
 admin.storage.title: Speicher
 admin.storage.objects: "{count, plural, one {# Datei} other {# Dateien}}"
