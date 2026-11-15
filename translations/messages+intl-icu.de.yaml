@@ -453,6 +453,7 @@ map.nothing_found: An dieser Stelle wurde keine Straße gefunden. Bitte trage di
 map.wheel_hint: Klicke auf die Karte oder halte Strg/⌘ gedrückt, um zu zoomen
 map.fullscreen: "Vollbild"
 map.exit_fullscreen: "Vollbild beenden"
+map.footage_car: Auto im Dashcam-Video
 report.media.consent_notice: "Mit dem Hochladen von Dateien willigst du ein, dass sie nach Prüfung veröffentlicht werden. Du kannst diese Einwilligung jederzeit auf der Seite deiner Meldung mit deinem Kennzeichen widerrufen."
 withdraw.title: Löschanfrage
 withdraw.intro: "Hast du diese Meldung eingereicht und möchtest die Aufnahmen und Fotos löschen lassen? Gib das Kennzeichen des Autos ein. Passt es zu dieser Meldung, leiten wir deine Anfrage an eine Moderatorin oder einen Moderator weiter, die bzw. der die Aufnahmen und Fotos löscht. Wir speichern das Kennzeichen nicht."

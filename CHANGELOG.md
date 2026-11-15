@@ -5,6 +5,11 @@ based on [Keep a Changelog](https://keepachangelog.com).
 
 ## [Unreleased]
 
+### Added
+
+- While Tesla footage plays, a blue arrow on the report's map follows the car and points where it drives. It hides
+  together with the driving data.
+
 ## [1.3.0] - 2026-11-16
 
 ### Added

@@ -572,6 +572,8 @@ final class ReportIncidentTest extends WebTestCase
         $this->client->request('GET', '/en/reports/'.$id);
         self::assertSelectorExists('[data-controller="footage-telemetry"][data-footage-telemetry-url-value="/footage/'.$id.'/telemetry"] video[src="/footage/'.$id.'"]');
         self::assertSelectorTextContains('main', 'recorded by the car itself');
+        // The map follows the car while the video plays.
+        self::assertSelectorExists('[data-controller="incident-map"][data-action~="footage-telemetry:position@window->incident-map#showCar"]');
 
         $this->client->request('GET', '/footage/'.$id.'/telemetry');
         self::assertResponseIsSuccessful();

@@ -134,7 +134,8 @@
                     <h2 class="font-semibold">{{ 'incident.location'|trans }}</h2>
                     <div class="mt-3 h-72 overflow-hidden rounded-xl"
                          data-controller="incident-map"
-                         data-incident-map-messages-value="{{ {wheel_hint: 'map.wheel_hint'|trans, fullscreen: 'map.fullscreen'|trans, exit_fullscreen: 'map.exit_fullscreen'|trans}|json_encode }}"
+                         data-action="footage-telemetry:position@window->incident-map#showCar"
+                         data-incident-map-messages-value="{{ {wheel_hint: 'map.wheel_hint'|trans, fullscreen: 'map.fullscreen'|trans, exit_fullscreen: 'map.exit_fullscreen'|trans, car: 'map.footage_car'|trans}|json_encode }}"
                          data-incident-map-points-value="{{ [{latitude: loc.latitude, longitude: loc.longitude, collision: incident.consequence.isCollision}]|json_encode }}"></div>
                 </section>
             {% endif %}

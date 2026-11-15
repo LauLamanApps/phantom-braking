@@ -453,6 +453,7 @@ map.nothing_found: Aucune route trouvée à cet endroit. Veuillez remplir les in
 map.wheel_hint: Cliquez sur la carte ou maintenez Ctrl/⌘ pour zoomer
 map.fullscreen: "Plein écran"
 map.exit_fullscreen: "Quitter le plein écran"
+map.footage_car: Voiture dans la vidéo de dashcam
 report.media.consent_notice: "En envoyant des fichiers, vous acceptez leur publication après vérification. Vous pouvez retirer ce consentement à tout moment sur la page de votre signalement, à l’aide de votre plaque."
 withdraw.title: Demande de suppression
 withdraw.intro: "Vous êtes l’auteur de ce signalement et souhaitez faire supprimer la vidéo et les photos ? Saisissez la plaque de la voiture. Si elle correspond à ce signalement, nous transmettons votre demande à un modérateur, qui supprime la vidéo et les photos. Nous ne conservons pas la plaque."

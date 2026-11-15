@@ -4,6 +4,8 @@ import { Controller } from '@hotwired/stimulus';
  * Lays the driving data the car embedded in its dashcam video (speed, pedals,
  * steering, blinkers, driver assistance, position) over the video, in step
  * with playback. The data is fetched once the video itself starts loading.
+ * The car's position is also sent out as a `footage-telemetry:position` event,
+ * for the map on the report page to follow.
  */
 const G = 9.81;
 // Braking harder than this is what a phantom brake feels like; show it in red.
@@ -62,6 +64,20 @@ export default class extends Controller {
     show() {
         this.hudTarget.hidden = !this.visible;
         this.compassTarget.toggleAttribute('hidden', !this.visible || !this.hasPosition); // an <svg> has no hidden property
+        this.announcePosition(this.shown);
+    }
+
+    /* Only when it changes; `position` is null when there is none or the overlay is hidden. */
+    announcePosition(sample) {
+        const position = this.visible && sample && sample.lat !== null && sample.lon !== null
+            ? { lat: sample.lat, lon: sample.lon, heading: sample.heading ?? 0 }
+            : null;
+        const key = JSON.stringify(position);
+        if (key === this.announced) {
+            return;
+        }
+        this.announced = key;
+        this.dispatch('position', { detail: { position } });
     }
 
     /* timeupdate fires only a few times a second; follow each frame while playing. */
@@ -137,6 +153,7 @@ export default class extends Controller {
             this.positionTarget.textContent = '';
         }
         this.compassTarget.toggleAttribute('hidden', !this.visible || !this.hasPosition); // an <svg> has no hidden property
+        this.announcePosition(sample);
     }
 
     blink(target, on) {
