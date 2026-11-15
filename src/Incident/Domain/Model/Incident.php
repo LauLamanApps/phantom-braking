@@ -211,6 +211,11 @@ class Incident
         $this->footage->reject();
     }
 
+    public function recordFootageTelemetry(?string $path, \DateTimeImmutable $checkedAt): void
+    {
+        $this->footage->recordTelemetry($path, $checkedAt);
+    }
+
     public function addPhoto(PhotoId $id, string $path, string $mimeType, int $size, int $width, int $height, bool $publicationConsent): Photo
     {
         if ($this->photos->count() >= self::MAX_PHOTOS) {
@@ -253,6 +258,9 @@ class Incident
         $keys = [];
         if (null !== $this->footage->getPath()) {
             $keys[] = $this->footage->getPath();
+        }
+        if (null !== $this->footage->getTelemetryPath()) {
+            $keys[] = $this->footage->getTelemetryPath();
         }
         foreach ($this->photos as $photo) {
             $keys[] = $photo->getPath();

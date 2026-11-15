@@ -119,6 +119,20 @@ final class IncidentRepository extends AbstractRepository implements IncidentRep
         return array_values(array_map(static fn (mixed $id): IncidentId => $id instanceof IncidentId ? $id : IncidentId::fromString((string) $id), $ids));
     }
 
+    public function getIdsNeedingFootageTelemetry(int $limit): array
+    {
+        $ids = $this->repository()->createQueryBuilder('i')
+            ->select('i.id')
+            ->where('i.footage.path IS NOT NULL')
+            ->andWhere('i.footage.telemetryCheckedAt IS NULL')
+            ->orderBy('i.occurredAt', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getSingleColumnResult();
+
+        return array_values(array_map(static fn (mixed $id): IncidentId => $id instanceof IncidentId ? $id : IncidentId::fromString((string) $id), $ids));
+    }
+
     public function persist(Incident $incident): void
     {
         $this->entityManager->persist($incident);

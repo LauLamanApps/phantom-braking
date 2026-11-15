@@ -101,7 +101,7 @@ faq.plate.a: "Non. Nous utilisons la plaque uniquement pour récupérer les info
 faq.plate_needed.q: "Alors pourquoi dois-je saisir une plaque ?"
 faq.plate_needed.a: "Elle nous permet d’obtenir du RDW la marque, le modèle, l’année et la réception par type exacts, sans faute de frappe. Ce sont ces informations qui permettent de voir si un problème concerne un modèle ou une version logicielle précise."
 faq.footage.q: "Que deviennent mes vidéos de dashcam et mes photos ?"
-faq.footage.a: "Elles restent privées jusqu’à leur vérification par un modérateur. Nous supprimons les métadonnées comme la position GPS. Vous masquez les plaques sur les photos lors de l’envoi, et le modérateur le vérifie. Nous ne publions pas de vidéos de dashcam où une plaque est lisible."
+faq.footage.a: "Elles restent privées jusqu’à leur vérification par un modérateur. Nous supprimons les métadonnées des photos, comme la position GPS. Les vidéos sont publiées telles quelles : certaines voitures, comme une Tesla, y enregistrent des données de conduite (vitesse, pédales, volant, aide à la conduite et position GPS). Nous affichons ces données sur la vidéo, avec la position arrondie à une dizaine de mètres. Vous masquez les plaques sur les photos lors de l’envoi, et le modérateur le vérifie. Nous ne publions pas de vidéos de dashcam où une plaque est lisible."
 faq.withdraw.q: "Comment retirer mon consentement pour les vidéos et les photos ?"
 faq.withdraw.a: "Ouvrez votre signalement via <a href=\"{reports}\">Signalements</a> et demandez-y la suppression des vidéos et des photos en saisissant la plaque. Si elle correspond, un modérateur les supprime."
 faq.delete_report.q: "Puis-je faire supprimer tout mon signalement ?"
@@ -432,7 +432,7 @@ report.photos.help: "Par exemple des dégâts ou la situation sur la route. Jusq
 report.photos.too_many_client: "Vous pouvez ajouter jusqu’à {max} photos."
 report.photos.too_big: L’une des photos dépasse 15 Mo.
 report.photos.invalid: L’une des photos n’a pas pu être lue. Essayez une autre photo ou un autre format de fichier.
-report.media.privacy: "Nous supprimons toutes les métadonnées des photos, comme la position GPS et l’appareil. Les vidéos et les photos restent privées jusqu’à leur vérification par un modérateur."
+report.media.privacy: "Nous supprimons toutes les métadonnées des photos, comme la position GPS et l’appareil. Les vidéos sont conservées telles quelles, avec les données de conduite que votre voiture y a enregistrées (comme la vitesse et la position GPS d’une Tesla). Les vidéos et les photos restent privées jusqu’à leur vérification par un modérateur."
 
 incident.photos: Photos des conséquences
 incident.photo_alt: "Photo des conséquences {n}"
@@ -459,10 +459,20 @@ withdraw.intro: "Vous êtes l’auteur de ce signalement et souhaitez faire supp
 withdraw.plate: Plaque d’immatriculation
 withdraw.plate.help: La même plaque que dans votre signalement.
 withdraw.submit: Demander la suppression
-withdraw.mismatch: Cette plaque ne correspond pas à ce signalement.
 withdraw.invalid: Veuillez saisir une plaque.
 withdraw.rate_limited: Trop de tentatives. Réessayez dans 15 minutes.
 incident.footage_status.withdrawn: L’auteur du signalement a retiré la vidéo de dashcam.
+footage.telemetry.toggle: Données de conduite
+footage.telemetry.source: Les données de conduite sur la vidéo ont été enregistrées par la voiture elle-même, image par image. La position est arrondie à une dizaine de mètres.
+footage.telemetry.accelerator: Accélérateur
+footage.telemetry.brake: Pédale de frein
+footage.telemetry.steering: Volant
+footage.telemetry.gear: Rapport
+footage.telemetry.gforce: "Accélération (+) ou freinage (−), en g : 1 g vaut 9,81 m/s²"
+footage.telemetry.automation.none: Manuel
+footage.telemetry.automation.self_driving: TAD (FSD)
+footage.telemetry.automation.lane_centering: Autosteer
+footage.telemetry.automation.adaptive_cruise: TACC
 enum.moderation_status.withdrawn: Retiré
 
 admin.title: Administration
@@ -523,7 +533,7 @@ admin.flash.deletion_approved: Toutes les vidéos et photos du signalement ont �
 admin.flash.deletion_denied: Demande de suppression refusée.
 report.photos.mask_hint: "Des plaques sont visibles sur vos photos ? Tracez un cadre dessus pour les noircir. Un modérateur vérifie également."
 report.photos.mask_remove: Supprimer le cadre
-withdraw.requested: "Nous avons bien reçu votre demande. Un modérateur supprimera la vidéo et les photos dès que possible."
+withdraw.requested: "Merci. Si la plaque est correcte, un de nos modérateurs supprimera la vidéo et les photos."
 incident.media_deleted: "La vidéo et les photos de ce signalement ont été supprimées à la demande de son auteur."
 admin.storage.title: Stockage
 admin.storage.objects: "{count, plural, one {# fichier} other {# fichiers}}"

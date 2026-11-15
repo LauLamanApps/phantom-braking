@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\E2E;
 
+use App\Incident\Domain\Command\ExtractFootageTelemetryCommand;
 use App\Incident\Domain\Command\ModerateFootageCommand;
 use App\Incident\Domain\Command\ModeratePhotoCommand;
 use App\Incident\Domain\Command\RecordMeasuredConditionsCommand;
@@ -16,6 +17,7 @@ use App\SharedKernel\Domain\Model\RenamedId;
 use App\Tests\Double\FakeWeatherHistory;
 use App\Tests\Support\JpegFixture;
 use App\Tests\Support\ResetsTestStorage;
+use App\Tests\Support\TeslaDashcamFixture;
 use App\Vehicle\Domain\ValueObject\Country;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
@@ -150,17 +152,21 @@ final class ReportIncidentTest extends WebTestCase
         self::assertCount(1, $points);
         self::assertSame(52.0907, $points[0]['latitude']);
 
-        // Deletion request on the report page: a wrong plate does nothing, the right plate files a request.
+        // Deletion request on the report page: a wrong plate files nothing, the right plate files a request,
+        // and both get the same answer, so the form doesn't reveal which car a report is about.
         $page = $this->client->request('GET', '/en/reports/'.$incident->getId());
         $this->client->submit($page->filter('#withdraw form')->form(), ['withdraw_media[licensePlate]' => 'VW001X']);
-        $this->client->followRedirect();
-        self::assertSelectorTextContains('main', "This plate doesn't belong to this report.");
+        $wrongPlate = $this->client->followRedirect()->filter('main')->html();
+        self::assertSelectorTextContains('main', 'If the license plate is correct, one of our moderators will remove the footage and photos.');
+        $this->em->clear();
+        self::assertNull($this->em->getRepository(Incident::class)->find($incident->getId())?->getMediaDeletionRequestedAt());
 
         $page = $this->client->request('GET', '/en/reports/'.$incident->getId());
         $this->client->submit($page->filter('#withdraw form')->form(), ['withdraw_media[licensePlate]' => 'te 123 s']);
-        $this->client->followRedirect();
-        self::assertSelectorTextContains('main', "We've received your request.");
-        self::assertSelectorNotExists('#withdraw', 'one request at a time');
+        $rightPlate = $this->client->followRedirect()->filter('main')->html();
+        self::assertSame(self::withoutCsrfToken($wrongPlate), self::withoutCsrfToken($rightPlate), 'the page looks the same after a right and a wrong plate');
+        $this->client->request('GET', '/en/reports/'.$incident->getId());
+        self::assertSelectorExists('#withdraw', 'the form stays, so a later visitor can\'t tell a request is pending');
         // Until an admin approves, the media stays as it was.
         $this->client->request('GET', '/photos/'.$photos[0]->getId());
         self::assertResponseIsSuccessful();
@@ -534,6 +540,57 @@ final class ReportIncidentTest extends WebTestCase
 
         $this->client->request('GET', '/en/reports/not-a-uuid');
         self::assertResponseStatusCodeSame(404);
+    }
+
+    public function testTeslaFootageGetsItsDrivingDataAsAnOverlayOnceApproved(): void
+    {
+        $crawler = $this->client->request('GET', '/en/report');
+        $video = TeslaDashcamFixture::create([
+            ['version' => 1, 'gear_state' => 1, 'vehicle_speed_mps' => 25.0, 'autopilot_state' => 1, 'latitude_deg' => 52.0907123, 'longitude_deg' => 5.1214234],
+            ['version' => 1, 'gear_state' => 1, 'vehicle_speed_mps' => 22.0, 'autopilot_state' => 1, 'brake_applied' => true, 'linear_acceleration_mps2_y' => 6.0],
+        ]);
+        $this->submitWithFiles($crawler, $this->validValues('te-123-s'), [
+            'footage' => new UploadedFile($video, 'tesla.mp4', 'video/mp4', test: true),
+        ]);
+        self::assertResponseRedirects();
+
+        // Read in the worker, after the report was stored.
+        $transport = self::getContainer()->get('messenger.transport.async');
+        self::assertInstanceOf(InMemoryTransport::class, $transport);
+        $event = $transport->getSent()[0]->getMessage();
+        self::assertInstanceOf(IncidentReportedEvent::class, $event);
+        self::getContainer()->get(CommandBusInterface::class)->dispatch(new ExtractFootageTelemetryCommand($event->incidentId));
+        $id = $event->incidentId;
+
+        // Private, like the footage itself, until a moderator approves it.
+        $this->client->request('GET', '/footage/'.$id.'/telemetry');
+        self::assertResponseStatusCodeSame(404);
+        $this->client->request('GET', '/en/reports/'.$id);
+        self::assertSelectorNotExists('[data-controller="footage-telemetry"]');
+
+        self::getContainer()->get(CommandBusInterface::class)->dispatch(new ModerateFootageCommand($id, true));
+        $this->client->request('GET', '/en/reports/'.$id);
+        self::assertSelectorExists('[data-controller="footage-telemetry"][data-footage-telemetry-url-value="/footage/'.$id.'/telemetry"] video[src="/footage/'.$id.'"]');
+        self::assertSelectorTextContains('main', 'recorded by the car itself');
+
+        $this->client->request('GET', '/footage/'.$id.'/telemetry');
+        self::assertResponseIsSuccessful();
+        self::assertResponseHeaderSame('Content-Type', 'application/json');
+        $telemetry = json_decode((string) $this->client->getInternalResponse()->getContent(), true, flags: \JSON_THROW_ON_ERROR);
+        self::assertSame('tesla', $telemetry['source']);
+        self::assertSame([0.0, 0.025], array_column($telemetry['samples'], 't'));
+        self::assertSame([90.0, 79.2], array_column($telemetry['samples'], 'speed'));
+        self::assertSame([false, true], array_column($telemetry['samples'], 'brake'));
+        self::assertSame(['self_driving', 'self_driving'], array_column($telemetry['samples'], 'automation'));
+        self::assertSame(-6.0, $telemetry['samples'][1]['accelLong']);
+        // The track is published no more precisely than the report's own location.
+        self::assertSame(52.0907, $telemetry['samples'][0]['lat']);
+        self::assertSame(5.1214, $telemetry['samples'][0]['lon']);
+    }
+
+    private static function withoutCsrfToken(string $html): string
+    {
+        return (string) preg_replace('/name="withdraw_media\[_token\]" value="[^"]*"/', '', $html);
     }
 
     /**

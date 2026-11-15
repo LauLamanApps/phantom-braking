@@ -91,6 +91,13 @@ final class InMemoryIncidentRepository implements IncidentRepositoryInterface
         return \array_slice(array_values(array_map(static fn (Incident $i): IncidentId => $i->getId(), $needing)), 0, $limit);
     }
 
+    public function getIdsNeedingFootageTelemetry(int $limit): array
+    {
+        $needing = array_filter($this->stored, static fn (Incident $i): bool => $i->getFootage()->needsTelemetryCheck());
+
+        return \array_slice(array_values(array_map(static fn (Incident $i): IncidentId => $i->getId(), $needing)), 0, $limit);
+    }
+
     public function persist(Incident $incident): void
     {
         $this->pending[(string) $incident->getId()] = $incident;

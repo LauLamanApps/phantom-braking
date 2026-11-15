@@ -101,7 +101,7 @@ faq.plate.a: "No. We only use the plate to fetch the vehicle details from the RD
 faq.plate_needed.q: "Then why do I have to enter a plate?"
 faq.plate_needed.a: "It gets us the exact make, model, year and type approval from the RDW, without typos. Those details are what make it possible to see whether a problem belongs to a specific model or software version."
 faq.footage.q: "What happens to my dashcam footage and photos?"
-faq.footage.a: "They stay private until a moderator has reviewed them. We remove metadata such as the GPS location. You black out plates on photos when uploading, and the moderator checks that. We don’t publish dashcam footage with a readable plate."
+faq.footage.a: "They stay private until a moderator has reviewed them. We remove metadata such as the GPS location from photos. Videos are published as they are: some cars, such as a Tesla, record driving data in them (speed, pedals, steering, driver assistance and the GPS position). We show that data over the video, with the position rounded to about 10 metres. You black out plates on photos when uploading, and the moderator checks that. We don’t publish dashcam footage with a readable plate."
 faq.withdraw.q: "How do I withdraw my consent for footage and photos?"
 faq.withdraw.a: "Open your report via <a href=\"{reports}\">Reports</a> and request deletion of the footage and photos there by entering the plate. If it matches, a moderator deletes them."
 faq.delete_report.q: "Can I have my whole report deleted?"
@@ -432,7 +432,7 @@ report.photos.help: "For example damage or the situation on the road. Up to {max
 report.photos.too_many_client: "You can add up to {max} photos."
 report.photos.too_big: One of the photos is larger than 15 MB.
 report.photos.invalid: One of the photos could not be read. Try another photo or file format.
-report.media.privacy: "We remove all metadata from photos, such as the GPS location and the device. Footage and photos stay private until a moderator has reviewed them."
+report.media.privacy: "We remove all metadata from photos, such as the GPS location and the device. Videos are kept as they are, including any driving data your car recorded in them (such as a Tesla's speed and GPS position). Footage and photos stay private until a moderator has reviewed them."
 
 incident.photos: Photos of the aftermath
 incident.photo_alt: "Aftermath photo {n}"
@@ -459,10 +459,20 @@ withdraw.intro: "Did you submit this report and want the footage and photos remo
 withdraw.plate: License plate
 withdraw.plate.help: The same plate as in your report.
 withdraw.submit: Request deletion
-withdraw.mismatch: This plate doesn't belong to this report.
 withdraw.invalid: Please enter a plate.
 withdraw.rate_limited: Too many attempts. Please try again in 15 minutes.
 incident.footage_status.withdrawn: The reporter took the dashcam footage offline.
+footage.telemetry.toggle: Driving data
+footage.telemetry.source: The driving data over the video was recorded by the car itself, frame by frame. The position is rounded to about 10 metres.
+footage.telemetry.accelerator: Accelerator
+footage.telemetry.brake: Brake pedal
+footage.telemetry.steering: Steering
+footage.telemetry.gear: Gear
+footage.telemetry.gforce: "Speeding up (+) or braking (−), in g: 1 g is 9.81 m/s²"
+footage.telemetry.automation.none: Manual
+footage.telemetry.automation.self_driving: TAD (FSD)
+footage.telemetry.automation.lane_centering: Autosteer
+footage.telemetry.automation.adaptive_cruise: TACC
 enum.moderation_status.withdrawn: Withdrawn
 
 admin.title: Admin
@@ -523,7 +533,7 @@ admin.flash.deletion_approved: All footage and photos of the report were deleted
 admin.flash.deletion_denied: Deletion request denied.
 report.photos.mask_hint: "Are there plates on your photos? Drag a box over them to black them out. A moderator checks this too."
 report.photos.mask_remove: Remove box
-withdraw.requested: "We've received your request. A moderator will delete the footage and photos as soon as possible."
+withdraw.requested: "Thanks. If the license plate is correct, one of our moderators will remove the footage and photos."
 incident.media_deleted: "The footage and photos of this report were deleted at the reporter's request."
 admin.storage.title: Storage
 admin.storage.objects: "{count, plural, one {# file} other {# files}}"

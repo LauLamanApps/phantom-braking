@@ -64,7 +64,10 @@
             {% if incident.footage.public %}
                 <section class="card">
                     <h2 class="font-semibold">{{ 'incident.footage'|trans }}</h2>
-                    <video class="mt-3 aspect-video w-full rounded-xl bg-black" controls preload="none" data-controller="deferred-media" src="{{ path('incident_footage', {id: incident.id}) }}"></video>
+                    {{ include('incident/_footage_player.html.twig', {
+                        src: path('incident_footage', {id: incident.id}),
+                        telemetry_url: incident.footage.telemetry ? path('incident_footage_telemetry', {id: incident.id}) : null,
+                    }) }}
                 </section>
             {% elseif incident.footage.exists %}
                 <p class="card text-sm text-stone-500">🎥 {{ ('incident.footage_status.' ~ incident.footage.status.value)|trans }}</p>
@@ -158,8 +161,6 @@
             </section>
             {% if incident.mediaDeletedAt %}
                 <p class="card text-sm text-stone-500">{{ 'incident.media_deleted'|trans }}</p>
-            {% elseif incident.mediaDeletionRequestedAt %}
-                <p class="card text-sm text-stone-500">{{ 'withdraw.requested'|trans }}</p>
             {% endif %}
             {% if withdraw_form %}
                 <details id="withdraw" class="card text-sm">

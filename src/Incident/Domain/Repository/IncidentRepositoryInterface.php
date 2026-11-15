@@ -41,6 +41,9 @@ interface IncidentRepositoryInterface
     /** @return list<IncidentId> reports with a location whose sun or measured weather is still missing, newest first */
     public function getIdsNeedingMeasuredConditions(int $limit): array;
 
+    /** @return list<IncidentId> reports with footage that hasn't been read for driving data yet, newest first */
+    public function getIdsNeedingFootageTelemetry(int $limit): array;
+
     public function persist(Incident $incident): void;
 
     public function flush(): void;

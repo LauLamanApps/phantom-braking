@@ -1,0 +1,75 @@
+{#
+ # The dashcam video, with the driving data the car embedded in it (speed, pedals, steering,
+ # blinkers, driver assistance, position) as an overlay when there is any.
+ # Expects: src, telemetry_url (null when the footage has no driving data).
+ #}
+{% if telemetry_url %}
+    <div class="relative mt-3" data-controller="footage-telemetry"
+         data-footage-telemetry-url-value="{{ telemetry_url }}"
+         data-footage-telemetry-labels-value="{{ {
+             automation: {
+                 none: 'footage.telemetry.automation.none'|trans,
+                 self_driving: 'footage.telemetry.automation.self_driving'|trans,
+                 lane_centering: 'footage.telemetry.automation.lane_centering'|trans,
+                 adaptive_cruise: 'footage.telemetry.automation.adaptive_cruise'|trans,
+             },
+             compass: range(0, 7)|map(i => ('compass.' ~ i)|trans),
+         }|json_encode }}">
+        <video class="aspect-video w-full rounded-xl bg-black" controls preload="none" data-controller="deferred-media" data-footage-telemetry-target="video" src="{{ src }}"></video>
+        {# Laid out like the car's own dashcam viewer: gear and brake left, speed in the middle, steering and accelerator right. #}
+        <div class="pointer-events-none absolute left-1/2 top-2 w-36 -translate-x-1/2 overflow-hidden rounded-xl bg-neutral-800/75 text-white tabular-nums shadow-lg backdrop-blur-md sm:top-3 sm:w-52" data-footage-telemetry-target="hud" hidden>
+            <div class="grid grid-cols-[auto_1fr_auto] items-center gap-x-2 px-2 pb-1 pt-1.5 sm:px-3 sm:pb-1.5 sm:pt-2">
+                <div class="flex flex-col items-center gap-1.5">
+                    <span class="flex h-5 w-5 items-center justify-center rounded-full bg-white/15 text-[11px] font-bold text-sky-400 sm:h-6 sm:w-6 sm:text-xs" data-footage-telemetry-target="gear" title="{{ 'footage.telemetry.gear'|trans }}">–</span>
+                    <svg class="h-4 w-4 text-white/35 transition-colors sm:h-5 sm:w-5" viewBox="0 0 24 24" fill="currentColor" data-footage-telemetry-target="brake" role="img" aria-label="{{ 'footage.telemetry.brake'|trans }}"><title>{{ 'footage.telemetry.brake'|trans }}</title><rect x="4" y="5" width="16" height="10" rx="3"/><rect x="10.5" y="15" width="3" height="5" rx="1"/></svg>
+                </div>
+                <div class="flex items-center justify-center gap-1">
+                    <span class="text-xs text-transparent transition-colors" data-footage-telemetry-target="blinkerLeft" aria-hidden="true">◀</span>
+                    <div class="text-center">
+                        <div class="text-2xl font-medium leading-none sm:text-4xl" data-footage-telemetry-target="speed">–</div>
+                        <div class="mt-0.5 text-[10px] font-semibold tracking-wide text-white/80">KM/H</div>
+                    </div>
+                    <span class="text-xs text-transparent transition-colors" data-footage-telemetry-target="blinkerRight" aria-hidden="true">▶</span>
+                </div>
+                <div class="flex flex-col items-center gap-1.5">
+                    <svg class="h-5 w-5 text-white/80 sm:h-6 sm:w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" data-footage-telemetry-target="wheel" role="img" aria-label="{{ 'footage.telemetry.steering'|trans }}"><title>{{ 'footage.telemetry.steering'|trans }}</title><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="2" fill="currentColor"/><path d="M3.7 10.5 10 12M20.3 10.5 14 12M12 14v6.5"/></svg>
+                    <svg class="h-4 w-4 text-white/35 transition-colors sm:h-5 sm:w-5" viewBox="0 0 24 24" fill="currentColor" data-footage-telemetry-target="accelerator" role="img" aria-label="{{ 'footage.telemetry.accelerator'|trans }}"><title>{{ 'footage.telemetry.accelerator'|trans }}</title><rect x="8" y="3" width="8" height="18" rx="3"/></svg>
+                </div>
+            </div>
+            <div class="bg-white/10 px-2 py-0.5 text-center text-[11px] font-semibold text-white/60 sm:text-xs" data-footage-telemetry-target="automation">–</div>
+            <div class="flex justify-center gap-2 px-2 py-0.5 text-[10px] text-white/70">
+                <span data-footage-telemetry-target="gforce" title="{{ 'footage.telemetry.gforce'|trans }}">–</span>
+                <span class="hidden truncate sm:inline" data-footage-telemetry-target="position"></span>
+            </div>
+        </div>
+        {# The card turns with the car's heading, so its N keeps pointing north; the mark on top is where the car drives. #}
+        <svg class="pointer-events-none absolute right-2 top-2 h-10 w-10 drop-shadow sm:right-3 sm:top-3 sm:h-14 sm:w-14" viewBox="0 0 48 48" data-footage-telemetry-target="compass" role="img" hidden>
+            <circle cx="24" cy="24" r="22" class="fill-neutral-800/75 stroke-white/25" stroke-width="1"/>
+            <g data-footage-telemetry-target="rose">
+                <g class="stroke-white/50" stroke-width="1.5" stroke-linecap="round">
+                    <path d="M24 4.5v3M43.5 24h-3M24 43.5v-3M4.5 24h3"/>
+                    <path d="M37.8 10.2l-1.4 1.4M37.8 37.8l-1.4-1.4M10.2 37.8l1.4-1.4M10.2 10.2l1.4 1.4" class="stroke-white/30"/>
+                </g>
+                <path d="M24 10l3.5 14h-7z" class="fill-red-500"/>
+                <path d="M24 38l3.5-14h-7z" class="fill-white/60"/>
+                <text x="24" y="9" text-anchor="middle" class="fill-white" font-size="6.5" font-weight="700" font-family="system-ui, sans-serif" dominant-baseline="middle">N</text>
+            </g>
+            <circle cx="24" cy="24" r="2" class="fill-white"/>
+            <path d="M24 1.5l2.5 3.5h-5z" class="fill-sky-400"/>
+        </svg>
+        <button type="button" class="absolute left-2 top-2 rounded-md bg-black/65 p-1.5 text-white backdrop-blur-sm hover:bg-black/80 aria-[pressed=false]:text-white/50 sm:left-3 sm:top-3"
+                data-action="footage-telemetry#toggle" data-footage-telemetry-target="toggle" aria-pressed="true"
+                aria-label="{{ 'footage.telemetry.toggle'|trans }}" title="{{ 'footage.telemetry.toggle'|trans }}" hidden>
+            {# An instrument cluster: a speedometer dial with its needle. #}
+            <svg class="h-4 w-4 sm:h-5 sm:w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <path d="M3.5 17a8.5 8.5 0 1 1 17 0"/>
+                <path d="M12 17l4.5-5.5"/>
+                <circle cx="12" cy="17" r="1.6" fill="currentColor"/>
+                <path d="M6.5 11.5l1 .8M12 7.5v1.3M17.5 11.5l-1 .8"/>
+            </svg>
+        </button>
+    </div>
+    <p class="mt-2 text-xs text-stone-500">{{ 'footage.telemetry.source'|trans }}</p>
+{% else %}
+    <video class="mt-3 aspect-video w-full rounded-xl bg-black" controls preload="none" data-controller="deferred-media" src="{{ src }}"></video>
+{% endif %}

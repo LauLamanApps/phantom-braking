@@ -17,10 +17,10 @@ enum MediaKind: string implements TranslatableEnum
         return str_starts_with($contentType, 'video/') ? self::Video : self::Photo;
     }
 
-    /** Our own file names tell the kind: "footage.<ext>" is the video, "photo-<id>…" a photo. */
+    /** Our own file names tell the kind: "footage.<ext>" (and its "footage-telemetry.json") is the video, "photo-<id>…" a photo. */
     public static function fromKey(string $key): self
     {
-        return str_starts_with(basename($key), 'footage.') ? self::Video : self::Photo;
+        return str_starts_with(basename($key), 'footage') ? self::Video : self::Photo;
     }
 
     public function translationKey(): string

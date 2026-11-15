@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 final class ShowLegalPageController extends AbstractController
 {
     /** Bump when the content of a page changes materially. */
-    public const string LAST_UPDATED = '2026-11-09';
+    public const string LAST_UPDATED = '2026-11-15';
 
     public function __invoke(Request $request, string $page): Response
     {
