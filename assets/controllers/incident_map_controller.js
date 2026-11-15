@@ -12,6 +12,9 @@ import { enableFullscreen } from '../lib/map_fullscreen.js';
  * Nearby points are grouped into a cluster showing how many reports it holds
  * (a red ring when one of them was a collision), so hundreds of points stay
  * fast and readable; zooming in or clicking a cluster splits it up.
+ *
+ * On a report page, an arrow follows the car while its dashcam video plays
+ * (the `footage-telemetry:position` events of the video's overlay).
  */
 export default class extends Controller {
     static values = {
@@ -104,6 +107,44 @@ export default class extends Controller {
             this.map.setView(markers[0].getLatLng(), 14);
         } else if (markers.length > 1) {
             this.map.fitBounds(clusters.getBounds().pad(0.1), { maxZoom: 12 });
+        }
+    }
+
+    /* The car's position in the video: an arrow pointing where it drives, kept in view. */
+    showCar({ detail: { position } }) {
+        if (!position) {
+            this.car?.remove();
+            this.car = null;
+            return;
+        }
+
+        const latLng = [position.lat, position.lon];
+        if (!this.car) {
+            const label = this.messagesValue.car ?? '';
+            this.car = L.marker(latLng, {
+                icon: L.divIcon({
+                    className: '',
+                    html: `<div class="h-7 w-7 drop-shadow-md" data-car-arrow>
+                        <svg viewBox="0 0 24 24" class="h-full w-full"><circle cx="12" cy="12" r="11" fill="#0284c7" stroke="#fff" stroke-width="2"/>
+                        <path d="M12 5.5l5 11-5-2.8-5 2.8z" fill="#fff"/></svg></div>`,
+                    iconSize: [28, 28],
+                    iconAnchor: [14, 14],
+                }),
+                title: label,
+                alt: label,
+                keyboard: false,
+                zIndexOffset: 1000, // above the report's own marker
+            }).addTo(this.map);
+        } else {
+            this.car.setLatLng(latLng);
+        }
+        const arrow = this.car.getElement()?.querySelector('[data-car-arrow]');
+        if (arrow) {
+            arrow.style.transform = `rotate(${position.heading}deg)`;
+        }
+
+        if (!this.map.getBounds().pad(-0.1).contains(latLng)) {
+            this.map.panTo(latLng);
         }
     }
 

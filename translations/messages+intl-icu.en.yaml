@@ -453,6 +453,7 @@ map.nothing_found: No road found at this spot. Please fill in the details yourse
 map.wheel_hint: Click the map or hold Ctrl/⌘ to zoom
 map.fullscreen: "Fullscreen"
 map.exit_fullscreen: "Exit fullscreen"
+map.footage_car: Car in the dashcam video
 report.media.consent_notice: "By uploading files, you consent to them being published after review. You can withdraw this consent at any time on your report's page, using your plate."
 withdraw.title: Removal request
 withdraw.intro: "Did you submit this report and want the footage and photos removed? Enter the car's plate. If it matches this report, we send your request to a moderator, who deletes the footage and photos. We don't store the plate."
